@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const functions = require('firebase-functions');
 mongoose.Promise = global.Promise;
 
 const getClient = async () => {
     mongoose
-        .connect(process.env.MONGO_CONNECTION_URI, {
+        .connect(functions.config().studybuddy.mongo, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
