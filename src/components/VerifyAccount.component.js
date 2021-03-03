@@ -39,7 +39,7 @@ function VerifyAccount(){
 };
 
 function handleVerify(){
-    console.log(JSON.parse(getUser()).first.toLowerCase());
+    
 };
 
 export default VerifyAccount;
