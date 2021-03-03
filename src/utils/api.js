@@ -6,6 +6,6 @@ export async function apiLogin(userData) {
         return res;
     } catch (error){
         console.log(error.response);
-        throw error;
+        return null;
     }    
 };

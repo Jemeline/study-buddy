@@ -5,7 +5,7 @@ import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiLogin} from '../utils/api';
-import {getUser,login} from '../utils/common';
+import {getUser,login, getRoleLiteral, getIsVerified, getRole} from '../utils/common';
 // import loginImg from "../login.jpg";
 
 
@@ -19,7 +19,7 @@ function Login(){
   // style={{position:"absolute", top:0, right:0, bottom:0, left:0,backgroundImage: "url(" + loginImg + ")",}}
   return <div> 
       <Container style={{width:"40%", position:"absolute",top: "35%", bottom: 0, left: 0, right: 0,margin: "auto"}} >     
-        <Card bg="secondary" style={{ borderRadius: 8 , opacity:.8, color:"white"}}>
+        <Card bg="dark" style={{ borderRadius: 8 , opacity:.8, color:"white"}}>
           <Row>
             <Col>
               <Card.Body>
@@ -49,7 +49,7 @@ function Login(){
                           />
                           </FormGroup>
                       </Col>
-                      <Button size="lg" color="dark" onClick={async () => {await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setaAlertMessageLogin);}}>Sign In</Button>
+                      <Button size="lg" color="secondary" onClick={async () => {await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setaAlertMessageLogin);}}>Sign In</Button>
                       <br></br>   
                   </Form>
                   </Container>
@@ -74,8 +74,16 @@ async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAle
         setAlertLogin(true);
         setAlertMessageLogin("We do not recognize your username and/or password");
       } else {
-        login(data.data.user,data.data.user.role)
-        history.push(`/dashboard/${data.data.user.role}`);
+        login(data.data.user,data.data.user.role,data.data.user.isVerified);
+        // console.log(getUser());
+        // console.log(getRole("student")||getRole("admin")||getRole("tutor"))
+        // console.log(getIsVerified());
+        // // console.log(getUser()&&getIsVerified())
+        if(!getIsVerified()){
+          history.push('/verify');
+        } else {
+          history.push(`/dashboard/${data.data.user.role}`);
+        }  
       }
     } else {
       setAlertLogin(true);
@@ -85,6 +93,7 @@ async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAle
     if (error.response.status === 401){
       setAlertLogin(true);
       setAlertMessageLogin(error.response.data.msg);
+      history.push(`/verify`);
     } else {
       setAlertLogin(true);
       setAlertMessageLogin("Oops... Something Went Wrong");
