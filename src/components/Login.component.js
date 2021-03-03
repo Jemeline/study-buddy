@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Button,Col,Container,Row,Form,
-  FormGroup, Input,} from 'reactstrap';
+  FormGroup,FormFeedback,Input,} from 'reactstrap';
 import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiLogin} from '../utils/api';
-import {getUser,login, getRoleLiteral, getIsVerified, getRole} from '../utils/common';
+import {getUser,login, validateEmail, getIsVerified} from '../utils/common';
 // import loginImg from "../login.jpg";
 
 
@@ -14,12 +14,13 @@ function Login(){
   const [passwordLogin, setPasswordLogin] = useState('');
   const [alertLogin, setAlertLogin] = useState(false);
   const [alertMessageLogin, setaAlertMessageLogin] = useState('');
+  const [emailValidLogin,setEmailValidLogin] = useState('');
   const history = useHistory();
 
   // style={{position:"absolute", top:0, right:0, bottom:0, left:0,backgroundImage: "url(" + loginImg + ")",}}
   return <div> 
       <Container style={{width:"40%", position:"absolute",top: "35%", bottom: 0, left: 0, right: 0,margin: "auto"}} >     
-        <Card bg="dark" style={{ borderRadius: 8 , opacity:.8, color:"white"}}>
+        <Card bg="light" style={{ borderRadius: 8 , opacity:.8, color:"white"}}>
           <Row>
             <Col>
               <Card.Body>
@@ -30,13 +31,20 @@ function Login(){
                 <Container>
                   <Form className="form">
                       <Col>
-                          <FormGroup>
+                      <FormGroup>
                           <Input
                               type="email"
                               name="Email"
                               placeholder="Email"
-                              onChange={(e) => setEmailLogin(e.target.value)}
-                          />
+                              onChange={(e) => {
+                                validateEmail(e,setEmailValidLogin)
+                                setEmailLogin(e.target.value)}}
+                              valid={ emailValidLogin === 'valid' }
+                              invalid={ emailValidLogin === 'invalid' }
+                              />
+                              <FormFeedback>
+                                There is an issue with your email. Please input a correct email.
+                              </FormFeedback>
                           </FormGroup>
                       </Col>
                       <Col>
@@ -49,7 +57,7 @@ function Login(){
                           />
                           </FormGroup>
                       </Col>
-                      <Button size="lg" color="secondary" onClick={async () => {await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setaAlertMessageLogin);}}>Sign In</Button>
+                      <Button size="lg" color="secondary" disabled={!(emailValidLogin === 'valid')||!(emailLogin.length > 0)||!(passwordLogin.length > 0)} onClick={async () => {await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setaAlertMessageLogin);}}>Sign In</Button>
                       <br></br>   
                   </Form>
                   </Container>
@@ -75,10 +83,6 @@ async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAle
         setAlertMessageLogin("We do not recognize your username and/or password");
       } else {
         login(data.data.user,data.data.user.role,data.data.user.isVerified);
-        // console.log(getUser());
-        // console.log(getRole("student")||getRole("admin")||getRole("tutor"))
-        // console.log(getIsVerified());
-        // // console.log(getUser()&&getIsVerified())
         if(!getIsVerified()){
           history.push('/verify');
         } else {

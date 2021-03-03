@@ -29,3 +29,15 @@ export function login (user,role,isVerified){
     sessionStorage.setItem('role',role);
     sessionStorage.setItem('isVerified',isVerified);
 };
+
+export function validateEmail(e,setEmailValid) {
+    const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!e.target.value){
+        setEmailValid('');
+      }
+      else if (emailRex.test(e.target.value)) {
+        setEmailValid("valid");
+      } else {
+        setEmailValid("invalid");
+      }
+};

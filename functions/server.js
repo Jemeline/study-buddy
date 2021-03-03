@@ -7,17 +7,17 @@ const courseRouter = require("./routes/courseRoutes.js");
 const userRouter = require("./routes/userRoutes.js");
 const getClient = require("./db.js");
 
-const app = express();
+const app3 = express();
 const port = 3000;
 
-app.use(cors());
-app.use(express.json());
-app.use("/api", courseRouter);
-app.use("/api", userRouter);
+app3.use(cors());
+app3.use(express.json());
+app3.use("/api", courseRouter);
+app3.use("/api", userRouter);
 
-app.listen(port, () => {
+app3.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   getClient();
 });
 
-exports.app = functions.https.onRequest(app);
+exports.app3 = functions.https.onRequest(app3);
