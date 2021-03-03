@@ -20,7 +20,8 @@
     "express-validator": "^6.10.0",
     "firebase-admin": "^9.2.0",
     "firebase-functions": "^3.11.0",
-    "mongoose": "^5.11.18"
+    "mongoose": "^5.11.18",
+    "nodemailer": "^6.5.0"
   },
   "devDependencies": {
     "eslint": "^7.6.0",
