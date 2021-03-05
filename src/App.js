@@ -18,6 +18,7 @@ function App(){
         <li><Link to="/register">Register</Link></li>
         <li><Link to="/recover">Recover Password</Link></li>
         <li><Link to="/verify">Verify Account</Link></li>
+        <li><Link to="/incorrect-email">Incorrect Email</Link></li>
         <Button as={Link} onClick={() => {logout()}} to="/login">Logout</Button>
         <div> 
           <Routes/>

@@ -5,30 +5,29 @@ import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiLogin} from '../utils/api';
-import {getUser,login, validateEmail, getIsVerified} from '../utils/common';
-// import loginImg from "../login.jpg";
+import {getUser,login, validateEmail,validatePassword,getIsVerified} from '../utils/common';
 
 
 function Login(){
   const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
   const [alertLogin, setAlertLogin] = useState(false);
-  const [alertMessageLogin, setaAlertMessageLogin] = useState('');
-  const [emailValidLogin,setEmailValidLogin] = useState('');
+  const [alertMessageLogin, setAlertMessageLogin] = useState('');
   const history = useHistory();
 
-  // style={{position:"absolute", top:0, right:0, bottom:0, left:0,backgroundImage: "url(" + loginImg + ")",}}
   return <div> 
-      <Container style={{width:"40%", position:"absolute",top: "35%", bottom: 0, left: 0, right: 0,margin: "auto"}} >     
-        <Card bg="light" style={{ borderRadius: 8 , opacity:.8, color:"white"}}>
+      <Container style={{width:"40%", margin: "auto"}} >     
+        <Card bg="light" style={{ borderRadius: 8}}>
+          <Card.Header><h4>Sign In</h4></Card.Header>
           <Row>
             <Col>
               <Card.Body>
-                <br></br>
+                <Container>
+                  <Col>
                   <Alert variant="danger" show={alertLogin} onClose={() => setAlertLogin(false)} dismissible transition={false}>
                     {alertMessageLogin}
                   </Alert>
-                <Container>
+                  </Col>
                   <Form className="form">
                       <Col>
                       <FormGroup>
@@ -36,11 +35,9 @@ function Login(){
                               type="email"
                               name="Email"
                               placeholder="Email"
-                              onChange={(e) => {
-                                validateEmail(e,setEmailValidLogin)
-                                setEmailLogin(e.target.value)}}
-                              valid={ emailValidLogin === 'valid' }
-                              invalid={ emailValidLogin === 'invalid' }
+                              onChange={(e) => setEmailLogin(e.target.value)}
+                              valid={ validateEmail(emailLogin) }
+                              invalid={ emailLogin.length > 0 && !validateEmail(emailLogin) }
                               />
                               <FormFeedback>
                                 There is an issue with your email. Please input a correct email.
@@ -54,10 +51,20 @@ function Login(){
                               name="passwordLogin"
                               placeholder="Password"
                               onChange={(e) => setPasswordLogin(e.target.value)}
+                              invalid={ passwordLogin.length > 0 && !validatePassword(passwordLogin)} 
+                              valid={validatePassword(passwordLogin)}
                           />
                           </FormGroup>
                       </Col>
-                      <Button size="lg" color="secondary" disabled={!(emailValidLogin === 'valid')||!(emailLogin.length > 0)||!(passwordLogin.length > 0)} onClick={async () => {await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setaAlertMessageLogin);}}>Sign In</Button>
+                      <Button
+                        size="lg"
+                        color="secondary"
+                        disabled={
+                          !(validateEmail(emailLogin))
+                          ||!(emailLogin.length > 0)
+                          ||!(validatePassword(passwordLogin))} 
+                        onClick={async () => {await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAlertMessageLogin);}}
+                      > Sign In</Button>
                       <br></br>   
                   </Form>
                   </Container>
@@ -75,29 +82,27 @@ function Login(){
 async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAlertMessageLogin){
   try{
     setAlertLogin(false);
+    if (!emailLogin||!passwordLogin){
+      setAlertLogin(true);
+      setAlertMessageLogin("Please fill in all required fields");
+    }
     if (!getUser()){
       const body = {"email":emailLogin,"password":passwordLogin}
       const data = await apiLogin(body);
-      if (!data){
-        setAlertLogin(true);
-        setAlertMessageLogin("We do not recognize your username and/or password");
+      login(data.data.user,data.data.user.role,data.data.user.isVerified);
+      if(!getIsVerified()){
+        history.push('/verify');
       } else {
-        login(data.data.user,data.data.user.role,data.data.user.isVerified);
-        if(!getIsVerified()){
-          history.push('/verify');
-        } else {
-          history.push(`/dashboard/${data.data.user.role}`);
-        }  
-      }
+        history.push(`/dashboard/${data.data.user.role}`);
+      }  
     } else {
       setAlertLogin(true);
-      setAlertMessageLogin("You are Already Logged In");
+      setAlertMessageLogin("Please Logout First");
     }  
   } catch (error){
     if (error.response.status === 401){
       setAlertLogin(true);
       setAlertMessageLogin(error.response.data.msg);
-      history.push(`/verify`);
     } else {
       setAlertLogin(true);
       setAlertMessageLogin("Oops... Something Went Wrong");

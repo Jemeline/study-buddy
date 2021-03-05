@@ -5,19 +5,21 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 const courseRouter = require("./routes/courseRoutes.js");
 const userRouter = require("./routes/userRoutes.js");
+const tokenRouter = require("./routes/tokenRoutes.js");
 const getClient = require("./db.js");
 
-const app3 = express();
+const app5 = express();
 const port = 3000;
 
-app3.use(cors());
-app3.use(express.json());
-app3.use("/api", courseRouter);
-app3.use("/api", userRouter);
+app5.use(cors());
+app5.use(express.json());
+app5.use("/api", courseRouter);
+app5.use("/api", userRouter);
+app5.use("/api", tokenRouter);
 
-app3.listen(port, () => {
+app5.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   getClient();
 });
 
-exports.app3 = functions.https.onRequest(app3);
+exports.app5 = functions.https.onRequest(app5);
