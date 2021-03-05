@@ -14,9 +14,9 @@ async (req, res) => {
 
   const user = await UserModel.findOne({email: req.body.email});
   try {
-    if (!user) return res.status(401).send({msg: "The email address " + req.body.email + " is not associated with any account. Double-check your email address and try again."});
+    if (!user) return res.status(401).send({msg: "The email address is not associated with any account."});
     user.comparePassword(req.body.password, function(err, isMatch) {
-      if (!isMatch) return res.status(401).send({msg: "Invalid email or password"});
+      if (!isMatch) return res.status(401).send({msg: "Invalid password"});
       res.send({user: user.toJSON()});
     });
   } catch (err) {
