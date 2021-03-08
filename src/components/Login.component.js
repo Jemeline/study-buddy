@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button,Col,Container,Row,Form,
   FormGroup,FormFeedback,Input,} from 'reactstrap';
+import ReactLoading from 'react-loading';
 import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
@@ -10,26 +11,26 @@ import {getUser,login, validateEmail,validatePassword,getIsVerified} from '../ut
 
 function Login(){
   const [emailLogin, setEmailLogin] = useState('');
+  const [loadingLogin, setLoadingLogin] = useState(false);
   const [passwordLogin, setPasswordLogin] = useState('');
   const [alertLogin, setAlertLogin] = useState(false);
+  const [alertInvalidLoginCreds, setAlertInvalidLoginCreds] = useState(false);
   const [alertMessageLogin, setAlertMessageLogin] = useState('');
   const history = useHistory();
 
   return <div> 
-      <Container style={{width:"40%", margin: "auto"}} >     
+      <Container style={{width:"35%", margin: "auto"}} >     
         <Card bg="light" style={{ borderRadius: 8}}>
           <Card.Header><h4>Sign In</h4></Card.Header>
-          <Row>
-            <Col>
+          <Col>
               <Card.Body>
-                <Container>
-                  <Col>
                   <Alert variant="danger" show={alertLogin} onClose={() => setAlertLogin(false)} dismissible transition={false}>
                     {alertMessageLogin}
                   </Alert>
-                  </Col>
+                  <Alert variant="danger" show={alertInvalidLoginCreds} onClose={() => setAlertInvalidLoginCreds(false)} dismissible transition={false}>
+                    We can't find that username and password. You can <Link to="/recover">reset your password </Link> or try again.
+                  </Alert>
                   <Form className="form">
-                      <Col>
                       <FormGroup>
                           <Input
                               type="email"
@@ -43,8 +44,6 @@ function Login(){
                                 There is an issue with your email. Please input a correct email.
                               </FormFeedback>
                           </FormGroup>
-                      </Col>
-                      <Col>
                           <FormGroup>
                           <Input
                               type="password"
@@ -55,33 +54,39 @@ function Login(){
                               valid={validatePassword(passwordLogin)}
                           />
                           </FormGroup>
-                      </Col>
                       <Button
                         size="lg"
                         color="secondary"
+                        hidden={loadingLogin}
                         disabled={
                           !(validateEmail(emailLogin))
                           ||!(emailLogin.length > 0)
                           ||!(validatePassword(passwordLogin))} 
-                        onClick={async () => {await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAlertMessageLogin);}}
+                        onClick={async () => {
+                          setAlertLogin(false);
+                          setAlertInvalidLoginCreds(false);
+                          setLoadingLogin(true);
+                          await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAlertMessageLogin,setAlertInvalidLoginCreds);
+                          setLoadingLogin(false);
+                        }}
                       > Sign In</Button>
-                      <br></br>   
+                      <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <ReactLoading hidden={!loadingLogin} type={"cylon"} color={"#000080"} height={'15%'} width={'15%'} /> 
+                      </div>
                   </Form>
-                  </Container>
               </Card.Body>
-            </Col>
-          </Row>
+              </Col>
           </Card>
-          Don't have an account? <Link to="/register">Register here</Link><br></br>  
-          <Link to="/recover">Forgot password? </Link>
+          Don't have an account? <Link to="/register">Sign Up Now</Link><br></br>  
+          <Link to="/recover">Forgot Password? </Link>
       </Container>
+      
   </div>
 };
 
-
-async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAlertMessageLogin){
+async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
+  setAlertMessageLogin,setAlertInvalidLoginCreds){
   try{
-    setAlertLogin(false);
     if (!emailLogin||!passwordLogin){
       setAlertLogin(true);
       setAlertMessageLogin("Please fill in all required fields");
@@ -97,14 +102,16 @@ async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAle
       }  
     } else {
       setAlertLogin(true);
+      setAlertInvalidLoginCreds(false);
       setAlertMessageLogin("Please Logout First");
     }  
   } catch (error){
     if (error.response.status === 401){
-      setAlertLogin(true);
-      setAlertMessageLogin(error.response.data.msg);
+      setAlertLogin(false);
+      setAlertInvalidLoginCreds(true);
     } else {
       setAlertLogin(true);
+      setAlertInvalidLoginCreds(false);
       setAlertMessageLogin("Oops... Something Went Wrong");
     } 
   };
