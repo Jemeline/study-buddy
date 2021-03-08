@@ -54,7 +54,7 @@ export function validatePassword(password) {
 };
 
 export function validateToken(token) {
-    const tokenRegex = /\b[0-9A-F]{8}\b/gi;
+    const tokenRegex = /\b[0-9A-Z]{8}\b/gi;
     if (tokenRegex.test(token)) {
         return true;
     }

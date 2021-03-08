@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button,Col,Container,Row,Form,
   FormGroup,FormText,Input,FormFeedback} from 'reactstrap';
+import ReactLoading from 'react-loading';
 import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
@@ -11,6 +12,7 @@ import {getUser,login, getIsVerified,validatePassword,
 
 function Register(){
   const [emailRegister, setEmailRegister] = useState('');
+  const [loadingRegister, setLoadingRegister] = useState(false);
   const [passwordRegister, setPasswordRegister] = useState('');
   const [passwordConfirmRegister, setPasswordConfirmRegister] = useState('');
   const [firstNameRegister, setFirstNameRegister] = useState('');
@@ -22,137 +24,132 @@ function Register(){
   const history = useHistory();
 
   return <div> 
-      <Container style={{width:"50%", margin: "auto"}} >     
+      <Container style={{width:"40%", margin: "auto"}} >     
         <Card bg="light" style={{ borderRadius: 8}}>
-        <Card.Header><h4>Register</h4></Card.Header>
-          <Row>
+          <Card.Header><h4>Register</h4></Card.Header>
             <Col>
               <Card.Body>
-                <Container>
-                  <Col>
                   <Alert variant="danger" show={alertRegister} onClose={() => setAlertRegister(false)} dismissible transition={false}>
                     {alertMessageRegister}
                   </Alert>
-                  </Col>
                   <Form className="form">
-                      <Col>
-                          <FormGroup>
-                          <Input
-                              type="email"
-                              name="Email"
-                              placeholder="Email"
-                              onChange={(e) => setEmailRegister(e.target.value)}
-                              valid={ validateEmail(emailRegister) }
-                              invalid={ emailRegister.length > 0 && !validateEmail(emailRegister) }
-                              />
-                              <FormFeedback>
-                                There is an issue with your email. Please input a correct email.
-                              </FormFeedback>
-                          </FormGroup>
-                      </Col>
-                      <Col>
-                        <Row form>
-                            <Col md={6}>
-                            <FormGroup>
-                                <Input
-                                  type="text"
-                                  name="firstnameRegister"
-                                  placeholder="First Name"
-                                  valid={ firstNameRegister.length !== 0 }
-                                  onChange={(e) => setFirstNameRegister(e.target.value)}/>
-                            </FormGroup>
-                            </Col>
-                            <Col md={6}>
-                            <FormGroup>
-                                <Input
-                                type="text"
-                                name="lastnameRegister"
-                                placeholder="Last Name"
-                                valid={ lastNameRegister.length !== 0 }
-                                onChange={(e) => setLastNameRegister(e.target.value)}/>
-                            </FormGroup>
-                            </Col>
-                        </Row>
-                      </Col>
-                      <Col>
-                        <Row form>
-                              <Col md={6}>
-                              <FormGroup>
-                                  <Input
-                                    type="password" 
-                                    name="passwordRegister"
-                                    placeholder="Password"
-                                    invalid={ passwordRegister.length > 0 && !validatePassword(passwordRegister)} 
-                                    valid={validatePassword(passwordRegister)}
-                                    onChange={(e) => setPasswordRegister(e.target.value)}/>
-                                  <FormFeedback>
-                                      {validatePasswordLiteral(passwordRegister)}
-                                  </FormFeedback>
-                              </FormGroup>
-                              </Col>
-                              <Col md={6}>
-                                <FormGroup>
-                                    <Input
-                                      type="password" 
-                                      name="passwordConfirm" 
-                                      placeholder="Confirm Password" 
-                                      invalid={ passwordConfirmRegister.length > 0 && (!validatePassword(passwordConfirmRegister) || (passwordRegister)!==(passwordConfirmRegister))} 
-                                      valid={(passwordRegister)===(passwordConfirmRegister) && validatePassword(passwordConfirmRegister)}
-                                      onChange={(e) => {
-                                        setPasswordConfirmRegister(e.target.value);}}
-                                    />
-                                    <FormFeedback>
-                                        Passwords do not match
-                                    </FormFeedback>
-                                </FormGroup>
-                              </Col>
-                          </Row>
-                      </Col>
-                      <Col>
+                    <FormGroup>
+                      <Input
+                          type="email"
+                          name="Email"
+                          placeholder="Email"
+                          onChange={(e) => setEmailRegister(e.target.value)}
+                          valid={validateEmail(emailRegister)}
+                          invalid={emailRegister.length > 0 && !validateEmail(emailRegister)}
+                          />
+                          <FormFeedback>
+                            There is an issue with your email. Please input a correct email.
+                          </FormFeedback>
+                    </FormGroup>
                       <Row form>
-                            <Col md={6}>
-                              <FormGroup>
-                                <Input type="select" name="select" id="exampleSelect" onChange={(e) => {setRoleRegister(e.target.value)}}>
-                                  <option value="student">Student</option>
-                                  <option value="tutor">Tutor</option>
-                                </Input>
-                              </FormGroup>
-                            </Col>
-                            <Col md={6}>
-                              <FormGroup>
-                                <Input type="text" name="phone" placeholder="Phone (Optional)" onChange={(e) => {setPhoneRegister(e.target.value)}}
-                                valid={validatePhone(phoneRegister)}
-                                invalid={phoneRegister.length > 0 && !validatePhone(phoneRegister)}
-                                >
-                                </Input>
-                                <FormText>Ex. 8475664332 (Only Numbers)</FormText>          
-                              </FormGroup>
-                            </Col>
-                        </Row>
-                      </Col>
+                        <Col md={6}>
+                          <FormGroup>
+                            <Input
+                              type="text"
+                              name="firstnameRegister"
+                              placeholder="First Name"
+                              invalid={firstNameRegister.length > 0 && /[^a-zA-Z]/.test(firstNameRegister)}
+                              valid={firstNameRegister.length !== 0 && !/[^a-zA-Z]/.test(firstNameRegister)}
+                              onChange={(e) => setFirstNameRegister(e.target.value)}/>
+                          </FormGroup>
+                        </Col>
+                        <Col md={6}>
+                          <FormGroup>
+                              <Input
+                              type="text"
+                              name="lastnameRegister"
+                              placeholder="Last Name"
+                              invalid={lastNameRegister.length > 0 && /[^a-zA-Z]/.test(lastNameRegister)}
+                              valid={lastNameRegister.length !== 0 && !/[^a-zA-Z]/.test(lastNameRegister)}
+                              onChange={(e) => setLastNameRegister(e.target.value)}/>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row form>
+                        <Col md={6}>
+                          <FormGroup>
+                            <Input
+                              type="password" 
+                              name="passwordRegister"
+                              placeholder="Password"
+                              invalid={passwordRegister.length > 0 && !validatePassword(passwordRegister)} 
+                              valid={validatePassword(passwordRegister)}
+                              onChange={(e) => setPasswordRegister(e.target.value)}/>
+                            <FormFeedback>
+                                {validatePasswordLiteral(passwordRegister)}
+                            </FormFeedback>
+                          </FormGroup>
+                        </Col>
+                        <Col md={6}>
+                          <FormGroup>
+                            <Input
+                              type="password" 
+                              name="passwordConfirm" 
+                              placeholder="Confirm Password" 
+                              invalid={passwordConfirmRegister.length > 0 && (!validatePassword(passwordConfirmRegister) || (passwordRegister)!==(passwordConfirmRegister))} 
+                              valid={(passwordRegister)===(passwordConfirmRegister) && validatePassword(passwordConfirmRegister)}
+                              onChange={(e) => {setPasswordConfirmRegister(e.target.value);}}
+                            />
+                            <FormFeedback>
+                                Passwords do not match
+                            </FormFeedback>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row form>
+                        <Col md={6}>
+                          <FormGroup>
+                            <Input type="select" name="select" id="exampleSelect" onChange={(e) => {setRoleRegister(e.target.value)}}>
+                              <option value="student">I'm a student</option>
+                              <option value="tutor">I'm a tutor</option>
+                            </Input>
+                          </FormGroup>
+                        </Col>
+                        <Col md={6}>
+                          <FormGroup>
+                            <Input type="text" name="phone" placeholder="Phone (Optional)" onChange={(e) => {setPhoneRegister(e.target.value)}}
+                            valid={validatePhone(phoneRegister)}
+                            invalid={phoneRegister.length > 0 && !validatePhone(phoneRegister)}
+                            >
+                            </Input>
+                            <FormText>Ex. 8475664332 (Only Numbers)</FormText>          
+                          </FormGroup>
+                        </Col>
+                      </Row>
                       <Button 
                         size="lg" 
                         color="secondary" 
+                        hidden={loadingRegister}
                         disabled={
                           !((passwordRegister)===(passwordConfirmRegister) && validatePassword(passwordConfirmRegister))
                           ||!(validateEmail(emailRegister))
                           ||!(emailRegister.length > 0)
-                          ||!(lastNameRegister.length !== 0)
-                          ||!(firstNameRegister.length !== 0)
+                          ||!(lastNameRegister.length !== 0 && !/[^a-zA-Z]/.test(lastNameRegister))
+                          ||!(firstNameRegister.length !== 0 && !/[^a-zA-Z]/.test(firstNameRegister))
                           ||!(validatePhone(phoneRegister)|| phoneRegister.length ===0)} 
-                        onClick={async () => {await handleRegister(emailRegister,passwordRegister,passwordConfirmRegister,
+                        onClick={async () => {
+                          setAlertRegister(false);
+                          setLoadingRegister(true);
+                          await handleRegister(emailRegister,passwordRegister,passwordConfirmRegister,
                           phoneRegister,firstNameRegister,lastNameRegister,roleRegister,
-                          history,setAlertRegister,setAlertMessageRegister);}}>
+                          history,setAlertRegister,setAlertMessageRegister);
+                          setLoadingRegister(false);
+                          }}>
                           Register
-                      </Button>
-                      <br></br>   
+                      </Button> 
+                      <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <ReactLoading hidden={!loadingRegister} type={"cylon"} color={"#000080"} height={'15%'} width={'15%'} /> 
+                      </div> 
                   </Form>
-                  </Container>
               </Card.Body>
             </Col>
-          </Row>
           </Card>
-          Already have an account? <Link to="/login">Sign in here</Link><br></br>
+          Already have an account? <Link to="/login">Sign In Now</Link><br></br>
       </Container>
   </div>
 };
