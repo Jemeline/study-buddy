@@ -66,6 +66,14 @@ const CourseSchema = new mongoose.Schema({
     required: [true, "Course instructor required"],
     uppercase: true,
   },
+  courseIsHonors: {
+    type: Boolean,
+    required: [true, "Course isHonors required"],
+  },
+  courseIsLab: {
+    type: Boolean,
+    required: [true, "Course isLab required"],
+  },
 });
 
 const Course = mongoose.model("Course", CourseSchema);

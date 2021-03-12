@@ -37,6 +37,12 @@ export function validateEmail(email) {
     return false;
 };
 
+export function capitalizeFirst(s){
+    return s.charAt(0).toUpperCase()+s.slice(1).toLowerCase()
+};
+
+export const zeroPad = (num, places) => String(num).padStart(places, '0');
+
 export function validatePassword(password) {
     const length = /^[\s\S]{8,32}$/;
     const upperCase = /[A-Z]/;

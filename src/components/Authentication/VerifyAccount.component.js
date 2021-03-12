@@ -4,8 +4,8 @@ import {Button,Col,Container,Row,Form,
 import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import {apiVerify,apiToken} from '../utils/api';
-import {getUser,getRoleLiteral,validateToken} from '../utils/common';
+import {apiVerify,apiToken} from '../../utils/api';
+import {getUser,getRoleLiteral,validateToken} from '../../utils/common';
 import ReactLoading from 'react-loading';
 
 function VerifyAccount(){

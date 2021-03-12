@@ -1,27 +1,27 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Link} from 'react-router-dom';
 import Routes from './routes/routes';
-import {Button} from 'react-bootstrap';
-import {logout} from './utils/common';
+import {getLoginStatus} from './utils/common';
+import Header from './components/Navigation/Header.component';
+import NavDrawer from './components/Navigation/NavDrawer.component';
+
 
 function App(){
   document.title = "Study Buddy";
+  const [isLoggedIn, setIsLoggedIn] = useState(getLoginStatus());
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);  
+  
+  
   return (
     <div className="App">
       <BrowserRouter>
-        <li><Link to="/dashboard/student">Student Dashboard (protected)</Link></li>
-        <li><Link to="/dashboard/tutor">Tutor Dashboard (protected)</Link></li>
-        <li><Link to="/dashboard/admin">Admin Dashboard (protected)</Link></li>
-        <li><Link to="/login">Login</Link></li>
-        <li><Link to="/register">Register</Link></li>
-        <li><Link to="/recover">Recover Password</Link></li>
-        <li><Link to="/verify">Verify Account</Link></li>
-        <li><Link to="/incorrect-email">Incorrect Email</Link></li>
-        <Button as={Link} onClick={() => {logout()}} to="/login">Logout</Button>
+        <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsOpenDrawer={setIsOpenDrawer}></Header>
+        <NavDrawer isOpenDrawer={isOpenDrawer} setIsOpenDrawer={setIsOpenDrawer} isLoggedIn={isLoggedIn}/>
         <div> 
-          <Routes/>
+          <br></br>
+          <Routes setIsLoggedIn={setIsLoggedIn}/>
         </div>
       </BrowserRouter>
     </div>

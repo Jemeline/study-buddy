@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import {Button,Col,Container,Row,Form,
-  FormGroup,FormFeedback,Input,} from 'reactstrap';
+import {Button,Col,Container,Form,
+  FormGroup,FormFeedback,Input} from 'reactstrap';
 import ReactLoading from 'react-loading';
-import {Alert,Card} from 'react-bootstrap'
+import {Alert,Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import {apiLogin} from '../utils/api';
-import {getUser,login, validateEmail,validatePassword,getIsVerified} from '../utils/common';
+import {apiLogin} from '../../utils/api';
+import {getUser,login, validateEmail,validatePassword,getIsVerified} from '../../utils/common';
 
 
-function Login(){
+function Login({setIsLoggedIn}){
   const [emailLogin, setEmailLogin] = useState('');
   const [loadingLogin, setLoadingLogin] = useState(false);
   const [passwordLogin, setPasswordLogin] = useState('');
@@ -66,7 +66,7 @@ function Login(){
                           setAlertLogin(false);
                           setAlertInvalidLoginCreds(false);
                           setLoadingLogin(true);
-                          await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAlertMessageLogin,setAlertInvalidLoginCreds);
+                          await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn);
                           setLoadingLogin(false);
                         }}
                       > Sign In</Button>
@@ -85,7 +85,7 @@ function Login(){
 };
 
 async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
-  setAlertMessageLogin,setAlertInvalidLoginCreds){
+  setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn){
   try{
     if (!emailLogin||!passwordLogin){
       setAlertLogin(true);
@@ -95,6 +95,7 @@ async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
       const body = {"email":emailLogin,"password":passwordLogin}
       const data = await apiLogin(body);
       login(data.data.user,data.data.user.role,data.data.user.isVerified);
+      setIsLoggedIn(true);
       if(!getIsVerified()){
         history.push('/verify');
       } else {
