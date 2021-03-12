@@ -5,9 +5,9 @@ import ReactLoading from 'react-loading';
 import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import {apiRegister} from '../utils/api';
+import {apiRegister} from '../../utils/api';
 import {getUser,login, getIsVerified,validatePassword,
-  validatePhone,validateEmail,validatePasswordLiteral} from '../utils/common';
+  validatePhone,validateEmail,validatePasswordLiteral} from '../../utils/common';
 
 
 function Register(){

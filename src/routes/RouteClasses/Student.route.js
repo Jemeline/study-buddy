@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect} from 'react-router-dom';
-import {getRole,getIsVerified,getRoleLiteral,getLoginStatus} from "../utils/common";
+import {getRole,getIsVerified,getRoleLiteral,getLoginStatus} from "../../utils/common";
 
 const StudentRoute = ({ component: Component, ...path }) => {
     return(

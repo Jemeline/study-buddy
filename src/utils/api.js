@@ -39,3 +39,13 @@ export async function apiToken(userData) {
         throw error;
     }    
 };
+
+export async function apiGetCourses() {
+    try {
+        const res = await axios.get('https://us-central1-study-buddy-d452c.cloudfunctions.net/app2/api/course');
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
