@@ -16,7 +16,7 @@ function CourseSearch(){
     const [error, setError] = useState(false);
     const [courseInput, setCourseInput] = useState('');
 
-    useEffect(async ()=>{
+    useEffect(()=>{
         const fetchCourses = async ()=>{
             try{
                 setLoading(true);
