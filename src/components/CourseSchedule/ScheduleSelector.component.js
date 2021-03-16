@@ -1,12 +1,12 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import {Col,Container} from 'reactstrap';
-import CourseSearch from './CourseSearch.component';
+import CourseSearchImproved from './CourseSearchImproved.component';
 
 function ScheduleSelector(){
     return <div>
         <Container fluid={true}>
             <Col sm={6}>
-                <CourseSearch/>
+                <CourseSearchImproved/>
             </Col>
         </Container>
     </div>

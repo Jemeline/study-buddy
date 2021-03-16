@@ -8,18 +8,18 @@ const userRouter = require("./routes/userRoutes.js");
 const tokenRouter = require("./routes/tokenRoutes.js");
 const getClient = require("./db.js");
 
-const app5 = express();
+const app6 = express();
 const port = 3000;
 
-app5.use(cors());
-app5.use(express.json());
-app5.use("/api", courseRouter);
-app5.use("/api", userRouter);
-app5.use("/api", tokenRouter);
+app6.use(cors());
+app6.use(express.json());
+app6.use("/api", courseRouter);
+app6.use("/api", userRouter);
+app6.use("/api", tokenRouter);
 
-app5.listen(port, () => {
+app6.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   getClient();
 });
 
-exports.app5 = functions.https.onRequest(app5);
+exports.app6 = functions.https.onRequest(app6);
