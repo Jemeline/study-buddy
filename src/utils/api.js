@@ -49,3 +49,14 @@ export async function apiGetCourses() {
         throw error;
     }    
 };
+
+export async function apiGetCoursesBySubject(subject) {
+    try {
+        console.log(subject);
+        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app6/api/course/find-by-subject/${subject}`);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};

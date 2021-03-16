@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const express = require("express");
 const CourseModel = require("../models/course");
 const app = express();
@@ -11,7 +12,25 @@ app.get("/course", async (req, res) => {
   }
 });
 
-app.get("/course/:id", async (req, res) => {
+app.get("/course/find-by-pagination/:limit/:skip", async (req, res) => {
+  const course = await CourseModel.find({}).skip(req.params.skip).limit(req.params.limit);
+  try {
+    res.send(course);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get("/course/find-by-subject/:subject", async (req, res) => {
+  const course = await CourseModel.find({courseSubject: (req.params.subject).toUpperCase()});
+  try {
+    res.send(course);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get("/course/find-by-id/:id", async (req, res) => {
   const course = await CourseModel.findById(req.params.id);
   try {
     res.send(course);

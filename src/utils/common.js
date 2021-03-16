@@ -98,3 +98,20 @@ export function validatePhone(phone) {
     }
     return false;
 };
+
+export function validateCourseInput(courseInput) {
+    const courseInputRegex = /^[a-zA-z]{4}( [0-9]{2,3}(L|H{1})?)?(-[0-9]{3})?$/;
+    if (courseInputRegex.test(courseInput)) {
+        return true;
+    }
+    return false;
+};
+export function validateCourseInput3Ticker(courseInput) {
+    const courseInputRegex = /^[a-zA-z]{3}( [0-9]{2,3}(L|H{1})?)?(-[0-9]{3})?$/;
+    if (courseInputRegex.test(courseInput)) {
+        return true;
+    }
+    return false;
+};
+
+

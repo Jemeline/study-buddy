@@ -6,7 +6,7 @@ import {zeroPad} from '../../utils/common';
 
 function Course({course}){
     const [isShown, setIsShown] = useState(false);
-    return <div style={{height:"100%",backgroundColor:colorPalette.primary,borderRadius: 8, textAlign:"left",paddingLeft:"7%",paddingRight:"1%"}}
+    return <div style={{height:"100%",backgroundColor:colorPalette.primary,borderRadius: 8, textAlign:"left",paddingLeft:"7%",paddingRight:"2%"}}
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={() => setIsShown(false)}
         >
