@@ -6,7 +6,8 @@ import {Alert,Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiLogin} from '../../utils/api';
-import {getUser,login, validateEmail,validatePassword,getIsVerified} from '../../utils/common';
+import {getUser,login,getIsVerified} from '../../utils/common';
+import {validateEmail,validatePassword} from '../../utils/regex';
 
 
 function Login({setIsLoggedIn}){

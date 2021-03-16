@@ -6,8 +6,8 @@ import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiRegister} from '../../utils/api';
-import {getUser,login, getIsVerified,validatePassword,
-  validatePhone,validateEmail,validatePasswordLiteral} from '../../utils/common';
+import {getUser,login, getIsVerified} from '../../utils/common';
+import {validatePassword,validatePhone,validateEmail,validatePasswordLiteral} from '../../utils/regex';
 
 
 function Register(){

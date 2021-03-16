@@ -6,7 +6,8 @@ import Course from './Course.component';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {colorPalette} from '../../utils/design';
-import {zeroPad,validateCourseInput,validateCourseInput3Ticker} from '../../utils/common';
+import {zeroPad} from '../../utils/common';
+import {validateCourseInput} from '../../utils/regex';
 import CourseTickers from './CourseTickers'
 
 function CourseSearchImproved(){
@@ -27,8 +28,11 @@ function CourseSearchImproved(){
                     onChange={async (e) => {
                         setNotFound('');
                         setCourseInput(e.target.value);
-                        if (validateCourseInput(e.target.value)||validateCourseInput3Ticker(e.target.value)){
-                            if (CourseTickers.includes(e.target.value.toUpperCase())) {
+                        console.log(courseInput.slice(0,4).toUpperCase());
+                        console.log(courseInput.slice(0,4).toUpperCase().length);
+                        console.log(CourseTickers.includes(courseInput.slice(0,5).toUpperCase()));
+                        if (validateCourseInput(e.target.value)){
+                            if (CourseTickers.includes(e.target.value.slice(0,5).toUpperCase())) {
                                 setNotFound('');
                                 await fetchCourses(e.target.value,setLoading,setCourses,setError,setFilteredCourses,setNotFound);
                             } else if (e.target.value.length > 4) {
@@ -38,8 +42,8 @@ function CourseSearchImproved(){
                             }
                         }
                     }}
-                    valid={(validateCourseInput(courseInput) || validateCourseInput3Ticker(courseInput))&& CourseTickers.includes(courseInput.toUpperCase())}
-                    invalid={courseInput.length > 0 && !((validateCourseInput(courseInput) || validateCourseInput3Ticker(courseInput)) && CourseTickers.includes(courseInput.toUpperCase()))}
+                    valid={(validateCourseInput(courseInput))&&(CourseTickers.includes(courseInput.slice(0,4).toUpperCase()) || CourseTickers.includes(courseInput.slice(0,3).toUpperCase()))}
+                    invalid={courseInput.length > 0 && !((validateCourseInput(courseInput))&&(CourseTickers.includes(courseInput.slice(0,4).toUpperCase()) || CourseTickers.includes(courseInput.slice(0,3).toUpperCase())))}
                 />
                 <InputGroupAddon addonType="append">
                     <Button
@@ -109,7 +113,7 @@ function filterCourses(searchString,setLoading,setFilteredCourses,setError,cours
                 : element.courseNumber.toString().includes(splitArrSpace[0].replace(/\D/g, "")) && zeroPad(element.courseSection,3).toString().includes(splitArrDash[1])
             })
         }
-        if(arr.length === 0){
+        if(arr.length === 0 && courses.length>0){
             setNotFound(`Could not find course: ${searchString.toUpperCase()}`)
         } else {
             setNotFound('') 
