@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import React from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { withFirebase } from "../../utils/Firebase.js";
 
-const Signup = ({ Firebase }) => {
-    const [signedUp, setSignedUp] = useState(false);
-    const handleSignup = async e => {
+const NewAdmin = ({ Firebase }) => {
+
+    const handleCreateAdmin = async e => {
         e.preventDefault();
         const { email, password, confirmPass } = e.target.elements;
+        if (!email.value || !password.value || !confirmPass.value) {
+            return alert("Please enter all fields");
+        }
 
         if (password.value !== confirmPass.value) {
-            alert("Password is not the same as confirm password");
+            return alert("Password is not the same as confirm password");
         } else {
             try {
-                const user = await Firebase.signup(email.value, password.value);
+                const user = await Firebase.addAdmin(email.value, password.value);
                 console.log(user);
-                setSignedUp(true);
+                return alert("Admin created- check console.");
             } catch (error) {
                 console.error(error);
             }
@@ -23,10 +25,9 @@ const Signup = ({ Firebase }) => {
     };
 
     return (
-        <Container className="signupContainer">
-            {signedUp ? <Redirect to="/student/dashboard" /> : null}
-            <Form className="signupForm" onSubmit={handleSignup}>
-                <h1>Signup</h1>
+        <Container className="newAdminContainer">
+            <Form className="NewAdminForm" onSubmit={handleCreateAdmin}>
+                <h1>New Admin</h1>
 
                 <Form.Control
                     name="email"
@@ -43,10 +44,10 @@ const Signup = ({ Firebase }) => {
                     type="password"
                     placeholder="Confirm Password"
                 />
-                <Button type="submit">Signup</Button>
+                <Button type="submit">Create Admin</Button>
             </Form>
         </Container>
     );
 };
 
-export default withFirebase(Signup);
+export default withFirebase(NewAdmin);

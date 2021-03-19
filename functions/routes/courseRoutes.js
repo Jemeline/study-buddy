@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const express = require("express");
 const CourseModel = require("../models/course");
 const app = express();

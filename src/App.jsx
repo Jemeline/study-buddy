@@ -7,9 +7,7 @@ import { Button } from 'react-bootstrap';
 import { withFirebase } from './utils/Firebase';
 
 const App = ({ Firebase }) => {
-  const logout = async () => (
-    await Firebase.logout()
-  );
+  const logout = async () => await Firebase.logout();
 
   return (
     <div className="App">
@@ -19,9 +17,10 @@ const App = ({ Firebase }) => {
         <li><Link to="/register">Register</Link></li>
         <li><Link to="/recover">Recover password</Link></li>
         <li><Link to="/protectedroute">Protected Component (Protected)</Link></li>
-        <li><Link to="/student/dashboard">Student Dashboard (Protected)</Link></li>
-        <li><Link to="/tutor/dashboard">Tutor Dashboard (Protected)</Link></li>
-        <li><Link to="/admin/dashboard">Admin Dashboard (Protected)</Link></li>
+        <li><Link to="/student/dashboard">Student Dashboard (Student Claim)</Link></li>
+        <li><Link to="/tutor/dashboard">Tutor Dashboard (Tutor Claim)</Link></li>
+        <li><Link to="/admin/dashboard">Admin Dashboard (Admin Claim)</Link></li>
+        <li><Link to="/admin/newAdmin">New Admin (Admin Claim)</Link></li>
         <Button as={Link} onClick={logout} to="/login">Logout</Button>
         <Routes />
       </Router>

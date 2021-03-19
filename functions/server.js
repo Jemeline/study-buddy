@@ -1,25 +1,25 @@
-const functions = require("firebase-functions");
+/* eslint-disable linebreak-style */
+const {https} = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
-const courseRouter = require("./routes/courseRoutes.js");
+// const courseRouter = require("./routes/courseRoutes.js");
 const userRouter = require("./routes/userRoutes.js");
-const tokenRouter = require("./routes/tokenRoutes.js");
-const getClient = require("./db.js");
+// const mongoose = require("mongoose");
+// mongoose.Promise = global.Promise;
+// const getClient = require("./db.js");
 
-const app5 = express();
-const port = 3000;
+const app = express();
+// const port = 3000;
 
-app5.use(cors());
-app5.use(express.json());
-app5.use("/api", courseRouter);
-app5.use("/api", userRouter);
-app5.use("/api", tokenRouter);
+app.use(cors());
+app.use(express.json());
+// app.use("/course", courseRouter);
+app.use("/user", userRouter);
 
-app5.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-  getClient();
-});
+// Commented out mongoDB because I don't have the env config set up
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+//   getClient();
+// });
 
-exports.app5 = functions.https.onRequest(app5);
+exports.api = https.onRequest(app);

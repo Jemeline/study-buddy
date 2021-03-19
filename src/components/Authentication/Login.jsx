@@ -5,13 +5,27 @@ import { withFirebase } from "../../utils/Firebase.js";
 
 const Login = ({ Firebase }) => {
     const [loggedIn, setLoggedIn] = useState(false);
+    const [claim, setClaim] = useState(null);
+
     const handleLogin = async e => {
         e.preventDefault();
-        const { email, password } = e.target.elements;
         try {
-            const user = await Firebase.login(email.value, password.value);
-            console.log(user);
+            const { email, password } = e.target.elements;
+            if (!email.value || !password.value) return alert("Please fill in both fields.");
+
+            const credential = await Firebase.login(email.value, password.value);
+            console.log(credential);
             setLoggedIn(true);
+            const claims = await Firebase.getClaims();
+            if(claims.admin) {
+                setClaim("admin");
+            } else if (claims.tutor) {
+                setClaim("tutor");
+            } else if (claims.student) {
+                setClaim("student");
+            } else {
+                return;
+            }
         } catch (error) {
             console.error(error);
         }
@@ -19,7 +33,7 @@ const Login = ({ Firebase }) => {
 
     return (
         <Container className="loginContainer">
-            {loggedIn ? <Redirect to="/student/dashboard" /> : null}
+            {loggedIn && claim ? <Redirect to={`/${claim}/dashboard`} /> : null}
             <Form className="loginForm" onSubmit={handleLogin}>
                 <h1>Firebase Login</h1>
 

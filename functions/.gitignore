@@ -1,3 +1,6 @@
 node_modules/
 .env
 .runtimeconfig.json
+
+# admin config
+config.json
