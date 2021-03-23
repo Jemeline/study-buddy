@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export async function apiLogin(userData) {
-    try {
-        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app/api/user/login', userData);
+    try { // app
+        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/user/login', userData);
         return res;
     } catch (error){
         console.log(error.response);
@@ -11,8 +11,8 @@ export async function apiLogin(userData) {
 };
 
 export async function apiRegister(userData) {
-    try {
-        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app3/api/user/register', userData);
+    try { // app3
+        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/user/register', userData);
         return res;
     } catch (error){
         console.log(error.response);
@@ -21,8 +21,8 @@ export async function apiRegister(userData) {
 };
 
 export async function apiVerify(userData) {
-    try {
-        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app4/api/token/verify', userData);
+    try { // app4
+        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/token/verify', userData);
         return res;
     } catch (error){
         console.log(error.response);
@@ -31,18 +31,8 @@ export async function apiVerify(userData) {
 };
 
 export async function apiToken(userData) {
-    try {
-        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app4/api/token', userData);
-        return res;
-    } catch (error){
-        console.log(error.response);
-        throw error;
-    }    
-};
-
-export async function apiGetCourses() {
-    try {
-        const res = await axios.get('https://us-central1-study-buddy-d452c.cloudfunctions.net/app2/api/course');
+    try { // app4
+        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/token', userData);
         return res;
     } catch (error){
         console.log(error.response);
@@ -51,9 +41,9 @@ export async function apiGetCourses() {
 };
 
 export async function apiGetCoursesBySubject(subject) {
-    try {
+    try { // app6
         console.log(subject);
-        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app6/api/course/find-by-subject/${subject}`);
+        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/course/find-by-subject/${subject}`);
         return res;
     } catch (error){
         console.log(error.response);

@@ -17,12 +17,12 @@ import UnverifiedRoute from './RouteClasses/Unverified.route';
 
 const Routes = ({setIsLoggedIn}) => (
     <Switch>
-      <Route exact path="/register" component={Register}/>
+      <Route path='/register' render={() => (<Register  setIsLoggedIn={setIsLoggedIn}/>)}/>
       <Route exact path="/home" component={Home}/>
       <Route exact path="/recover" component={RecoverPassword}/>
       <Route exact path="/course-search" render={() => (<ScheduleSelector/>)}/>
       <Route path='/login' render={() => (<Login  setIsLoggedIn={setIsLoggedIn}/>)}/>
-      <UnverifiedRoute exact path="/verify" component={VerifyAccount}/>
+      <UnverifiedRoute exact path='/verify' component={VerifyAccount} />
       <UnverifiedRoute exact path="/incorrect-email" component={IncorrectEmail}/>
       <StudentRoute exact path="/dashboard/student" component={StudentDashboard}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>

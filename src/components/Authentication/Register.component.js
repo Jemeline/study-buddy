@@ -8,9 +8,10 @@ import { useHistory } from "react-router-dom";
 import {apiRegister} from '../../utils/api';
 import {getUser,login, getIsVerified} from '../../utils/common';
 import {validatePassword,validatePhone,validateEmail,validatePasswordLiteral} from '../../utils/regex';
+import {colorPalette} from '../../utils/design';
 
 
-function Register(){
+function Register({setIsLoggedIn}){
   const [emailRegister, setEmailRegister] = useState('');
   const [loadingRegister, setLoadingRegister] = useState(false);
   const [passwordRegister, setPasswordRegister] = useState('');
@@ -123,7 +124,8 @@ function Register(){
                       </Row>
                       <Button 
                         size="lg" 
-                        color="secondary" 
+                        style={{backgroundColor:colorPalette.primary,color:colorPalette.white}}
+                        type="submit"
                         hidden={loadingRegister}
                         disabled={
                           !((passwordRegister)===(passwordConfirmRegister) && validatePassword(passwordConfirmRegister))
@@ -132,13 +134,13 @@ function Register(){
                           ||!(lastNameRegister.length !== 0 && !/[^a-zA-Z]/.test(lastNameRegister))
                           ||!(firstNameRegister.length !== 0 && !/[^a-zA-Z]/.test(firstNameRegister))
                           ||!(validatePhone(phoneRegister)|| phoneRegister.length ===0)} 
-                        onClick={async () => {
+                        onClick={async (e) => {
+                          e.preventDefault();
                           setAlertRegister(false);
                           setLoadingRegister(true);
                           await handleRegister(emailRegister,passwordRegister,passwordConfirmRegister,
                           phoneRegister,firstNameRegister,lastNameRegister,roleRegister,
-                          history,setAlertRegister,setAlertMessageRegister);
-                          setLoadingRegister(false);
+                          history,setAlertRegister,setAlertMessageRegister,setIsLoggedIn,setLoadingRegister);
                           }}>
                           Register
                       </Button> 
@@ -156,7 +158,7 @@ function Register(){
 
 
 async function handleRegister(emailRegister,passwordRegister,passwordConfirmRegister,phoneRegister,
-  firstNameRegister,lastNameRegister,roleRegister,history,setAlertRegister,setAlertMessageRegister){
+  firstNameRegister,lastNameRegister,roleRegister,history,setAlertRegister,setAlertMessageRegister,setIsLoggedIn,setLoadingRegister){
   try{
     setAlertRegister(false);
     if (!emailRegister||!passwordRegister||!passwordConfirmRegister||!firstNameRegister||!lastNameRegister||!roleRegister){
@@ -174,16 +176,19 @@ async function handleRegister(emailRegister,passwordRegister,passwordConfirmRegi
       };
       const data = await apiRegister(body);
       login(data.data.user,data.data.user.role,data.data.user.isVerified);
+      setIsLoggedIn(true);
       if(!getIsVerified()){
         history.push('/verify');
       } else {
         history.push(`/dashboard/${data.data.user.role}`);
       }
     } else {
+      setLoadingRegister(false);
       setAlertRegister(true);
       setAlertMessageRegister("Please Logout First");
     }  
   } catch (error){
+    setLoadingRegister(false);
     if (error.response.status === 401){
       setAlertRegister(true);
       setAlertMessageRegister(error.response.data.msg);
