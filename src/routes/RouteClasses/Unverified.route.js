@@ -20,4 +20,6 @@ const UnverifiedRoute = ({ component: Component, ...path }) => {
         />                         
     )
 };
+
+
 export default UnverifiedRoute;

@@ -7,7 +7,8 @@ import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiLogin} from '../../utils/api';
 import {getUser,login,getIsVerified} from '../../utils/common';
-import {validateEmail,validatePassword} from '../../utils/regex';
+import {validateEmail} from '../../utils/regex';
+import {colorPalette} from '../../utils/design';
 
 
 function Login({setIsLoggedIn}){
@@ -22,7 +23,9 @@ function Login({setIsLoggedIn}){
   return <div> 
       <Container style={{width:"35%", margin: "auto"}} >     
         <Card bg="light" style={{ borderRadius: 8}}>
-          <Card.Header><h4>Sign In</h4></Card.Header>
+          <Card.Header>
+            <h4>Sign In</h4>
+          </Card.Header>
           <Col>
               <Card.Body>
                   <Alert variant="danger" show={alertLogin} onClose={() => setAlertLogin(false)} dismissible transition={false}>
@@ -51,24 +54,23 @@ function Login({setIsLoggedIn}){
                               name="passwordLogin"
                               placeholder="Password"
                               onChange={(e) => setPasswordLogin(e.target.value)}
-                              invalid={ passwordLogin.length > 0 && !validatePassword(passwordLogin)} 
-                              valid={validatePassword(passwordLogin)}
                           />
                           </FormGroup>
                       <Button
                         size="lg"
-                        color="secondary"
+                        style={{backgroundColor:colorPalette.primary,color:colorPalette.white}}
+                        type="submit"
                         hidden={loadingLogin}
                         disabled={
                           !(validateEmail(emailLogin))
-                          ||!(emailLogin.length > 0)
-                          ||!(validatePassword(passwordLogin))} 
-                        onClick={async () => {
+                          ||!(emailLogin.length > 0)} 
+                        onClick={async (e) => {
+                          e.preventDefault();
                           setAlertLogin(false);
                           setAlertInvalidLoginCreds(false);
                           setLoadingLogin(true);
-                          await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn);
-                          setLoadingLogin(false);
+                          await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
+                            setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn,setLoadingLogin);
                         }}
                       > Sign In</Button>
                       <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -86,7 +88,7 @@ function Login({setIsLoggedIn}){
 };
 
 async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
-  setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn){
+  setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn,setLoadingLogin){
   try{
     if (!emailLogin||!passwordLogin){
       setAlertLogin(true);
@@ -103,11 +105,13 @@ async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
         history.push(`/dashboard/${data.data.user.role}`);
       }  
     } else {
+      setLoadingLogin(false);
       setAlertLogin(true);
       setAlertInvalidLoginCreds(false);
       setAlertMessageLogin("Please Logout First");
     }  
   } catch (error){
+    setLoadingLogin(false);
     if (error.response.status === 401){
       setAlertLogin(false);
       setAlertInvalidLoginCreds(true);

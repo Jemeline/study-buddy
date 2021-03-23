@@ -5,9 +5,10 @@ import {Alert,Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiVerify,apiToken} from '../../utils/api';
-import {getUser,getRoleLiteral} from '../../utils/common';
+import {getUser,getRoleLiteral,} from '../../utils/common';
 import {validateToken} from '../../utils/regex';
 import ReactLoading from 'react-loading';
+import {colorPalette} from '../../utils/design';
 
 function VerifyAccount(){
     const user = JSON.parse(getUser());
@@ -56,7 +57,7 @@ function VerifyAccount(){
                   </Form>
                   <Button 
                     size="lg"
-                    color="secondary"
+                    style={{backgroundColor:colorPalette.primary,color:colorPalette.white}}
                     hidden={tokenVerify || loadingVerify}
                     disabled={
                         !(emailVerify===user.email)
@@ -71,7 +72,7 @@ function VerifyAccount(){
                   > Send Me A Confirmation Email</Button>
                   <Button 
                     size="lg"
-                    color="secondary"
+                    style={{backgroundColor:colorPalette.primary,color:colorPalette.white}}
                     hidden={!tokenVerify || verified || loadingVerify}
                     onClick={async () => {
                         setLoadingVerify(true);
@@ -85,7 +86,7 @@ function VerifyAccount(){
                   > Verify My Account</Button>
                   <Button 
                     size="lg"
-                    color="secondary"
+                    style={{backgroundColor:colorPalette.primary,color:colorPalette.white}}
                     hidden={!verified || loadingVerify}
                     onClick={() => {
                         setLoadingVerify(true);
@@ -158,13 +159,14 @@ async function handleToken(token,history,setAlertVerify,setAlertMessageVerify,
             const body = {"token":token,"_userId":user._id}
             const data = await apiToken(body);
             sessionStorage.setItem('isVerified',data.data.user.isVerified);
-            setpTagVerify("Woohoo! You've been verified.");
+            setpTagVerify("Woohoo! You're email has been verified.");
             setVerified(true);
         } else {
             setAlertVerify(true);
             setAlertMessageVerify("You must login first");
         }  
       } catch (error){
+          console.log(error);
         if (error.response.status === 401){
             setAlertInvalidToken(true);
         } else if (error.response.status === 402) {
