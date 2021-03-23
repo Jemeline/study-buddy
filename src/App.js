@@ -20,7 +20,6 @@ function App(){
         <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsOpenDrawer={setIsOpenDrawer}></Header>
         <NavDrawer isOpenDrawer={isOpenDrawer} setIsOpenDrawer={setIsOpenDrawer} isLoggedIn={isLoggedIn}/>
         <div> 
-          <br></br>
           <Routes setIsLoggedIn={setIsLoggedIn}/>
         </div>
       </BrowserRouter>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {Button,Col,Container,Row,Form,
-    FormGroup,FormFeedback,Input,} from 'reactstrap';
-import {Alert,Card} from 'react-bootstrap'
+import {Button,Col,Container,Form,
+    FormGroup,Input,} from 'reactstrap';
+import {Alert,Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiVerify,apiToken} from '../../utils/api';

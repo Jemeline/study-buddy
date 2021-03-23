@@ -9,6 +9,7 @@ import Register from '../components/Authentication/Register.component';
 import ScheduleSelector from '../components/CourseSchedule/ScheduleSelector.component';
 import RecoverPassword from '../components/Authentication/RecoverPassword.component';
 import VerifyAccount from '../components/Authentication/VerifyAccount.component';
+import Survey from '../components/Survey/Survey.component';
 import IncorrectEmail from '../components/Authentication/IncorrectEmail.component';
 import StudentRoute from './RouteClasses/Student.route';
 import TutorRoute from './RouteClasses/Tutor.route';
@@ -21,6 +22,7 @@ const Routes = ({setIsLoggedIn}) => (
       <Route exact path="/home" component={Home}/>
       <Route exact path="/recover" component={RecoverPassword}/>
       <Route exact path="/course-search" render={() => (<ScheduleSelector/>)}/>
+      <Route exact path="/survey" render={() => (<Survey/>)}/>
       <Route path='/login' render={() => (<Login  setIsLoggedIn={setIsLoggedIn}/>)}/>
       <UnverifiedRoute exact path='/verify' component={VerifyAccount} />
       <UnverifiedRoute exact path="/incorrect-email" component={IncorrectEmail}/>

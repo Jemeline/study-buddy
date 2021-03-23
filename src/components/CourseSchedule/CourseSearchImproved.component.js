@@ -28,9 +28,6 @@ function CourseSearchImproved(){
                     onChange={async (e) => {
                         setNotFound('');
                         setCourseInput(e.target.value);
-                        console.log(courseInput.slice(0,4).toUpperCase());
-                        console.log(courseInput.slice(0,4).toUpperCase().length);
-                        console.log(CourseTickers.includes(courseInput.slice(0,5).toUpperCase()));
                         if (validateCourseInput(e.target.value)){
                             if (CourseTickers.includes(e.target.value.slice(0,5).toUpperCase())) {
                                 setNotFound('');
