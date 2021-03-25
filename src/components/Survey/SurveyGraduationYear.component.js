@@ -1,37 +1,69 @@
-import React, {useState} from 'react';
-import {Button,Col,Container,Form,
-    FormGroup,Input,} from 'reactstrap';
-import {Alert,Card} from 'react-bootstrap';
-import {getUser,getRoleLiteral,} from '../../utils/common';
+import React from 'react';
 import Slider from '@material-ui/core/Slider';
-import Chip from '@material-ui/core/Chip';
+import {colorPalette} from '../../utils/design';
+import { withStyles } from '@material-ui/core/styles';
+import {storeGraduationYear} from './common';
 
-function SurveyGraduationYear(){
-    const user = JSON.parse(getUser());
-    const [graduationYear, setGraduationYear] = useState(new Date().getFullYear()+2);
 
-    return <div> 
-            <Card bg="light" style={{ borderRadius: 8}}>
-                <Col>
-                    <Card.Body>
-                    <h4>WHAT IS YOUR GRADUATION YEAR?</h4>
-                    <h6>{graduationYear}</h6>
-                    <br></br>
-                    <Slider
-                        defaultValue={new Date().getFullYear()+2}
-                        aria-labelledby="discrete-slider"
-                        valueLabelDisplay="auto"
-                        step={1}
-                        marks
-                        min={new Date().getFullYear()}
-                        max={new Date().getFullYear()+8}
-                        onChange = {(e,value)=>setGraduationYear(value)}
-                        style = {{thumb: {width: 24,}}}
-                    />
-                    </Card.Body>
-                </Col>
-            </Card>
+function SurveyGraduationYear({graduationYear,setGraduationYear,hidden}){
+    return <div hidden={hidden}> 
+            <h4>WHAT IS YOUR GRADUATION YEAR?</h4>
+            <br></br><br></br>
+            <h5 style={{backgroundColor:colorPalette.secondaryB,borderRadius: 10, color:colorPalette.white,
+                width:'20%',left: '50%',position: "absolute",transform: 'translate(-50%, -50%)', paddingTop:'5px',paddingBottom:'5px'}}>{graduationYear}</h5>
+            <br></br><br></br>
+            <YearSlider
+                defaultValue={new Date().getFullYear()+2}
+                value={graduationYear}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="off"
+                step={1}
+                marks
+                min={new Date().getFullYear()}
+                max={new Date().getFullYear()+8}
+                onChange = {(e,value)=>{setGraduationYear(value);storeGraduationYear(value);}}
+            />
     </div>
 };
+
+const YearSlider = withStyles({
+    root: {
+      color: colorPalette.secondaryB,
+      height: 8,
+    },
+    thumb: {
+      height: 24,
+      width: 24,
+      backgroundColor: '#fff',
+      border: '2px solid currentColor',
+      marginTop: -8,
+      marginLeft: -12,
+      '&:focus, &:hover, &$active': {
+        boxShadow: 'inherit',
+      },
+    },
+    active: {},
+    valueLabel: {
+      left: 'calc(-50% + 4px)',
+    },
+    track: {
+      height: 8,
+      borderRadius: 4,
+    },
+    rail: {
+      height: 8,
+      borderRadius: 4,
+    },
+    mark: {
+        backgroundColor: colorPalette.secondaryB,
+        height: 8,
+        width: 1,
+        marginTop: -1,
+    },
+    markActive: {
+        opacity: 0,
+        backgroundColor: 'currentColor',
+    },
+  })(Slider);
 
 export default SurveyGraduationYear;
