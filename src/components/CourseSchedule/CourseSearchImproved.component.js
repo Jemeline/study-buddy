@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import ReactLoading from 'react-loading';
-import {Input,Container,InputGroup,InputGroupAddon,FormText} from 'reactstrap';
+import {Input,InputGroup,InputGroupAddon,FormText} from 'reactstrap';
 import {apiGetCoursesBySubject} from '../../utils/api';
 import Course from './Course.component';
 import Grid from '@material-ui/core/Grid';
@@ -10,7 +10,7 @@ import {zeroPad} from '../../utils/common';
 import {validateCourseInput} from '../../utils/regex';
 import CourseTickers from './CourseTickers'
 
-function CourseSearchImproved(){
+function CourseSearchImproved({courseSchedule,setCourseSchedule}){
     const [courses, setCourses] = useState([]);
     const [filteredCourses,setFilteredCourses] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -19,11 +19,10 @@ function CourseSearchImproved(){
     const [notFound, setNotFound] = useState('');
 
     return <div>
-        <Container >
             <InputGroup style={{margin: "auto"}}>
                 <Input
                     type="text"
-                    placeholder="Search For Your Class Here"
+                    placeholder="Search For Your Courses Here"
                     value={courseInput}
                     onChange={async (e) => {
                         setNotFound('');
@@ -52,6 +51,7 @@ function CourseSearchImproved(){
             </InputGroup>
             <FormText>Ex: COMP 523, CHEM 101-001, CHEM 262L-002, AMST</FormText>
             <br></br>
+            <div style={{height:'60vh'}}>
             {error && <div>
                 <h6>Something went wrong...</h6>
                 <Button
@@ -68,7 +68,7 @@ function CourseSearchImproved(){
             (
             <div>
                 <h6><em>{notFound}</em></h6>
-            <div style={{flexGrow: 1}}><Grid
+            <div style={{flexGrow: 1,height:'60vh',overflowY:'auto'}}><Grid
                 container
                 direction="row"
                 justify="flex-start"
@@ -76,11 +76,11 @@ function CourseSearchImproved(){
             >
             {filteredCourses.map(item => (
                 <Grid item xs={12} sm={6} md={3} key={item._id}  >
-                    <Course course={item}></Course>
+                    <Course course={item} courseSchedule={courseSchedule} setCourseSchedule={setCourseSchedule} hideAddButton={false}></Course>
                 </Grid>
             ))}
-            </Grid></div></div>)} 
-        </Container>    
+            </Grid></div></div>)}   
+            </div>  
     </div>
 };
 

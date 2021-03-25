@@ -1,25 +1,54 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import IconButton from '@material-ui/core/IconButton';
 import {colorPalette} from '../../utils/design';
 import {zeroPad} from '../../utils/common';
+import {storeCourseSchedule} from '../Survey/common';
 
-function Course({course}){
+function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
     const [isShown, setIsShown] = useState(false);
+
+    useEffect(() => {
+      storeCourseSchedule(courseSchedule);
+    }, [courseSchedule]);
+
     return <div style={{height:"100%",backgroundColor:colorPalette.primary,borderRadius: 8, textAlign:"left",paddingLeft:"7%",paddingRight:"2%"}}
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={() => setIsShown(false)}
         >
-        <div style={{float:"right"}}>
-            <IconButton style={{ color: colorPalette.secondaryA }}>
+        <div hidden={hideAddButton} style={{float:"right"}} onMouseEnter={() => setIsShown(false)} onMouseLeave={() => setIsShown(true)}>
+            <IconButton 
+              style={{ color: colorPalette.secondaryA }}
+              onClick={()=> {
+                if (!courseSchedule.includes(course)){
+                  setCourseSchedule(prevArray => [...prevArray, course]);
+                }
+              }
+              }
+            >
                 <AddCircleIcon/>
             </IconButton>
         </div>
+        <div hidden={!hideAddButton} style={{float:"right"}} onMouseEnter={() => setIsShown(false)} onMouseLeave={() => setIsShown(true)}>
+            <IconButton 
+              style={{ color: colorPalette.secondaryA }}
+              onClick={()=> {
+                setCourseSchedule(courseSchedule.filter(item => JSON.stringify(item) !== JSON.stringify(course)));
+                // storeCourseSchedule(courseSchedule.filter(item => JSON.stringify(item) !== JSON.stringify(course)));
+                }
+              }
+            >
+                <RemoveCircleIcon/>
+            </IconButton>
+        </div>
         <br></br>
-        <h6 style={{color:colorPalette.white}} hidden={isShown}>{course.courseSubject} {course.courseNumber}{course.courseIsHonors ? "H" : course.courseIsLab ? "L" : ""}-{zeroPad(course.courseSection,3)}</h6>
-        <p style={{color:colorPalette.white}} hidden={isShown}>{course.courseTitle}</p>
-        <h6 hidden={!isShown} style={{listStyleType:"none",margin:0}}>{course.courseSchedule.map((ele)=> <li style={{color:colorPalette.white}}><em>{ele.day}</em> {(ele.time.includes('TBA')) ? "TBA": processTime(ele.time)}</li>)}</h6>
-        <p hidden={!isShown} style={{listStyleType:"none",margin:0}}>{course.courseInstructor.map((ele)=> <li style={{color:colorPalette.white}}>{ele.replace(/,/g, ', ').concat(" ")}</li>)}</p>
+        <h6 style={{color:colorPalette.white,fontSize:'1.4vw'}} hidden={isShown}>{course.courseSubject} </h6>
+        <h6 style={{color:colorPalette.white,fontSize:'1.25vw'}} hidden={isShown}>{course.courseNumber}{course.courseIsHonors ? "H" : course.courseIsLab ? "L" : ""}-{zeroPad(course.courseSection,3)}</h6>
+        <p style={{color:colorPalette.white, fontSize:'1vw'}} hidden={isShown}>{course.courseTitle}</p>
+        <h6 hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1.25vw'}}>{course.courseSchedule.map((ele)=> <li style={{color:colorPalette.white}}><em>{ele.day}</em> {(ele.time.includes('TBA')) ? "TBA": processTime(ele.time)}</li>)}</h6>
+        <br hidden={!isShown}></br>
+        <p hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1vw'}}>{course.courseInstructor.map((ele)=> <li style={{color:colorPalette.white}}>{ele.replace(/,/g, ', ').concat(" ")}</li>)}</p>
         <br hidden={!isShown}></br>
     </div>
 };
@@ -41,5 +70,6 @@ function convertTime(timeString){
     return timeString.join(':') + 'am';
   }
 };
+
 
 export default Course;
