@@ -20,7 +20,7 @@ function Survey(){
     const [graduationYear, setGraduationYear] = useState((getGraduationYear() !== null) ? parseInt(getGraduationYear()) : new Date().getFullYear()+2);
     const [major, setMajor] = useState((getMajor() !== null) ? JSON.parse(getMajor()) : []);
     const [minor, setMinor] = useState((getMinor() !== null) ? JSON.parse(getMinor()) : []);
-    const [studentType, setStudentType] = useState((getStudentType !== null) ? getStudentType() : 'undergraduate');
+    const [studentType, setStudentType] = useState((getStudentType() !== null) ? getStudentType() : 'undergraduate');
     const [courseSchedule, setCourseSchedule] = useState((getCourseSchedule() !== null) ? JSON.parse(getCourseSchedule()) : []);
 
 
@@ -44,7 +44,7 @@ function Survey(){
                 </Card>
             </div>
                 <div hidden={currPage === 3} style={{display: 'flex',alignItems: 'center',justifyContent: 'center',height: '92vh'}}>
-                <Card style={{backgroundColor:colorPalette.white,boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
+                <Card style={{backgroundColor:colorPalette.white,boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',width:'45%',}}>
                     <Col>
                         <Card.Body>
                             <SurveyGraduationYear graduationYear={graduationYear} setGraduationYear={setGraduationYear} hidden={currPage !== 0}/>
