@@ -1,5 +1,20 @@
 const mongoose = require("mongoose");
-const StudyPrograms = require("../utils/StudyPrograms.js");
+const {Majors, Minors, GraduatePrograms} = require("../utils/StudyPrograms.js");
+
+const ProgramOfStudy = new mongoose.Schema({
+  major: {
+    type: [String],
+    enum: Majors,
+  },
+  minor: {
+    type: [String],
+    enum: Minors,
+  },
+  graduateProgram: {
+    type: [String],
+    enum: GraduatePrograms,
+  },
+});
 
 const StudentProfileSchema = new mongoose.Schema({
   _userId: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"},
@@ -10,24 +25,25 @@ const StudentProfileSchema = new mongoose.Schema({
   },
   studentType: {
     type: String,
-    required: [true, "Student Type required"],
+    required: [true, "Student type required"],
     lowercase: true,
     enum: ["undergraduate", "graduate"],
   },
-  major: {
-    type: [String],
-    required: [true, "Major required"],
-    enum: StudyPrograms,
+  programOfStudy: {
+    type: ProgramOfStudy,
+    required: [true, "POS required"],
   },
-  classSchedule: {
+  courseSchedule: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "StudentProfile",
+    required: [true, "Course schedule required"],
   },
   learningType: {
     type: [String],
     lowercase: true,
     enum: ["verbal", "visual", "auditory/musical", "physical/kinaesthetic",
       "logical/mathematical", "social", "solitary", "prefer not to answer"],
+    required: [true, "Learning type required"],
   },
   residencelLocation: {
     type: String,
@@ -47,6 +63,7 @@ const StudentProfileSchema = new mongoose.Schema({
     lowercase: true,
   },
 });
+
 
 const StudentProfile = mongoose.model("StudentProfile", StudentProfileSchema);
 module.exports = StudentProfile;

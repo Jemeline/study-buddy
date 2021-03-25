@@ -42,8 +42,17 @@ export async function apiToken(userData) {
 
 export async function apiGetCoursesBySubject(subject) {
     try { // app6
-        console.log(subject);
         const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/course/find-by-subject/${subject}`);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
+export async function apiCreateStudentProfile(surveyPayload) {
+    try {
+        const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile',surveyPayload);
         return res;
     } catch (error){
         console.log(error.response);

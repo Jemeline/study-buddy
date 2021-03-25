@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from '@material-ui/core/Slider';
-import {colorPalette} from '../../utils/design';
+import {colorPalette} from '../../../utils/design';
 import { withStyles } from '@material-ui/core/styles';
 import {storeGraduationYear} from './common';
 
@@ -48,11 +48,11 @@ const YearSlider = withStyles({
     },
     track: {
       height: 8,
-      borderRadius: 4,
+      borderRadius: 10,
     },
     rail: {
       height: 8,
-      borderRadius: 4,
+      borderRadius: 10,
     },
     mark: {
         backgroundColor: colorPalette.secondaryB,

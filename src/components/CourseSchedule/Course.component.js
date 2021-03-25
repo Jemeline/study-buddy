@@ -4,7 +4,7 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import IconButton from '@material-ui/core/IconButton';
 import {colorPalette} from '../../utils/design';
 import {zeroPad} from '../../utils/common';
-import {storeCourseSchedule} from '../Survey/common';
+import {storeCourseSchedule} from '../Survey/Student/common';
 
 function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
     const [isShown, setIsShown] = useState(false);
@@ -35,7 +35,6 @@ function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
               style={{ color: colorPalette.secondaryA }}
               onClick={()=> {
                 setCourseSchedule(courseSchedule.filter(item => JSON.stringify(item) !== JSON.stringify(course)));
-                // storeCourseSchedule(courseSchedule.filter(item => JSON.stringify(item) !== JSON.stringify(course)));
                 }
               }
             >

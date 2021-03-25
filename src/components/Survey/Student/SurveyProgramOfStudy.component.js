@@ -1,19 +1,24 @@
 import React from 'react';
-import {colorPalette} from '../../utils/design';
-import {Majors,Minors} from './StudyPrograms';
+import {colorPalette} from '../../../utils/design';
+import {Majors,Minors,GraduatePrograms} from './StudyPrograms';
 import Select from 'react-select';
-import {storeMajor,storeMinor} from './common';
+import {storeMajor,storeMinor,storeGraduatePOS} from './common';
 
-const selectMajors = (Majors.map((e)=> {return {label:e,value:e}}))
-const selectMinors = (Minors.map((e)=> {return {label:e,value:e}}))
-
-function SurveyProgramOfStudy({major,setMajor,minor,setMinor,hidden}){
+function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGraduatePOS,hidden,studentType}){
+    const selectMajors = (Majors.map((e)=> {return {label:e,value:e}}))
+    const selectGraduatePOS = (GraduatePrograms.map((e)=> {return {label:e,value:e}}))
+    const selectMinors = (Minors.map((e)=> {return {label:e,value:e}}))
     const maxOptions = 3;
+    const maxOptionsGraduate = 1;
     
     const handleChangeMajor = (e) => {
         setMajor(e);
         storeMajor(e);
     };
+    const handleChangeGraduatePOS = (e) => {
+      setGraduatePOS(e);
+      storeGraduatePOS(e);
+  };
     const handleChangeMinor = (e) => {
         setMinor(e);
         storeMinor(e);
@@ -21,6 +26,18 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,hidden}){
     return <div hidden={hidden}> 
             <h4>SELECT YOUR PROGRAM(S) OF STUDY</h4>
             <br></br>
+            <div hidden={studentType==='undergraduate'}>
+            <Select
+                placeholder={"Select Your Program of Study (Required)"}
+                isMulti
+                options={(graduatePOS.length) === maxOptionsGraduate ? [] : selectGraduatePOS}
+                onChange={(e)=> handleChangeGraduatePOS(e)}
+                noOptionsMessage={()=>'Max 1 Selection'}
+                styles={colourStyles}
+                value={graduatePOS}
+            />
+            </div>
+            <div hidden={studentType==='graduate'}>
             <Select
                 placeholder={"Select Your Major(s) (Required)"}
                 isMulti
@@ -40,6 +57,7 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,hidden}){
                 styles={colourStyles}
                 value={minor}
             />
+            </div>
     </div>
 };
 

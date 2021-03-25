@@ -175,7 +175,7 @@ async function handleRegister(emailRegister,passwordRegister,passwordConfirmRegi
         "phone":phoneRegister
       };
       const data = await apiRegister(body);
-      login(data.data.user,data.data.user.role,data.data.user.isVerified);
+      login(data.data.user,data.data.user.role,data.data.user.isVerified,data.data.user.isSurveyed);
       setIsLoggedIn(true);
       if(!getIsVerified()){
         history.push('/verify');
