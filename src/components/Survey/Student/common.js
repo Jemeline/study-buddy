@@ -30,6 +30,14 @@ export function getMinor(){
     return sessionStorage.getItem('minor') || null;
 };
 
+export function storeGraduatePOS(graduatePOS){
+    sessionStorage.setItem('graduatePOS',JSON.stringify(graduatePOS));
+};
+
+export function getGraduatePOS(){
+    return sessionStorage.getItem('graduatePOS') || null;
+};
+
 export function storeCurrPage(currPage){
     sessionStorage.setItem('currPage',currPage);
 };
@@ -39,9 +47,17 @@ export function getCurrPage(){
 };
 
 export function storeCourseSchedule(courseSchedule){
-    sessionStorage.setItem('courseSchedule1',JSON.stringify(courseSchedule));
+    sessionStorage.setItem('courseSchedule',JSON.stringify(courseSchedule));
 };
 
 export function getCourseSchedule(){
-    return sessionStorage.getItem('courseSchedule1') || null;
+    return sessionStorage.getItem('courseSchedule') || null;
+};
+
+export function storeLearningType(learningType){
+    sessionStorage.setItem('learningType',JSON.stringify(learningType));
+};
+
+export function getLearningType(){
+    return sessionStorage.getItem('learningType') || null;
 };

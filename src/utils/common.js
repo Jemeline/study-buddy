@@ -18,15 +18,33 @@ export function getIsVerified() {
         return false;
     } else return true;
 };
+export function getIsSurveyed() {
+    if (!sessionStorage.getItem('isSurveyed')) return null;
+    if (sessionStorage.getItem('isSurveyed') === 'false'){
+        return false;
+    } else return true;
+};
+
 export function logout (){
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('isVerified');
+    sessionStorage.removeItem('isSurveyed');
+    sessionStorage.removeItem('graduationYear');
+    sessionStorage.removeItem('studentType');
+    sessionStorage.removeItem('major');
+    sessionStorage.removeItem('minor');
+    sessionStorage.removeItem('graduatePOS');
+    sessionStorage.removeItem('currPage');
+    sessionStorage.removeItem('courseSchedule');
+    sessionStorage.removeItem('learningType');
+
 };
-export function login (user,role,isVerified){
+export function login (user,role,isVerified,isSurveyed){
     sessionStorage.setItem('user',JSON.stringify(user));
     sessionStorage.setItem('role',role);
     sessionStorage.setItem('isVerified',isVerified);
+    sessionStorage.setItem('isSurveyed',isSurveyed);
 };
 
 export function capitalizeFirst(s){

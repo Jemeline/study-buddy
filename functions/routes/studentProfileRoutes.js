@@ -25,9 +25,10 @@ app.get("/student-profile/find-by-id/:id", async (req, res) => {
 
 app.post("/student-profile", [
   check("_userId", "_userId required").not().isEmpty(),
-  check("graduationYear", "Graduation Year required").not().isEmpty(),
-  check("studentType", "Student Type required").notEmpty(),
-  check("major", "Major required").notEmpty(),
+  check("graduationYear", "Graduation year required").not().isEmpty().custom((value, {req}) => value >= 2020),
+  check("studentType", "Student type required").notEmpty().custom((value, {req}) => value === "graduate" || value === "undergraduate"),
+  check("courseSchedule", "Course schedule required").notEmpty(),
+  check("learningType", "Learning type required").notEmpty(),
 ],
 async (req, res) => {
   const errors = validationResult(req);
@@ -37,6 +38,8 @@ async (req, res) => {
     if (!user) return res.status(401).send({msg: "There is no user with this ID"});
     const profile = new StudentProfileModel(req.body);
     await profile.save();
+    user.isSurveyed = true;
+    await user.save();
     res.send(profile);
   } catch (err) {
     res.status(500).send(err);

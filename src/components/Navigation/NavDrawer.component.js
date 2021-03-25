@@ -34,10 +34,6 @@ function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn}){
       </List>
       <Divider/>
       <List>
-        <ListItem button hidden={!isLoggedIn} onClick={()=>history.push('/course-search')}>
-            <ListItemIcon><ScheduleIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
-            <ListItemText primary={"My Class Schedule"} />
-        </ListItem>
         <ListItem button onClick={()=>history.push('/home')}>
             <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
             <ListItemText primary={"UNC Help Center"} />

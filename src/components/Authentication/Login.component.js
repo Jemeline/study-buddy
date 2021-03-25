@@ -6,7 +6,7 @@ import {Alert,Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiLogin} from '../../utils/api';
-import {getUser,login,getIsVerified} from '../../utils/common';
+import {getUser,login,getIsVerified,getIsSurveyed} from '../../utils/common';
 import {validateEmail} from '../../utils/regex';
 import {colorPalette} from '../../utils/design';
 
@@ -97,7 +97,7 @@ async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
     if (!getUser()){
       const body = {"email":emailLogin,"password":passwordLogin}
       const data = await apiLogin(body);
-      login(data.data.user,data.data.user.role,data.data.user.isVerified);
+      login(data.data.user,data.data.user.role,data.data.user.isVerified,data.data.user.isSurveyed);
       setIsLoggedIn(true);
       if(!getIsVerified()){
         history.push('/verify');

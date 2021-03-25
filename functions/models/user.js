@@ -40,6 +40,7 @@ const UserSchema = new mongoose.Schema({
   },
   phoneNumberVerified: {type: Boolean, default: false},
   isVerified: {type: Boolean, default: false},
+  isSurveyed: {type: Boolean, default: false},
   passwordResetToken: String,
   passwordResetExpires: Date,
 });
