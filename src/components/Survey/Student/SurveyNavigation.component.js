@@ -8,7 +8,7 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import {apiCreateStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
 import {getIsSurveyed} from '../../../utils/common';
 
-function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSchedule,profilePayload,graduatePOS}){ 
+function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSchedule,profilePayload,graduatePOS,studentType}){ 
     return <div style={{display: 'flex',justifyContent: "space-between"}}>
         <Button
             variant="contained"
@@ -22,11 +22,11 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
         </Button>
         <Button
             variant="contained"
-            style={{width:'30%',backgroundColor:getButtonColor((((major.length===0 && graduatePOS.length === 0) && currPage === 2) || (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 3)),colorPalette),
+            style={{width:'30%',backgroundColor:getButtonColor(((major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 3)),colorPalette),
                 color:colorPalette.white}}
             endIcon={<ArrowForwardIcon />}
             onClick={()=> {setCurrPage(currPage+1);storeCurrPage(currPage+1);}}
-            disabled={((major.length===0 && graduatePOS.length === 0) && currPage === 2) || (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 3)}
+            disabled={(major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 3)}
             hidden={(currPage >= pageEnd-1)}
         >
             Next
@@ -38,7 +38,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
             onClick={async()=> {
                 await handleSurveySubmit(profilePayload(),setCurrPage,storeCurrPage);
             }}
-            disabled={((major.length===0 && graduatePOS.length === 0) && currPage === 2) || (courseSchedule.length === 0 && currPage === 3)}
+            disabled={(major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 3)}
             hidden={!(currPage === pageEnd-1)}
         >
             Finish

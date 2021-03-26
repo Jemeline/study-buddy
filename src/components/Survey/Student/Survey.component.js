@@ -22,8 +22,8 @@ function Survey(){
     const pageStart = 0;
     const pageEnd = 5;
     const [graduationYear, setGraduationYear] = useState((getGraduationYear() !== null) ? parseInt(getGraduationYear()) : new Date().getFullYear()+2);
-    const [major, setMajor] = useState((getMajor() !== null) ? JSON.parse(getMajor()) : []);
     const [minor, setMinor] = useState((getMinor() !== null) ? JSON.parse(getMinor()) : []);
+    const [major, setMajor] = useState((getMajor() !== null) ? JSON.parse(getMajor()) : []);
     const [graduatePOS, setGraduatePOS] = useState((getGraduatePOS() !== null) ? JSON.parse(getGraduatePOS()) : []);
     const [studentType, setStudentType] = useState((getStudentType() !== null) ? getStudentType() : 'undergraduate');
     const [courseSchedule, setCourseSchedule] = useState((getCourseSchedule() !== null) ? JSON.parse(getCourseSchedule()) : []);
@@ -45,7 +45,7 @@ function Survey(){
                         <Card.Body>
                             <SurveyCourseSchedule hidden={currPage !== 3} courseSchedule={courseSchedule} setCourseSchedule={setCourseSchedule}/>
                             <br hidden={currPage>pageEnd}></br>
-                            <SurveyNavigation currPage={currPage} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload}/>
+                            <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload} graduatePOS={graduatePOS}/>
                         </Card.Body>
                     </Col>
                 </Card>
@@ -61,7 +61,7 @@ function Survey(){
                             <SurveyComplete hidden={currPage !== 6} />
                             <SurveyResubmit hidden={currPage !== 5}/>
                             <br></br>
-                            <SurveyNavigation currPage={currPage} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} graduatePOS={graduatePOS} courseSchedule={courseSchedule} profilePayload={profilePayload}/>
+                            <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload}graduatePOS={graduatePOS}/>
                         </Card.Body>
                     </Col>    
                 </Card>
