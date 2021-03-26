@@ -34,7 +34,7 @@ export function logout (){
     sessionStorage.removeItem('studentType');
     sessionStorage.removeItem('major');
     sessionStorage.removeItem('minor');
-    sessionStorage.removeItem('graduatePOS');
+    sessionStorage.removeItem('graduatepos');
     sessionStorage.removeItem('currPage');
     sessionStorage.removeItem('courseSchedule');
     sessionStorage.removeItem('learningType');

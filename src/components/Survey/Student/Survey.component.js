@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Col} from 'reactstrap';
 import {Card} from 'react-bootstrap';
-import {getUser,getIsSurveyed} from '../../../utils/common';
+import {getUser} from '../../../utils/common';
 import SurveyGraduationYear from './SurveyGraduationYear.component';
 import SurveyProgramOfStudy from './SurveyProgramOfStudy.component';
 import SurveyStudentType from './SurveyStudentType.component';
@@ -11,19 +11,19 @@ import {colorPalette} from '../../../utils/design';
 import SurveyCourseSchedule from './SurveyCourseSchedule.component';
 import CourseSearchImproved from '../../CourseSchedule/CourseSearchImproved.component';
 import SurveyNavigation from './SurveyNavigation.component';
-import SurveyRedirect from './SurveyRedirect.component';
+import SurveyResubmit from './SurveyResubmit.component';
 import SurveyComplete from './SurveyComplete.component';
 import {getGraduationYear,getStudentType,getMajor,getMinor,getCurrPage,getCourseSchedule,getLearningType,getGraduatePOS} from './common';
 import { useHistory } from "react-router-dom";
 
 function Survey(){
     const user = JSON.parse(getUser());
-    const [currPage, setCurrPage] = useState((getIsSurveyed() === true) ? 5 : (getCurrPage() !== null)? parseInt(getCurrPage()) : 0);
+    const [currPage, setCurrPage] = useState((getCurrPage() !== null)? parseInt(getCurrPage()) : 0);
     const pageStart = 0;
-    const pageEnd = 4;
+    const pageEnd = 5;
     const [graduationYear, setGraduationYear] = useState((getGraduationYear() !== null) ? parseInt(getGraduationYear()) : new Date().getFullYear()+2);
-    const [major, setMajor] = useState((getMajor() !== null) ? JSON.parse(getMajor()) : []);
     const [minor, setMinor] = useState((getMinor() !== null) ? JSON.parse(getMinor()) : []);
+    const [major, setMajor] = useState((getMajor() !== null) ? JSON.parse(getMajor()) : []);
     const [graduatePOS, setGraduatePOS] = useState((getGraduatePOS() !== null) ? JSON.parse(getGraduatePOS()) : []);
     const [studentType, setStudentType] = useState((getStudentType() !== null) ? getStudentType() : 'undergraduate');
     const [courseSchedule, setCourseSchedule] = useState((getCourseSchedule() !== null) ? JSON.parse(getCourseSchedule()) : []);
@@ -45,7 +45,7 @@ function Survey(){
                         <Card.Body>
                             <SurveyCourseSchedule hidden={currPage !== 3} courseSchedule={courseSchedule} setCourseSchedule={setCourseSchedule}/>
                             <br hidden={currPage>pageEnd}></br>
-                            <SurveyNavigation currPage={currPage} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload}/>
+                            <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload} graduatePOS={graduatePOS}/>
                         </Card.Body>
                     </Col>
                 </Card>
@@ -57,11 +57,11 @@ function Survey(){
                             <SurveyGraduationYear graduationYear={graduationYear} setGraduationYear={setGraduationYear} hidden={currPage !== 0}/>
                             <SurveyProgramOfStudy major={major} setMajor={setMajor} minor={minor} setMinor={setMinor} graduatePOS={graduatePOS} setGraduatePOS={setGraduatePOS} studentType={studentType} hidden={currPage !== 2}/>
                             <SurveyStudentType studentType={studentType} setStudentType={setStudentType} hidden={currPage !== 1} setMajor={setMajor}/>
-                            <SurveyLearningType learningType={learningType} setLearningType={setLearningType} hidden={currPage !== 4}/>
+                            <SurveyLearningType learningType={learningType} setLearningType={setLearningType} hidden={currPage !== 4}/> 
                             <SurveyComplete hidden={currPage !== 6} />
-                            <br hidden={currPage>pageEnd}></br>
-                            <SurveyRedirect hidden={currPage !== 5} history={history}/>
-                            <SurveyNavigation currPage={currPage} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload}/>
+                            <SurveyResubmit hidden={currPage !== 5}/>
+                            <br></br>
+                            <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload}graduatePOS={graduatePOS}/>
                         </Card.Body>
                     </Col>    
                 </Card>
@@ -80,7 +80,6 @@ function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,stud
             courseSchedule:courseSchedule.map((ele)=>ele._id),
             learningType:(learningType.length !== 0)?learningType:['prefer not to answer'],
         }
-        console.log(graduateObj);
         return graduateObj;
     } else {
         const undergraduateObj = {
@@ -91,7 +90,6 @@ function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,stud
             courseSchedule:courseSchedule.map((ele)=>ele._id),
             learningType:(learningType.length !== 0)?learningType:['prefer not to answer'],
         }
-        console.log(undergraduateObj);
         return undergraduateObj;
     }
 };
