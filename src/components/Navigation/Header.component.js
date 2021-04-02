@@ -15,10 +15,10 @@ import {logout} from '../../utils/common';
 import { useHistory } from "react-router-dom";
 
 
-function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer}){ 
+function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){ 
   const history = useHistory();
 
-    return <div style={{flexGrow: 1}}>
+    return <div hidden={!isLoggedIn || isHome} style={{flexGrow: 1}}>
       <AppBar position="static" style={{ background: colorPalette.secondaryA }}>
         <Toolbar>
           <IconButton edge="start" style={{ background: colorPalette.secondaryA }}
@@ -47,7 +47,7 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer}){
                 hidden={isLoggedIn}
                 style={{ background: colorPalette.white }}
                 onClick={() => {
-                    history.push('/login');
+                    history.push('/');
                 }}
                 >Sign In</Button>
             <Button 
@@ -57,9 +57,9 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer}){
                 onClick={() => {
                     logout();
                     setIsLoggedIn(false);
-                    history.push('/login');
+                    history.push('/');
                 }}
-                to="/login">Sign Out
+                to="/">Sign Out
             </Button>
         </Toolbar>
       </AppBar>

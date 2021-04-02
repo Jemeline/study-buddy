@@ -2,7 +2,8 @@ import React from 'react';
 import { Route, Redirect} from 'react-router-dom';
 import {getIsVerified,getRoleLiteral,getLoginStatus} from "../../utils/common";
 
-const UnverifiedRoute = ({ component: Component, ...path }) => {
+const UnverifiedRoute = ({ component: Component,setIsHome, ...path }) => {
+    setIsHome(false);
     return(
         <Route {...path}  component={(props)=>{
             if (getLoginStatus()){
@@ -14,7 +15,7 @@ const UnverifiedRoute = ({ component: Component, ...path }) => {
                     return <Redirect to={{pathname:`/dashboard/${getRoleLiteral()}`}} /> 
                 }
             } else {
-                return <Redirect to="/login" />
+                return <Redirect to="/" />
             }
         }}
         />                         

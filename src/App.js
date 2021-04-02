@@ -11,16 +11,17 @@ import NavDrawer from './components/Navigation/NavDrawer.component';
 function App(){
   document.title = "Study Buddy";
   const [isLoggedIn, setIsLoggedIn] = useState(getLoginStatus());
-  const [isOpenDrawer, setIsOpenDrawer] = useState(false);  
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false); 
+  const [isHome, setIsHome] = useState(false);
   
   
   return (
     <div className="App">
       <BrowserRouter>
-        <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsOpenDrawer={setIsOpenDrawer}></Header>
-        <NavDrawer isOpenDrawer={isOpenDrawer} setIsOpenDrawer={setIsOpenDrawer} isLoggedIn={isLoggedIn}/>
+        <Header isLoggedIn={isLoggedIn} isHome={isHome} setIsLoggedIn={setIsLoggedIn} setIsOpenDrawer={setIsOpenDrawer}></Header>
+        <NavDrawer isOpenDrawer={isOpenDrawer} isHome={isHome} setIsOpenDrawer={setIsOpenDrawer} isLoggedIn={isLoggedIn}/>
         <div> 
-          <Routes setIsLoggedIn={setIsLoggedIn}/>
+          <Routes setIsLoggedIn={setIsLoggedIn} setIsHome={setIsHome}/>
         </div>
       </BrowserRouter>
     </div>
