@@ -9,8 +9,9 @@ import {getUser,getRoleLiteral,} from '../../utils/common';
 import {validateToken} from '../../utils/regex';
 import ReactLoading from 'react-loading';
 import {colorPalette} from '../../utils/design';
+import background from './dark-background.jpg';
 
-function VerifyAccount(){
+function VerifyAccount({setIsLoggedIn}){
     const user = JSON.parse(getUser());
     const emailVerify = user.email;
     const h5 = `Hello ${user.first.charAt(0).toUpperCase()+user.first.slice(1).toLowerCase()},`;
@@ -26,9 +27,10 @@ function VerifyAccount(){
     const [verified,setVerified] = useState(false);
     const [alertInvalidToken, setAlertInvalidToken] = useState(false);
     
-    return <div> 
+    return <div style={{backgroundImage: `url(${background})`,minHeight:'100%',minWidth:'1024px',width:'100%',height:'auto',position:'fixed',top:0,left:0}}> 
+        <div style={{margin:'auto',alignItems: 'center',display:'flex',justifyContent:'center',height:'100vh'}}>
         <Container style={{width:"35%", margin: "auto"}} >     
-          <Card bg="light" style={{ borderRadius: 8}}>
+          <Card>
             <Card.Header><h4>Verify Your Account</h4></Card.Header>
               <Col>
                 <Card.Body>
@@ -92,6 +94,7 @@ function VerifyAccount(){
                         setLoadingVerify(true);
                         history.push(`/dashboard/${getRoleLiteral()}`);
                         setLoadingVerify(false);
+                        setIsLoggedIn(true);
                     }}
                   > Go To My Dashboard</Button>
                 </Card.Body>
@@ -125,7 +128,8 @@ function VerifyAccount(){
             > I need a token</Button>
             </Card>
             <Link hidden={verified} to="/incorrect-email">Change the email associated with my account</Link>     
-        </Container>   
+        </Container> 
+        </div>  
     </div>
 };
 
