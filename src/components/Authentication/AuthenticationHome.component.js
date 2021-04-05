@@ -12,7 +12,7 @@ function AuthenticationHome({setIsLoggedIn,setIsHome}){
   const [id,setId] = useState('');
 
   setIsHome(true);
-  return <div className='ah'>
+  return <div>
     <div style={{float:'right',backgroundImage: `url(${background})`,height:'100vh',width:'60vw',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed'}}/>
     <div style={{float:'right',width:'40vw',height:'100vh'}}>
         <div style={{marginTop:'5%',marginBottom:'5%',alignItems: 'center',display:'flex',justifyContent:'center',overflow:'auto'}}>
