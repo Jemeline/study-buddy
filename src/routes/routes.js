@@ -19,15 +19,11 @@ const Routes = ({setIsLoggedIn,setIsHome}) => (
     <Switch>
       <Route exact path="/" render={() => (<Home  setIsLoggedIn={setIsLoggedIn} setIsHome={setIsHome}/>)}/>
       <Route exact path="/auth/" render={() => (<AuthenticationHome  setIsLoggedIn={setIsLoggedIn} setIsHome={setIsHome}/>)}/>
-      <Route exact path="/recover" component={RecoverPassword}/>
-      <Route exact path='/verify' render={() => (<VerifyAccount setIsLoggedIn={setIsLoggedIn}/>)}/>
-      <UnverifiedRoute exact path="/incorrect-email" component={IncorrectEmail} setIsHome={setIsHome}/>
       <StudentRoute exact path="/dashboard/student" component={StudentDashboard} setIsHome={setIsHome}/>
       <StudentRoute exact path="/student-survey" component={Survey} setIsHome={setIsHome}/>
       <StudentRoute exact path="/student-profile" component={StudentProfile} setIsHome={setIsHome}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard} setIsHome={setIsHome}/>
-      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard} setIsHome={setIsHome}/>
-      
+      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard} setIsHome={setIsHome}/>  
     </Switch>
   );
   

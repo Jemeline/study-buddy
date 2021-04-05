@@ -1,24 +1,23 @@
 import React, {useState} from 'react';
-import {Button,Col,Container,Form,
-    FormGroup,Input,} from 'reactstrap';
-import {Alert,Card} from 'react-bootstrap';
+import {Button,Col,Container,Form,FormGroup,Input} from 'reactstrap';
+import {Alert} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiVerify,apiToken} from '../../utils/api';
-import {getUser,getRoleLiteral,} from '../../utils/common';
+import {getUser,getRoleLiteral} from '../../utils/common';
 import {validateToken} from '../../utils/regex';
 import ReactLoading from 'react-loading';
 import {colorPalette} from '../../utils/design';
-import background from './dark-background.jpg';
+import logo from '../study-buddy-tagline.png';
 
-function VerifyAccount({setIsLoggedIn}){
-    const user = JSON.parse(getUser());
-    const emailVerify = user.email;
-    const h5 = `Hello ${user.first.charAt(0).toUpperCase()+user.first.slice(1).toLowerCase()},`;
-    const p = `Click below to recieve a validation token at ${user.email}`
+function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
+    const h5 = `Hello ${first.charAt(0).toUpperCase()+first.slice(1).toLowerCase()},`;
+    const p1='Click below to recieve a validation code at:';
+    const p2 = `${email}`
     const [alertVerify, setAlertVerify] = useState(false);
     const [alertMessageVerify, setAlertMessageVerify] = useState('');
-    const [pTagVerify,setpTagVerify]=useState(p);
+    const [p1TagVerify,setp1TagVerify]=useState(p1);
+    const [p2TagVerify,setp2TagVerify]=useState(p2);
     const [h5TagVerify,seth5TagVerify]=useState(h5);
     const [tokenVerify,setTokenVerify]=useState(false);
     const [loadingVerify,setLoadingVerify]=useState(false);
@@ -27,22 +26,41 @@ function VerifyAccount({setIsLoggedIn}){
     const [verified,setVerified] = useState(false);
     const [alertInvalidToken, setAlertInvalidToken] = useState(false);
     
-    return <div style={{backgroundImage: `url(${background})`,minHeight:'100%',minWidth:'1024px',width:'100%',height:'auto',position:'fixed',top:0,left:0}}> 
-        <div style={{margin:'auto',alignItems: 'center',display:'flex',justifyContent:'center',height:'100vh'}}>
-        <Container style={{width:"35%", margin: "auto"}} >     
-          <Card>
-            <Card.Header><h4>Verify Your Account</h4></Card.Header>
+    const getNewToken = () => {
+        setAlertVerify(false);
+        setAlertInvalidToken(false);
+        seth5TagVerify(h5);
+        setTokenVerify(false);
+        setp1TagVerify(p1);
+        setp2TagVerify(p2);
+        setToken('');
+    };
+    const alreadyHaveToken = () => {
+        setAlertVerify(false);
+        setAlertInvalidToken(false);
+        seth5TagVerify('');
+        setTokenVerify(true);
+        setp1TagVerify('');
+        setp2TagVerify('');
+        setToken('');
+    };
+
+    return <div>
+        <Container style={{width:'35vw',margin: "auto"}} >
               <Col>
-                <Card.Body>
-                    <Alert variant="danger" show={alertVerify} onClose={() => setAlertVerify(false)} dismissible transition={false}>
-                    {alertMessageVerify}
-                    </Alert>
-                    <Alert variant="danger" show={alertInvalidToken} onClose={() => setAlertInvalidToken(false)} dismissible transition={false}>
-                        Your token is incorrect or expired. Please <Link to="/verify">request a new token</Link> or try again.
-                    </Alert>
-                    <h5>{h5TagVerify}</h5>
-                    <p>{pTagVerify}</p> 
-                  <Form hidden={!tokenVerify || verified} className="form">
+                <img src={logo} style={{height: '35vh'}}/>
+                <br/>
+                <Alert variant="danger" show={alertVerify} onClose={() => setAlertVerify(false)} dismissible transition={false}>
+                {alertMessageVerify}
+                </Alert>
+                <Alert variant="danger" show={alertInvalidToken} onClose={() => setAlertInvalidToken(false)} dismissible transition={false}>
+                    Your token is incorrect or expired. Please <Link to="/auth" onClick={()=>{getNewToken();}}>request a new token</Link> or try again.
+                </Alert>
+                <h5>{h5TagVerify}</h5>
+                <p style={{marginBottom:0}}>{p1TagVerify}</p>
+                
+                <p><strong><em>{p2TagVerify}</em></strong></p>
+                <Form hidden={!tokenVerify || verified} className="form" style={{width:'20vw',margin: "auto"}}>
                     <FormGroup>
                         <Input
                             type="text"
@@ -53,42 +71,43 @@ function VerifyAccount({setIsLoggedIn}){
                             setToken(e.target.value)
                             }}
                             valid={validateToken(token)}
-                            invalid={token.length > 0 && !validateToken(token)}    
+                            invalid={token.length > 0 && !validateToken(token)}
+                            style={{borderRadius:14}}    
                         />
                     </FormGroup> 
-                  </Form>
-                  <Button 
+                </Form>
+                <Button 
+                size="lg"
+                style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'40%',borderRadius:14}} 
+                hidden={tokenVerify || loadingVerify}
+                disabled={!(email.length > 0)}
+                onClick={async () => {
+                    setLoadingVerify(true);
+                    setAlertVerify(false);
+                    setAlertInvalidToken(false);
+                    await handleVerify(email,setAlertVerify,setAlertMessageVerify,setp1TagVerify,setTokenVerify,seth5TagVerify,setp2TagVerify);
+                    setLoadingVerify(false);
+                }}
+                > Send Me a Code
+                </Button>
+                <Button 
                     size="lg"
-                    style={{backgroundColor:colorPalette.primary,color:colorPalette.white}}
-                    hidden={tokenVerify || loadingVerify}
-                    disabled={
-                        !(emailVerify===user.email)
-                        ||!(emailVerify.length > 0)}
-                    onClick={async () => {
-                        setLoadingVerify(true);
-                        setAlertVerify(false);
-                        setAlertInvalidToken(false);
-                        await handleVerify(emailVerify,setAlertVerify,setAlertMessageVerify,setpTagVerify,setTokenVerify,seth5TagVerify);
-                        setLoadingVerify(false);
-                    }}
-                  > Send Me A Confirmation Email</Button>
-                  <Button 
-                    size="lg"
-                    style={{backgroundColor:colorPalette.primary,color:colorPalette.white}}
+                    style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'40%',borderRadius:14}} 
                     hidden={!tokenVerify || verified || loadingVerify}
                     onClick={async () => {
                         setLoadingVerify(true);
                         setAlertVerify(false);
                         setAlertInvalidToken(false);
                         await handleToken(token,history,setAlertVerify,setAlertMessageVerify,
-                        user,setpTagVerify,setVerified,setAlertInvalidToken);
+                        id,setp1TagVerify,setVerified,setAlertInvalidToken,setp2TagVerify);
                         setLoadingVerify(false);
                     }}
                     disabled={!validateToken(token)}
-                  > Verify My Account</Button>
+                  > Confirm My Email
+                  </Button>
                   <Button 
                     size="lg"
-                    style={{backgroundColor:colorPalette.primary,color:colorPalette.white}}
+                    style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14}} 
                     hidden={!verified || loadingVerify}
                     onClick={() => {
                         setLoadingVerify(true);
@@ -96,8 +115,8 @@ function VerifyAccount({setIsLoggedIn}){
                         setLoadingVerify(false);
                         setIsLoggedIn(true);
                     }}
-                  > Go To My Dashboard</Button>
-                </Card.Body>
+                  > Go To My Dashboard
+                  </Button>
             </Col>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <ReactLoading hidden={!loadingVerify} type={"cylon"} color={"#000080"} height={'15%'} width={'15%'} /> 
@@ -106,40 +125,26 @@ function VerifyAccount({setIsLoggedIn}){
                 color="link"
                 size="sm"
                 hidden={tokenVerify}
-                onClick={()=>{
-                    setAlertVerify(false);
-                    setAlertInvalidToken(false);
-                    seth5TagVerify('');
-                    setTokenVerify(true);
-                    setpTagVerify("");
-                    setToken('');}}
+                onClick={()=>{alreadyHaveToken();}}
             > I already have a token</Button>
             <Button
                 color="link"
                 size="sm"
                 hidden={!tokenVerify || verified}
-                onClick={()=>{
-                    setAlertVerify(false);
-                    setAlertInvalidToken(false);
-                    seth5TagVerify(h5);
-                    setTokenVerify(false);
-                    setpTagVerify(p);
-                    setToken('');}}
+                onClick={()=>{getNewToken();}}
             > I need a token</Button>
-            </Card>
-            <Link hidden={verified} to="/incorrect-email">Change the email associated with my account</Link>     
-        </Container> 
-        </div>  
-    </div>
+        </Container>
+        </div>
 };
 
-async function handleVerify(emailVerify,setAlertVerify,setAlertMessageVerify,setpTagVerify,
-    setTokenVerify,seth5TagVerify){
+async function handleVerify(emailVerify,setAlertVerify,setAlertMessageVerify,setp1TagVerify,
+    setTokenVerify,seth5TagVerify,setp2TagVerify){
     try{
         if (getUser()){
             const body = {"email":emailVerify}
             const data = await apiVerify(body);
-            setpTagVerify(data.data.msg);
+            setp1TagVerify(data.data.msg);
+            setp2TagVerify('');
             seth5TagVerify('');
             setTokenVerify(true);
         } else {
@@ -153,17 +158,18 @@ async function handleVerify(emailVerify,setAlertVerify,setAlertMessageVerify,set
 };
 
 async function handleToken(token,history,setAlertVerify,setAlertMessageVerify,
-    user,setpTagVerify,setVerified,setAlertInvalidToken){
+    id,setp1TagVerify,setVerified,setAlertInvalidToken,setp2TagVerify){
     try{
         if (!token){
             setAlertVerify(true);
             setAlertMessageVerify("Please fill in all required fields");
         }
         if (getUser()){
-            const body = {"token":token,"_userId":user._id}
+            const body = {"token":token,"_userId":id}
             const data = await apiToken(body);
             sessionStorage.setItem('isVerified',data.data.user.isVerified);
-            setpTagVerify("Woohoo! You're email has been verified.");
+            setp1TagVerify("Woohoo! Your email has been verified.");
+            setp2TagVerify('');
             setVerified(true);
         } else {
             setAlertVerify(true);
