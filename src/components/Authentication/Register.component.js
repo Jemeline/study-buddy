@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button,Col,Container,Row,Form,
   FormGroup,FormText,Input,FormFeedback} from 'reactstrap';
 import ReactLoading from 'react-loading';
-import {Alert,Card} from 'react-bootstrap'
+import {Alert} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiRegister} from '../../utils/api';
@@ -12,7 +12,7 @@ import {colorPalette} from '../../utils/design';
 import logo from '../study-buddy-tagline.png';
 
 
-function Register({setIsLoggedIn,setTab}){
+function Register({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
   const [emailRegister, setEmailRegister] = useState('');
   const [loadingRegister, setLoadingRegister] = useState(false);
   const [passwordRegister, setPasswordRegister] = useState('');
@@ -42,7 +42,7 @@ function Register({setIsLoggedIn,setTab}){
           {alertMessageRegister}
         </Alert>
         <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertAlreadyLoggedIn} onClose={() => setAlertAlreadyLoggedIn(false)} dismissible transition={false}>
-                Please <Link to="/" onClick={()=>{setAlertAlreadyLoggedIn(false);logout()}}>Logout</Link> or <Link to="/dashboard/student">Go To Your Dashboard</Link>
+                Please <Link to="/auth" onClick={()=>{setAlertAlreadyLoggedIn(false);logout()}}>Logout</Link> or <Link to="/dashboard/student">Go To Your Dashboard</Link>
         </Alert>
         <Form className="form">
           <FormGroup>
@@ -161,7 +161,7 @@ function Register({setIsLoggedIn,setTab}){
                 await handleRegister(emailRegister,passwordRegister,passwordConfirmRegister,
                 phoneRegister,firstNameRegister,lastNameRegister,roleRegister,
                 history,setAlertRegister,setAlertMessageRegister,setIsLoggedIn,setLoadingRegister,
-                setAlertAlreadyLoggedIn,dismissAlerts);
+                setAlertAlreadyLoggedIn,dismissAlerts,setFirst,setEmail,setId,setTab);
                 }}>
                 Register
             </Button> 
@@ -182,7 +182,7 @@ function Register({setIsLoggedIn,setTab}){
 
 async function handleRegister(emailRegister,passwordRegister,passwordConfirmRegister,phoneRegister,
   firstNameRegister,lastNameRegister,roleRegister,history,setAlertRegister,setAlertMessageRegister,setIsLoggedIn,
-  setLoadingRegister,setAlertAlreadyLoggedIn,dismissAlerts){
+  setLoadingRegister,setAlertAlreadyLoggedIn,dismissAlerts,setFirst,setEmail,setId,setTab){
   try{
     dismissAlerts();
     if (!emailRegister||!passwordRegister||!passwordConfirmRegister||!firstNameRegister||!lastNameRegister||!roleRegister){
@@ -204,7 +204,10 @@ async function handleRegister(emailRegister,passwordRegister,passwordConfirmRegi
         login(data.data.user,data.data.user.role,data.data.user.isVerified,data.data.user.isSurveyed);
         setIsLoggedIn(true);
         if(!getIsVerified()){
-          history.push('/verify');
+          setFirst(data.data.user.first);
+          setEmail(data.data.user.email);
+          setId(data.data.user._id);
+          setTab('verify');
         } else {
           history.push(`/dashboard/${data.data.user.role}`);
         }

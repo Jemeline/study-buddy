@@ -57,9 +57,8 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){
                 onClick={() => {
                     logout();
                     setIsLoggedIn(false);
-                    history.push('/');
                 }}
-                to="/">Sign Out
+                to="/auth">Sign Out
             </Button>
         </Toolbar>
       </AppBar>
