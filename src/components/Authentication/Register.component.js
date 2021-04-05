@@ -171,7 +171,7 @@ function Register({setIsLoggedIn,setTab}){
         </Form>
         <br/>
         Already Have an Account?
-        <Link to="/" onClick={()=>{setTab('login')}}> Sign In Now</Link>
+        <Link to="/auth" onClick={()=>{setTab('login')}}> Sign In Now</Link>
         <br/>
       </Col> 
     </Container>

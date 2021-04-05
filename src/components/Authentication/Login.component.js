@@ -89,9 +89,9 @@ function Login({setIsLoggedIn,setTab}){
               </Form>
               <br/>
               Don't Have an Account?
-              <Link to="/" onClick={()=>{setTab('register')}}> Sign Up Now</Link>
+              <Link to="/auth" onClick={()=>{setTab('register')}}> Sign Up Now</Link>
               <br/>
-              <Link to="/" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
+              <Link to="/auth" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
           </Col>  
       </Container>  
   </div>
