@@ -19,7 +19,7 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){
   const history = useHistory();
 
     return <div hidden={!isLoggedIn || isHome} style={{flexGrow: 1}}>
-      <AppBar position="static" style={{ background: colorPalette.secondaryA }}>
+      <AppBar position="static" style={{ background: colorPalette.secondaryA,height:'65px'}}>
         <Toolbar>
           <IconButton edge="start" style={{ background: colorPalette.secondaryA }}
             onClick={() => {
