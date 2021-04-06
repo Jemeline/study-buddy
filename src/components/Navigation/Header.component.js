@@ -7,12 +7,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {colorPalette} from '../../utils/design';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
 import {Link} from 'react-router-dom';
-import {logout} from '../../utils/common';
+import {getRoleLiteral,logout} from '../../utils/common';
 import { useHistory } from "react-router-dom";
+
 
 
 function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){ 
@@ -30,7 +28,7 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){
           <Typography variant="h6" style={{flexGrow: 1,textAlign: "left"}}>
             Study Buddy
           </Typography>
-          <IconButton hidden={!isLoggedIn}>
+          <IconButton hidden={!isLoggedIn} onClick={() => {history.push(`/${getRoleLiteral()}-profile`)}}>
             <AccountCircle style={{ color: colorPalette.white }}/>
           </IconButton>
           <Button 
@@ -40,6 +38,7 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){
               onClick={() => {
                   logout();
                   setIsLoggedIn(false);
+                  history.push('/auth');
               }}
               to="/auth">Sign Out
           </Button>

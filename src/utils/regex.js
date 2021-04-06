@@ -69,3 +69,11 @@ export function validateCourseInput(courseInput) {
     }
     return false;
 };
+
+export function validateName(name) {
+    const nameRegex = /[^a-zA-Z]/;
+    if (name.length !== 0 && !nameRegex.test(name)) {
+        return true;
+    }
+    return false;
+};
