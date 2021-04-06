@@ -3,9 +3,8 @@ import {Switch,Route} from 'react-router-dom';
 import StudentDashboard from '../components/Dashboard/StudentDashboard.component';
 import TutorDashboard from '../components/Dashboard/TutorDashboard.component';
 import AdminDashboard from '../components/Dashboard/AdminDashboard.component';
-import Login from '../components/Authentication/Login.component';
 import Home from '../components/Home.component';
-import Register from '../components/Authentication/Register.component';
+import AuthenticationHome from '../components/Authentication/AuthenticationHome.component';
 import RecoverPassword from '../components/Authentication/RecoverPassword.component';
 import VerifyAccount from '../components/Authentication/VerifyAccount.component';
 import Survey from '../components/Survey/Student/Survey.component';
@@ -20,16 +19,13 @@ import Calendar from '../components/Calendar/react/src/Calendar';
 const Routes = ({setIsLoggedIn,setIsHome}) => (
     <Switch>
       <Route exact path="/" render={() => (<Home  setIsLoggedIn={setIsLoggedIn} setIsHome={setIsHome}/>)}/>
-      <Route exact path="/recover" component={RecoverPassword}/>
       <Route exact path="/student-calendar" component={Calendar} setIsHome={setIsHome}/>
-      <Route exact path='/verify' render={() => (<VerifyAccount setIsLoggedIn={setIsLoggedIn}/>)}/>
-      <UnverifiedRoute exact path="/incorrect-email" component={IncorrectEmail} setIsHome={setIsHome}/>
+      <Route exact path="/auth/" render={() => (<AuthenticationHome  setIsLoggedIn={setIsLoggedIn} setIsHome={setIsHome}/>)}/>
       <StudentRoute exact path="/dashboard/student" component={StudentDashboard} setIsHome={setIsHome}/>
       <StudentRoute exact path="/student-survey" component={Survey} setIsHome={setIsHome}/>
       <StudentRoute exact path="/student-profile" component={StudentProfile} setIsHome={setIsHome}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard} setIsHome={setIsHome}/>
-      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard} setIsHome={setIsHome}/>
-      
+      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard} setIsHome={setIsHome}/>  
     </Switch>
   );
   

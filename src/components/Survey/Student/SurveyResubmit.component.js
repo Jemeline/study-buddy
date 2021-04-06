@@ -3,8 +3,8 @@ import React from 'react';
 
 function SurveyResubmit({hidden}){
     return <div hidden={hidden}> 
-            <h4>WE ALREADY HAVE SURVEY RESPONSES RECORDED FOR YOU, WOULD YOU LIKE TO SUBMIT ANYWAY?</h4>
-            <p>(Your previous responses will be deleted)</p>
+            <h4 style={{margin:'auto',paddingBottom:'0.5vw',fontSize:'2vw'}}>WE ALREADY HAVE SURVEY RESPONSES RECORDED FOR YOU, WOULD YOU LIKE TO SUBMIT ANYWAY?</h4>
+            <p style={{margin:'auto',paddingBottom:'0.5vw',fontSize:'1vw'}}>(Your previous responses will be deleted)</p>
     </div>
 };
 

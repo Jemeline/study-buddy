@@ -1,12 +1,11 @@
 import React from 'react';
-import Course from '../../CourseSchedule/Course.component';
+import Course from '../../../CourseSchedule/Course.component';
 import Grid from '@material-ui/core/Grid';
 
-function SurveyStudentType({courseSchedule,setCourseSchedule,hidden}){
-    return <div hidden={hidden}> 
-            <h4>WHAT IS YOUR COURSE SCHEDULE?</h4>
-            <br/>
-            <div style={{flexGrow: 1,height:'57vh',overflowY:'auto'}}>
+function SurveyCourseSchedule({courseSchedule,setCourseSchedule,hidden}){
+    return <div hidden={hidden} style={{marginBottom:'1vh'}}> 
+            <h4 style={{margin:'auto',fontSize:'2vw',height:'6vh'}}>WHAT IS YOUR COURSE SCHEDULE?</h4>
+            <div style={{flexGrow: 1,height:'54vh',overflowY:'auto'}}>
             <Grid
                 container
                 direction="row"
@@ -23,4 +22,4 @@ function SurveyStudentType({courseSchedule,setCourseSchedule,hidden}){
     </div>
 };
 
-export default SurveyStudentType;
+export default SurveyCourseSchedule;

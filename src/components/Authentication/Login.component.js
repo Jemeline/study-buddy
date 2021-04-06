@@ -2,16 +2,16 @@ import React, {useState} from 'react';
 import {Button,Col,Container,Form,
   FormGroup,FormFeedback,Input} from 'reactstrap';
 import ReactLoading from 'react-loading';
-import {Alert,Card} from 'react-bootstrap';
+import {Alert} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import {apiLogin} from '../../utils/api';
-import {getUser,login,getIsVerified,getIsSurveyed, logout} from '../../utils/common';
+import {getUser,login,getIsVerified,logout} from '../../utils/common';
 import {validateEmail} from '../../utils/regex';
 import {colorPalette} from '../../utils/design';
 import logo from '../study-buddy-tagline.png';
 
-function Login({setIsLoggedIn,setTab}){
+function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
   const [emailLogin, setEmailLogin] = useState('');
   const [loadingLogin, setLoadingLogin] = useState(false);
   const [passwordLogin, setPasswordLogin] = useState('');
@@ -37,10 +37,10 @@ function Login({setIsLoggedIn,setTab}){
                 {alertMessageLogin}
             </Alert>
             <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertInvalidLoginCreds} onClose={() => setAlertInvalidLoginCreds(false)} dismissible transition={false}>
-                We can't find that username and password. You can <Link to="/recover">reset your password</Link> or try again. 
+                We can't find that username and password. You can <Link to="/auth" onClick={()=>{setTab('recover')}}>reset your password</Link> or try again. 
             </Alert>
             <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertAlreadyLoggedIn} onClose={() => setAlertAlreadyLoggedIn(false)} dismissible transition={false}>
-                Please <Link to="/" onClick={()=>{setAlertAlreadyLoggedIn(false);logout()}}>Logout</Link> or <Link to="/dashboard/student">Go To Your Dashboard</Link>
+                Please <Link to="/auth" onClick={()=>{setAlertAlreadyLoggedIn(false);logout()}}>Logout</Link> or <Link to="/dashboard/student">Go To Your Dashboard</Link>
             </Alert>
               <Form className="form">
                 <FormGroup>
@@ -66,6 +66,7 @@ function Login({setIsLoggedIn,setTab}){
                       style={{borderRadius:14}}
                   />
                 </FormGroup>
+                </Form>
                 <Button
                   size="lg"
                   type="submit"
@@ -78,7 +79,8 @@ function Login({setIsLoggedIn,setTab}){
                     dismissAlerts();
                     setLoadingLogin(true);
                     await handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
-                      setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn,setLoadingLogin,setAlertAlreadyLoggedIn,dismissAlerts);
+                      setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn,setLoadingLogin,setAlertAlreadyLoggedIn,
+                      dismissAlerts,setFirst,setEmail,setId,setTab);
                   }}
                   style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'50%',borderRadius:14}}                                                                                                                
                 > Sign In</Button>
@@ -86,19 +88,19 @@ function Login({setIsLoggedIn,setTab}){
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                   <ReactLoading hidden={!loadingLogin} type={"cylon"} color={colorPalette.secondary} height={'10%'} width={'10%'} /> 
                 </div>
-              </Form>
               <br/>
               Don't Have an Account?
-              <Link to="/" onClick={()=>{setTab('register')}}> Sign Up Now</Link>
+              <Link to="/auth" onClick={()=>{setTab('register')}}> Sign Up Now</Link>
               <br/>
-              <Link to="/" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
+              <Link to="/auth" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
           </Col>  
       </Container>  
   </div>
 };
 
 async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
-  setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn,setLoadingLogin,setAlertAlreadyLoggedIn,dismissAlerts){
+  setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn,setLoadingLogin,setAlertAlreadyLoggedIn,dismissAlerts,
+  setFirst,setEmail,setId,setTab){
   try{
     if (!emailLogin||!passwordLogin){
       dismissAlerts();
@@ -111,7 +113,10 @@ async function handleLogin(emailLogin,passwordLogin,history,setAlertLogin,
         const data = await apiLogin(body);
         login(data.data.user,data.data.user.role,data.data.user.isVerified,data.data.user.isSurveyed);
         if(!getIsVerified()){
-          history.push('/verify');
+          setFirst(data.data.user.first);
+          setEmail(data.data.user.email);
+          setId(data.data.user._id);
+          setTab('verify');
         } else {
           setIsLoggedIn(true);
           history.push(`/dashboard/${data.data.user.role}`);

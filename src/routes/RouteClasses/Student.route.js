@@ -8,18 +8,14 @@ const StudentRoute = ({ component: Component,setIsHome, ...path }) => {
         <Route {...path}  component={(props)=>{
             if (getLoginStatus()){
                 if (getRole('student')){
-                    if (getIsVerified()){
-                        return <div>
-                          <Component {...props} />
-                        </div>
-                    } else {
-                        return <Redirect to="/verify" /> 
-                    }
+                    return <div>
+                        <Component {...props} />
+                    </div>
                 } else {
                     return <Redirect to={{pathname:`/dashboard/${getRoleLiteral()}`}} /> 
                 }
             } else {
-                return <Redirect to="/" />
+                return <Redirect to="/auth" />
             }    
         }}
         />                         
