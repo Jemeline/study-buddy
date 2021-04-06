@@ -38,6 +38,7 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){
               onClick={() => {
                   logout();
                   setIsLoggedIn(false);
+                  history.push('/auth');
               }}
               to="/auth">Sign Out
           </Button>
