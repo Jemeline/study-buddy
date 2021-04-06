@@ -23,7 +23,7 @@ function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn,isHome}){
             <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItem>
-          <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+          <ListItem button onClick={()=>history.push(`/${getRoleLiteral()}-profile`)}>
             <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>
