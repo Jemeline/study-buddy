@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -10,6 +10,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SecurityIcon from '@material-ui/icons/Security';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import UserDetails from './UserDetails.component';
+import {getUser,login} from '../../../utils/common';
 
 function StudentProfile(){
   const theme = useTheme();
@@ -18,6 +19,7 @@ function StudentProfile(){
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [user,setUser] = useState(JSON.parse(getUser()));
   
   return <div>
     <Tabs
@@ -38,7 +40,7 @@ function StudentProfile(){
     </Tabs>
     <div style={{zIndex:-1,height:'calc(100vh - 160px)',display:'flex',justifyContent:'center',alignItems: 'center'}}>
     {(value === 0) ? 
-    <UserDetails/>
+    <UserDetails user={user} setUser={setUser}/>
      
     :(value === 1) ? <p>1</p>
     :(value === 2) ? <p>2</p>

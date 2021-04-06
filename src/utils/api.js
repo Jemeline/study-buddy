@@ -69,3 +69,13 @@ export async function apiResubmitStudentProfile(surveyPayload) {
         throw error;
     }    
 };
+
+export async function apiUpdateUser(id,userData) {
+    try {
+        const res = await axios.post(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/update/${id}`, userData);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
