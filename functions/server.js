@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
@@ -7,6 +8,7 @@ const courseRouter = require("./routes/courseRoutes.js");
 const userRouter = require("./routes/userRoutes.js");
 const tokenRouter = require("./routes/tokenRoutes.js");
 const studentProfileRouter = require("./routes/studentProfileRoutes.js");
+const AdvertisementRouter = require("./routes/advertisementRoutes");
 const getClient = require("./db.js");
 
 const app7 = express();
@@ -18,6 +20,7 @@ app7.use("/api", courseRouter);
 app7.use("/api", userRouter);
 app7.use("/api", tokenRouter);
 app7.use("/api", studentProfileRouter);
+app7.use("/api", AdvertisementRouter);
 
 app7.listen(port, () => {
   console.log(`Server is running on port ${port}`);
