@@ -3,9 +3,10 @@ import {colorPalette} from '../../../utils/design';
 import Button from '@material-ui/core/Button';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {getRoleLiteral} from '../../../utils/common';
+import {getRoleLiteral, getUser} from '../../../utils/common';
+import {getWeightedSum} from '../MatchingAlgorithm';
 
-function SurveyRedirect({hidden,history}){
+async function SurveyRedirect({hidden,history}){
     return <div hidden={hidden}> 
             <h4>CONGRATUALTIONS, YOU HAVE ALREADY COMPLETED YOUR SURVEY!</h4>
             <br></br>
@@ -14,7 +15,7 @@ function SurveyRedirect({hidden,history}){
                     variant="contained"
                     style={{width:'45%',backgroundColor:colorPalette.secondaryB,color:colorPalette.white}}
                     startIcon={<DashboardIcon />}
-                    onClick={()=> {history.push(`/dashboard/${getRoleLiteral()}`);}}
+                    onClick={async ()=> {history.push(`/dashboard/${getRoleLiteral()}`); console.log(await getWeightedSum(getUser()))}}
                 >
                     Go To My Dashboard
                 </Button>
