@@ -14,28 +14,24 @@ import PersonIcon from '@material-ui/icons/Person';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import {colorPalette} from '../../utils/design';
 
-function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn}){
+function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn,isHome}){
     const history = useHistory();
-    return <div>
+    return <div hidden={!isLoggedIn || isHome}>
         <Drawer anchor={"left"} open={isOpenDrawer} onClose={()=>setIsOpenDrawer(false)}>
         <List>
-          <ListItem button onClick={()=>history.push('/home')}>
-            <ListItemIcon><HomeIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
-            <ListItemText primary={"Home"} style={{paddingRight:"20%"}}/>
-          </ListItem>
-          <ListItem button hidden={!isLoggedIn} onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
-            <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+          <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+            <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItem>
-          <ListItem button hidden={!isLoggedIn} onClick={()=>history.push(`/home`)}>
-            <ListItemIcon><PersonIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+          <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+            <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>
       </List>
       <Divider/>
       <List>
-        <ListItem button onClick={()=>history.push('/home')}>
-            <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+        <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+            <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"UNC Help Center"} />
         </ListItem>
       </List>

@@ -4,7 +4,7 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import IconButton from '@material-ui/core/IconButton';
 import {colorPalette} from '../../utils/design';
 import {zeroPad} from '../../utils/common';
-import {storeCourseSchedule} from '../Survey/Student/common';
+import {storeCourseSchedule} from '../Survey/Student/utils/common';
 
 function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
     const [isShown, setIsShown] = useState(false);
@@ -13,13 +13,13 @@ function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
       storeCourseSchedule(courseSchedule);
     }, [courseSchedule]);
 
-    return <div style={{height:"100%",backgroundColor:colorPalette.primary,borderRadius: 8, textAlign:"left",paddingLeft:"7%",paddingRight:"2%"}}
+    return <div style={{height:"100%",backgroundColor:colorPalette.secondaryA,borderRadius: 8, textAlign:"left",paddingLeft:"7%",paddingRight:"2%"}}
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={() => setIsShown(false)}
         >
         <div hidden={hideAddButton} style={{float:"right"}} onMouseEnter={() => setIsShown(false)} onMouseLeave={() => setIsShown(true)}>
             <IconButton 
-              style={{ color: colorPalette.secondaryA }}
+              style={{ color: colorPalette.secondary }}
               onClick={()=> {
                 if (!courseSchedule.includes(course)){
                   setCourseSchedule(prevArray => [...prevArray, course]);
@@ -32,7 +32,7 @@ function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
         </div>
         <div hidden={!hideAddButton} style={{float:"right"}} onMouseEnter={() => setIsShown(false)} onMouseLeave={() => setIsShown(true)}>
             <IconButton 
-              style={{ color: colorPalette.secondaryA }}
+              style={{ color: colorPalette.secondary }}
               onClick={()=> {
                 setCourseSchedule(courseSchedule.filter(item => JSON.stringify(item) !== JSON.stringify(course)));
                 }
@@ -42,13 +42,11 @@ function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
             </IconButton>
         </div>
         <br></br>
-        <h6 style={{color:colorPalette.white,fontSize:'1.4vw'}} hidden={isShown}>{course.courseSubject} </h6>
-        <h6 style={{color:colorPalette.white,fontSize:'1.25vw'}} hidden={isShown}>{course.courseNumber}{course.courseIsHonors ? "H" : course.courseIsLab ? "L" : ""}-{zeroPad(course.courseSection,3)}</h6>
-        <p style={{color:colorPalette.white, fontSize:'1vw'}} hidden={isShown}>{course.courseTitle}</p>
-        <h6 hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1.25vw'}}>{course.courseSchedule.map((ele)=> <li style={{color:colorPalette.white}}><em>{ele.day}</em> {(ele.time.includes('TBA')) ? "TBA": processTime(ele.time)}</li>)}</h6>
-        <br hidden={!isShown}></br>
-        <p hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1vw'}}>{course.courseInstructor.map((ele)=> <li style={{color:colorPalette.white}}>{ele.replace(/,/g, ', ').concat(" ")}</li>)}</p>
-        <br hidden={!isShown}></br>
+        <h6 style={{color:colorPalette.secondary,fontSize:'1.4vw'}} hidden={isShown}>{course.courseSubject} </h6>
+        <h6 style={{color:colorPalette.secondary,fontSize:'1.25vw'}} hidden={isShown}>{course.courseNumber}{course.courseIsHonors ? "H" : course.courseIsLab ? "L" : ""}-{zeroPad(course.courseSection,3)}</h6>
+        <p style={{color:colorPalette.secondary, fontSize:'0.9vw',marginLeft:'0.2vw',marginRight:'0.2vw'}} hidden={isShown}>{course.courseTitle}</p>
+        <h6 hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1.25vw',paddingBottom:'1vh',marginLeft:'0.2vw',marginRight:'0.2vw'}}>{course.courseSchedule.map((ele)=> <li style={{color:colorPalette.secondary}}><em>{ele.day}</em> {(ele.time.includes('TBA')) ? "TBA": processTime(ele.time)}</li>)}</h6>
+        <p hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1vw',paddingBottom:'1vh',marginLeft:'0.2vw',marginRight:'0.2vw'}}>{course.courseInstructor.map((ele)=> <li style={{color:colorPalette.secondary}}>{ele.replace(/,/g, ', ').concat(" ")}</li>)}</p>
     </div>
 };
 

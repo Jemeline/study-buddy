@@ -31,11 +31,11 @@ export function getMinor(){
 };
 
 export function storeGraduatePOS(graduatePOS){
-    sessionStorage.setItem('graduatePOS',JSON.stringify(graduatePOS));
+    sessionStorage.setItem('graduatepos',JSON.stringify(graduatePOS));
 };
 
 export function getGraduatePOS(){
-    return sessionStorage.getItem('graduatePOS') || null;
+    return sessionStorage.getItem('graduatepos') || null;
 };
 
 export function storeCurrPage(currPage){

@@ -15,11 +15,11 @@ import {logout} from '../../utils/common';
 import { useHistory } from "react-router-dom";
 
 
-function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer}){ 
+function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){ 
   const history = useHistory();
 
-    return <div style={{flexGrow: 1}}>
-      <AppBar position="static" style={{ background: colorPalette.secondaryA }}>
+    return <div hidden={!isLoggedIn || isHome} style={{flexGrow: 1}}>
+      <AppBar position="static" style={{ background: colorPalette.secondaryA,height:'65px'}}>
         <Toolbar>
           <IconButton edge="start" style={{ background: colorPalette.secondaryA }}
             onClick={() => {
@@ -31,36 +31,18 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer}){
             Study Buddy
           </Typography>
           <IconButton hidden={!isLoggedIn}>
-              <Badge badgeContent={4} color="primary">
-                <MailIcon style={{ color: colorPalette.white }}/>
-              </Badge>
-            </IconButton>
-            <IconButton hidden={!isLoggedIn}>
-              <Badge badgeContent={17} color="primary">
-                <NotificationsIcon style={{ color: colorPalette.white }}/>
-              </Badge>
-            </IconButton>
-            <IconButton hidden={!isLoggedIn}>
-              <AccountCircle style={{ color: colorPalette.white }}/>
-            </IconButton>
-            <Button
-                hidden={isLoggedIn}
-                style={{ background: colorPalette.white }}
-                onClick={() => {
-                    history.push('/login');
-                }}
-                >Sign In</Button>
-            <Button 
-                as={Link}
-                hidden={!isLoggedIn}
-                style={{ color: colorPalette.white }}
-                onClick={() => {
-                    logout();
-                    setIsLoggedIn(false);
-                    history.push('/login');
-                }}
-                to="/login">Sign Out
-            </Button>
+            <AccountCircle style={{ color: colorPalette.white }}/>
+          </IconButton>
+          <Button 
+              as={Link}
+              hidden={!isLoggedIn}
+              style={{ color: colorPalette.white }}
+              onClick={() => {
+                  logout();
+                  setIsLoggedIn(false);
+              }}
+              to="/auth">Sign Out
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
