@@ -2,9 +2,10 @@ import React from 'react';
 import {getIsSurveyed} from '../../utils/common';
 import DashboardUnsurveyed from './DashboardUnsurveyed.component';
 import Grid from '@material-ui/core/Grid';
+import {colorPalette} from '../../utils/design';
  
 function StudentDashboard() {
-    return <div style={{backgroundColor:'#f1f1f1',zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center'}}>
+    return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center'}}>
       {getIsSurveyed() ?
       <Grid
           container

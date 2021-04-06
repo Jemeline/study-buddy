@@ -3,15 +3,13 @@ import Slider from '@material-ui/core/Slider';
 import {colorPalette} from '../../../utils/design';
 import { withStyles } from '@material-ui/core/styles';
 import {storeGraduationYear} from './common';
+import SurveyNavigation from './SurveyNavigation.component';
 
 
 function SurveyGraduationYear({graduationYear,setGraduationYear,hidden}){
     return <div hidden={hidden}> 
-            <h4>WHAT IS YOUR GRADUATION YEAR?</h4>
-            <br></br><br></br>
-            <h5 style={{backgroundColor:colorPalette.secondaryB,borderRadius: 10, color:colorPalette.white,
-                width:'20%',left: '50%',position: "absolute",transform: 'translate(-50%, -50%)', paddingTop:'5px',paddingBottom:'5px'}}>{graduationYear}</h5>
-            <br></br><br></br>
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>WHAT IS YOUR GRADUATION YEAR?</h4>
+            <h5 style={{paddingBottom:'1.5vw',backgroundColor:colorPalette.secondary,borderRadius: 10,color:colorPalette.white,paddingTop:'5px',paddingBottom:'5px',width:'6vw',margin:'auto',fontSize:'2vw'}}>{graduationYear}</h5>
             <YearSlider
                 defaultValue={new Date().getFullYear()+2}
                 value={graduationYear}
@@ -22,14 +20,16 @@ function SurveyGraduationYear({graduationYear,setGraduationYear,hidden}){
                 min={new Date().getFullYear()}
                 max={new Date().getFullYear()+8}
                 onChange = {(e,value)=>{setGraduationYear(value);storeGraduationYear(value);}}
-            />
+            />        
     </div>
 };
 
 const YearSlider = withStyles({
     root: {
-      color: colorPalette.secondaryB,
+      color: colorPalette.secondary,
       height: 8,
+      paddingTop:'1.5vw',
+      width:'35vw'
     },
     thumb: {
       height: 24,
@@ -55,7 +55,7 @@ const YearSlider = withStyles({
       borderRadius: 10,
     },
     mark: {
-        backgroundColor: colorPalette.secondaryB,
+        backgroundColor: colorPalette.secondary,
         height: 8,
         width: 1,
         marginTop: -1,

@@ -17,7 +17,7 @@ function DashboardUnsurveyed() {
         <Button
             size="sm"
             onClick={async (e) => {history.push('/student-survey');}}
-            style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14,margin:'auto',width:'20vw'}}                                                                                                                
+            style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14,margin:'auto',width:'20vw',height:'5vh',fontSize:'1vw'}}                                                                                                                
         > Take the Survey Now
         </Button>
       </div>

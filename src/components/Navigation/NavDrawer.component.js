@@ -20,18 +20,18 @@ function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn,isHome}){
         <Drawer anchor={"left"} open={isOpenDrawer} onClose={()=>setIsOpenDrawer(false)}>
         <List>
           <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
-            <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+            <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItem>
           <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
-            <ListItemIcon><PersonIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+            <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>
       </List>
       <Divider/>
       <List>
         <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
-            <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+            <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"UNC Help Center"} />
         </ListItem>
       </List>

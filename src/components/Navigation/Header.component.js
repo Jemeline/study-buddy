@@ -31,35 +31,26 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){
             Study Buddy
           </Typography>
           <IconButton hidden={!isLoggedIn}>
-              <Badge badgeContent={4} color="primary">
-                <MailIcon style={{ color: colorPalette.white }}/>
-              </Badge>
-            </IconButton>
-            <IconButton hidden={!isLoggedIn}>
-              <Badge badgeContent={17} color="primary">
-                <NotificationsIcon style={{ color: colorPalette.white }}/>
-              </Badge>
-            </IconButton>
-            <IconButton hidden={!isLoggedIn}>
-              <AccountCircle style={{ color: colorPalette.white }}/>
-            </IconButton>
-            <Button
-                hidden={isLoggedIn}
-                style={{ background: colorPalette.white }}
-                onClick={() => {
-                    history.push('/');
-                }}
-                >Sign In</Button>
-            <Button 
-                as={Link}
-                hidden={!isLoggedIn}
-                style={{ color: colorPalette.white }}
-                onClick={() => {
-                    logout();
-                    setIsLoggedIn(false);
-                }}
-                to="/auth">Sign Out
-            </Button>
+            <AccountCircle style={{ color: colorPalette.white }}/>
+          </IconButton>
+          <Button
+              hidden={isLoggedIn}
+              style={{ background: colorPalette.white }}
+              onClick={() => {
+                  history.push('/');
+              }}
+          >Sign In
+          </Button>
+          <Button 
+              as={Link}
+              hidden={!isLoggedIn}
+              style={{ color: colorPalette.white }}
+              onClick={() => {
+                  logout();
+                  setIsLoggedIn(false);
+              }}
+              to="/auth">Sign Out
+          </Button>
         </Toolbar>
       </AppBar>
     </div>

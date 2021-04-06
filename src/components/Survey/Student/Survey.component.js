@@ -30,43 +30,31 @@ function Survey(){
     const [learningType, setLearningType] = useState((getLearningType() !== null) ? JSON.parse(getLearningType()) : []);
     const profilePayload = () => createStudentProfilePayload(graduationYear,major,minor,graduatePOS,studentType,courseSchedule,learningType,user);
     const history = useHistory();
-
-    return <div style={{backgroundImage: `url(${background})`,backgroundSize:"cover",backgroundPosition: 'center'}}> 
-            <div hidden={currPage !== 3} style={{display: 'flex',justifyContent: "space-between",alignItems: 'center',justifyContent: 'center',height: '92vh'}}>
-                <Card style={{marginLeft:'3%', marginRight:'3%', width:'45%',backgroundColor:colorPalette.white,boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
-                    <Col>
-                        <Card.Body>
-                            <CourseSearchImproved courseSchedule={courseSchedule} setCourseSchedule={setCourseSchedule}/>
-                        </Card.Body>
-                    </Col>
-                </Card>
-                <Card style={{marginRight:'3%',marginLeft:'3%',width:'45%',backgroundColor:colorPalette.white,boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
-                    <Col>
-                        <Card.Body>
-                            <SurveyCourseSchedule hidden={currPage !== 3} courseSchedule={courseSchedule} setCourseSchedule={setCourseSchedule}/>
-                            <br hidden={currPage>pageEnd}></br>
-                            <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload} graduatePOS={graduatePOS}/>
-                        </Card.Body>
-                    </Col>
-                </Card>
-            </div>
-                <div hidden={currPage === 3} style={{display: 'flex',alignItems: 'center',justifyContent: 'center',height: '92vh'}}>
-                <Card style={{backgroundColor:colorPalette.white,boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',width:'45%',}}>
-                    <Col>
-                        <Card.Body>
-                            <SurveyGraduationYear graduationYear={graduationYear} setGraduationYear={setGraduationYear} hidden={currPage !== 0}/>
-                            <SurveyProgramOfStudy major={major} setMajor={setMajor} minor={minor} setMinor={setMinor} graduatePOS={graduatePOS} setGraduatePOS={setGraduatePOS} studentType={studentType} hidden={currPage !== 2}/>
-                            <SurveyStudentType studentType={studentType} setStudentType={setStudentType} hidden={currPage !== 1} setMajor={setMajor}/>
-                            <SurveyLearningType learningType={learningType} setLearningType={setLearningType} hidden={currPage !== 4}/> 
-                            <SurveyComplete hidden={currPage !== 6} />
-                            <SurveyResubmit hidden={currPage !== 5}/>
-                            <br></br>
-                            <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload}graduatePOS={graduatePOS}/>
-                        </Card.Body>
-                    </Col>    
-                </Card>
+    
+    return <div style={{backgroundImage: `url(${background})`,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}}>
+        <div hidden={currPage === 3} style={{width:'40vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white',display:'flex',alignItems: 'center',justifyContent:'center',padding:'1vw'}}>
+            <div>
+            <SurveyGraduationYear graduationYear={graduationYear} setGraduationYear={setGraduationYear} hidden={currPage !== 0}/>
+            <SurveyStudentType studentType={studentType} setStudentType={setStudentType} hidden={currPage !== 1} setMajor={setMajor}/>
+            <SurveyProgramOfStudy major={major} setMajor={setMajor} minor={minor} setMinor={setMinor} graduatePOS={graduatePOS} setGraduatePOS={setGraduatePOS} studentType={studentType} hidden={currPage !== 2}/>
+            <SurveyLearningType learningType={learningType} setLearningType={setLearningType} hidden={currPage !== 4}/> 
+            <SurveyResubmit hidden={currPage !== 5}/>
+            <SurveyComplete hidden={currPage !== 6}/>
+            <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload}graduatePOS={graduatePOS}/>
+            
+            </div>    
+        </div>
+            <div hidden={currPage !== 3} style={{display:'flex',alignItems: 'center',justifyContent:"space-between"}}>
+                <div style={{width:'40vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white',marginRight:'10vw',padding:'1vw',height:'70vh'}}>
+                    <CourseSearchImproved courseSchedule={courseSchedule} setCourseSchedule={setCourseSchedule}/>
+                </div>
+                <div style={{width:'40vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white',padding:'1vw',height:'70vh'}}>
+                    <SurveyCourseSchedule courseSchedule={courseSchedule} setCourseSchedule={setCourseSchedule}/>
+                    <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload} graduatePOS={graduatePOS}/>
+                </div>
             </div>
     </div>
+              
 };
 
 function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,studentType,courseSchedule,learningType,user){
