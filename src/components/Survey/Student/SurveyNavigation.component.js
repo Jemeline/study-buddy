@@ -3,7 +3,7 @@ import {colorPalette} from '../../../utils/design';
 import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {storeCurrPage} from './common';
+import {storeCurrPage} from './utils/common';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import {apiCreateStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
 import {getIsSurveyed,getUser} from '../../../utils/common';
@@ -30,8 +30,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
                 }
             }}
             hidden={currPage > pageEnd+1}
-        >
-            Back
+        >Back
         </Button>
         <Button
             variant="contained"
@@ -41,8 +40,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
             onClick={()=> {setCurrPage(currPage+1);storeCurrPage(currPage+1);}}
             disabled={(major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 4)}
             hidden={(currPage >= pageEnd-1)}
-        >
-            Next
+        >Next
         </Button>
         <Button
             variant="contained"
@@ -53,8 +51,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
             }}
             disabled={(major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 4)}
             hidden={!(currPage === pageEnd-1)}
-        >
-            Finish
+        >Finish
         </Button>
         <Button
             variant="contained"
@@ -63,8 +60,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
                 await handleSurveyResubmit(profilePayload(),setCurrPage,storeCurrPage);
             }}
             hidden={currPage !==5}
-        >
-            Yes, Resubmit
+        >Yes, Resubmit
         </Button>
     </div>
 };

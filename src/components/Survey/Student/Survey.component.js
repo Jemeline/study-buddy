@@ -1,19 +1,16 @@
 import React, {useState} from 'react';
-import {Col} from 'reactstrap';
-import {Card} from 'react-bootstrap';
 import {getUser} from '../../../utils/common';
-import SurveyGraduationYear from './SurveyGraduationYear.component';
-import SurveyProgramOfStudy from './SurveyProgramOfStudy.component';
-import SurveyStudentType from './SurveyStudentType.component';
-import SurveyLearningType from './SurveyLearningType.component';
+import SurveyGraduationYear from './questions/SurveyGraduationYear.component';
+import SurveyProgramOfStudy from './questions/SurveyProgramOfStudy.component';
+import SurveyStudentType from './questions/SurveyStudentType.component';
+import SurveyLearningType from './questions/SurveyLearningType.component';
 import background from '../survey-background.jpg';
-import {colorPalette} from '../../../utils/design';
-import SurveyCourseSchedule from './SurveyCourseSchedule.component';
+import SurveyCourseSchedule from './questions/SurveyCourseSchedule.component';
 import CourseSearchImproved from '../../CourseSchedule/CourseSearchImproved.component';
 import SurveyNavigation from './SurveyNavigation.component';
 import SurveyResubmit from './SurveyResubmit.component';
 import SurveyComplete from './SurveyComplete.component';
-import {getGraduationYear,getStudentType,getMajor,getMinor,getCurrPage,getCourseSchedule,getLearningType,getGraduatePOS} from './common';
+import {getGraduationYear,getStudentType,getMajor,getMinor,getCurrPage,getCourseSchedule,getLearningType,getGraduatePOS} from './utils/common';
 import { useHistory } from "react-router-dom";
 
 function Survey(){

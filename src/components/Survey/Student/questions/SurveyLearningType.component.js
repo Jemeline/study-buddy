@@ -6,8 +6,8 @@ import PanToolIcon from '@material-ui/icons/PanTool';
 import FunctionsIcon from '@material-ui/icons/Functions';
 import GroupIcon from '@material-ui/icons/Group';
 import PersonIcon from '@material-ui/icons/Person';
-import '../survey.css';
-import {storeLearningType} from './common';
+import '../../survey.css';
+import {storeLearningType} from '../utils/common';
 
 function SurveyLearningType({learningType,setLearningType,hidden}){
     const [visual, setVisual] = useState((learningType.includes('visual')) ? 'selected': '');

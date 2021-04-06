@@ -1,8 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SchoolIcon from '@material-ui/icons/School';
-import '../survey.css';
-import {storeStudentType,storeMajor} from './common';
+import '../../survey.css';
+import {storeStudentType} from '../utils/common';
 
 function SurveyStudentType({studentType,setStudentType,hidden}){
     const [graduateClassName, setGraduateClassName] = useState((studentType==='graduate') ? 'selected': '');

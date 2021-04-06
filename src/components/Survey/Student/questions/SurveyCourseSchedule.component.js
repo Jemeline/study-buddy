@@ -1,5 +1,5 @@
 import React from 'react';
-import Course from '../../CourseSchedule/Course.component';
+import Course from '../../../CourseSchedule/Course.component';
 import Grid from '@material-ui/core/Grid';
 
 function SurveyCourseSchedule({courseSchedule,setCourseSchedule,hidden}){

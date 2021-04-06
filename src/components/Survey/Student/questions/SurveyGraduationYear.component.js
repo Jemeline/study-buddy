@@ -1,9 +1,9 @@
 import React from 'react';
 import Slider from '@material-ui/core/Slider';
-import {colorPalette} from '../../../utils/design';
+import {colorPalette} from '../../../../utils/design';
 import { withStyles } from '@material-ui/core/styles';
-import {storeGraduationYear} from './common';
-import SurveyNavigation from './SurveyNavigation.component';
+import {storeGraduationYear} from '../utils/common';
+import SurveyNavigation from '../SurveyNavigation.component';
 
 
 function SurveyGraduationYear({graduationYear,setGraduationYear,hidden}){

@@ -1,8 +1,8 @@
 import React from 'react';
-import {colorPalette} from '../../../utils/design';
-import {Majors,Minors,GraduatePrograms} from './StudyPrograms';
+import {colorPalette} from '../../../../utils/design';
+import {Majors,Minors,GraduatePrograms} from '../utils/StudyPrograms';
 import Select from 'react-select';
-import {storeMajor,storeMinor,storeGraduatePOS} from './common';
+import {storeMajor,storeMinor,storeGraduatePOS} from '../utils/common';
 
 function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGraduatePOS,hidden,studentType}){
     const selectMajors = (Majors.map((e)=> {return {label:e,value:e}}))

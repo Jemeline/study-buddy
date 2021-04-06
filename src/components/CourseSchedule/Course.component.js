@@ -4,7 +4,7 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import IconButton from '@material-ui/core/IconButton';
 import {colorPalette} from '../../utils/design';
 import {zeroPad} from '../../utils/common';
-import {storeCourseSchedule} from '../Survey/Student/common';
+import {storeCourseSchedule} from '../Survey/Student/utils/common';
 
 function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
     const [isShown, setIsShown] = useState(false);

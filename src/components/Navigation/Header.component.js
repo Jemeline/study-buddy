@@ -33,14 +33,6 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){
           <IconButton hidden={!isLoggedIn}>
             <AccountCircle style={{ color: colorPalette.white }}/>
           </IconButton>
-          <Button
-              hidden={isLoggedIn}
-              style={{ background: colorPalette.white }}
-              onClick={() => {
-                  history.push('/');
-              }}
-          >Sign In
-          </Button>
           <Button 
               as={Link}
               hidden={!isLoggedIn}
