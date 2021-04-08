@@ -6,7 +6,6 @@ import {apiUpdateUser} from '../../../utils/api';
 import { useHistory } from "react-router-dom";
 import avatar from './unknown-avatar.jpg';
 import { InputGroup,InputGroupAddon,InputGroupText,Input,FormFeedback} from 'reactstrap';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -17,16 +16,11 @@ function UserDetails({user,setUser}) {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [update, setUpdate] = useState(false);
-    const [userUpdated, setUserUpdated] = useState(user);
     const [first, setFirst] = useState(capitalizeFirst(user.first));
     const [last, setLast] = useState(capitalizeFirst(user.last));
     const handleClick = (event) => {setAnchorEl(event.currentTarget);};
     const handleClose = () => {setAnchorEl(null);};
 
-    useEffect(() => {
-      login(userUpdated,userUpdated.role,userUpdated.isVerified,userUpdated.isSurveyed);
-      setUser(userUpdated);
-    }, [userUpdated]);
 
     return <div style={{width:'65vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white'}}>
       <h5 style={{marginTop:'1vw',float:'left',paddingLeft:'1vw',fontSize:'1.5vw'}}>User Details</h5>
@@ -71,7 +65,7 @@ function UserDetails({user,setUser}) {
               value={first}
               onChange={(e) => {if (update){setFirst(e.target.value)};}}
               valid={update && validateName(first)}
-              invalid={ update && first.length === 0 }
+              invalid={update && !validateName(first)}
             />
           </InputGroup>
           <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>
@@ -81,8 +75,8 @@ function UserDetails({user,setUser}) {
             <Input
               value={last}
               onChange={(e) => {if (update){setLast(e.target.value)};}}
-              valid={update && validateName(last)}
-              invalid={ update && last.length === 0 }
+              valid={update && last.length !== 0 && validateName(last)}
+              invalid={update && !validateName(last)}
             />
           </InputGroup>
         </div>

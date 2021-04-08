@@ -10,6 +10,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SecurityIcon from '@material-ui/icons/Security';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import UserDetails from './UserDetails.component';
+import ContactInfo from './ContactInfo.component';
 import {getUser,login} from '../../../utils/common';
 
 function StudentProfile(){
@@ -39,10 +40,8 @@ function StudentProfile(){
       <Tab label="Security" icon={<SecurityIcon />} style={{flexShrink: 0}}/>
     </Tabs>
     <div style={{zIndex:-1,height:'calc(100vh - 160px)',display:'flex',justifyContent:'center',alignItems: 'center'}}>
-    {(value === 0) ? 
-    <UserDetails user={user} setUser={setUser}/>
-     
-    :(value === 1) ? <p>1</p>
+    {(value === 0) ? <UserDetails user={user} setUser={setUser}/>
+    :(value === 1) ? <ContactInfo user={user} setUser={setUser}/>
     :(value === 2) ? <p>2</p>
     :(value === 3) ? <p>3</p>
     :(value === 4) ? <p>4</p>
