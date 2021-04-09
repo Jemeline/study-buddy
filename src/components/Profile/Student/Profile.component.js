@@ -5,16 +5,16 @@ import Tab from '@material-ui/core/Tab';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SecurityIcon from '@material-ui/icons/Security';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import UserDetails from './UserDetails.component';
 import ContactInfo from './ContactInfo.component';
 import StudyPreferences from './StudyPreferences.component';
-import {getUser,login} from '../../../utils/common';
+import {getUser,getIsSurveyed} from '../../../utils/common';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import {apiGetStudentProfile,apiUpdateUser} from '../../../utils/api';
+import {apiGetStudentProfile} from '../../../utils/api';
+import DashboardUnsurveyed from '../../Dashboard/DashboardUnsurveyed.component';
 
 function StudentProfile(){
   const theme = useTheme();
@@ -62,7 +62,8 @@ function StudentProfile(){
     <div style={{zIndex:-1,height:'calc(100vh - 160px)',display:'flex',justifyContent:'center',alignItems: 'center'}}>
     {(value === 0) ? <UserDetails user={user} setUser={setUser}/>
     :(value === 1) ? <ContactInfo user={user} setUser={setUser}/>
-    :(value === 2) ? <StudyPreferences user={user} setUser={setUser} profile={profile} loading={loading} error={error} setProfile={setProfile}/>
+    :(value === 2) ? (getIsSurveyed()) ? <StudyPreferences user={user} setUser={setUser} profile={profile} loading={loading} error={error} setProfile={setProfile}/> 
+      : <DashboardUnsurveyed/>
     :(value === 3) ? <p>3</p> // Clayton put your calendar thing here
     :(value === 4) ? <p>4</p>
     :<p>5</p>}

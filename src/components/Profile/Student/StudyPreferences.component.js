@@ -21,8 +21,6 @@ function StudyPreferences({user,setUser,profile,error,loading,setProfile}) {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [update, setUpdate] = useState(false);
-    const [first, setFirst] = useState(capitalizeFirst(user.first));
-    const [last, setLast] = useState(capitalizeFirst(user.last));
     const handleClick = (event) => {setAnchorEl(event.currentTarget);};
     const handleClose = () => {setAnchorEl(null);};
     const selectMajors = (Majors.map((e)=> {return {label:e,value:e}}))
