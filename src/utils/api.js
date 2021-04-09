@@ -79,3 +79,14 @@ export async function apiUpdateUser(id,userData) {
         throw error;
     }    
 };
+
+export async function apiGetStudentProfile(id) {
+    try {
+        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/student-profile/find-by-id/${id}`);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
