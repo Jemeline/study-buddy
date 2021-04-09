@@ -70,7 +70,7 @@ function ContactInfo({user,setUser}) {
         <div style={{margin:'1vw'}}>
           <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>Email</InputGroupText>
+              <InputGroupText style={{fontSize:'1.2vw'}}>Email</InputGroupText>
             </InputGroupAddon>
             <Input
                 style={{backgroundColor:'white'}}
@@ -78,23 +78,27 @@ function ContactInfo({user,setUser}) {
                 onChange={(e) => {if (updateType==='email'){setEmail(e.target.value)};}}
                 valid={updateType==='email' && validateEmail(email)}
                 invalid={ updateType==='email' && email.length > 0 && !validateEmail(email) }
+                style={{backgroundColor:'white',fontSize:'1.2vw'}}
+                disabled={!(updateType==='email') }
             />
           </InputGroup>
         </div>
         <div style={{margin:'1vw'}}>
           <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>Phone</InputGroupText>
+              <InputGroupText style={{fontSize:'1.2vw'}}>Phone</InputGroupText>
             </InputGroupAddon>
             <Input
               value={phone}
               onChange={(e) => {if (updateType==='phone'){setPhone(e.target.value)};}}
               valid={updateType==='phone' && validatePhone(phone)}
               invalid={updateType==='phone' && phone.length > 0 && !validatePhone(phone)}
+              style={{backgroundColor:'white',fontSize:'1.2vw'}}
+              disabled={!(updateType==='phone')}
             />
           </InputGroup>
             <Modal isOpen={modal} toggle={async ()=> await CancelUpdateEmail(user,setEmail,setModal,setAlert,setAlertMessage,setpTag)}>
-                <ModalHeader toggle={async ()=> await CancelUpdateEmail(user,setEmail,setModal,setAlert,setAlertMessage,setpTag)}>Modal title</ModalHeader>
+                <ModalHeader toggle={async ()=> await CancelUpdateEmail(user,setEmail,setModal,setAlert,setAlertMessage,setpTag)}>Verify Your Email</ModalHeader>
                     <ModalBody>
                     <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14, margin:'1vw'}} show={alertModal} onClose={() => setAlertModal(false)} dismissible transition={false}>
                         {alertModalMessage}

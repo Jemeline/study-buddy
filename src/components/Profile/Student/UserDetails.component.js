@@ -45,38 +45,42 @@ function UserDetails({user,setUser}) {
         <div style={{margin:'1vw'}}>
           <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>Username</InputGroupText>
+              <InputGroupText style={{fontSize:'1.2vw'}}>Username</InputGroupText>
             </InputGroupAddon>
-            <Input disabled style={{backgroundColor:'white'}} value={user.email}/>
+            <Input disabled style={{backgroundColor:'white',fontSize:'1.2vw'}} value={user.email}/>
           </InputGroup>
           <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>Member Since</InputGroupText>
+              <InputGroupText style={{fontSize:'1.2vw'}}>Member Since</InputGroupText>
             </InputGroupAddon>
-            <Input disabled style={{backgroundColor:'white'}} value={new Date(user.dateMember).getDate()+'-' + (new Date(user.dateMember).getMonth()+1) + '-'+new Date(user.dateMember).getFullYear()}/>
+            <Input disabled style={{backgroundColor:'white',fontSize:'1.2vw'}} value={new Date(user.dateMember).getDate()+'-' + (new Date(user.dateMember).getMonth()+1) + '-'+new Date(user.dateMember).getFullYear()}/>
           </InputGroup>
         </div>
         <div style={{margin:'1vw'}}>
           <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>First Name</InputGroupText>
+              <InputGroupText style={{fontSize:'1.2vw'}}>First Name</InputGroupText>
             </InputGroupAddon>
             <Input
               value={first}
               onChange={(e) => {if (update){setFirst(e.target.value)};}}
               valid={update && validateName(first)}
               invalid={update && !validateName(first)}
+              style={{backgroundColor:'white',fontSize:'1.2vw'}}
+              disabled={!update}
             />
           </InputGroup>
           <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>Last Name</InputGroupText>
+              <InputGroupText style={{fontSize:'1.2vw'}}>Last Name</InputGroupText>
             </InputGroupAddon>
             <Input
               value={last}
               onChange={(e) => {if (update){setLast(e.target.value)};}}
               valid={update && last.length !== 0 && validateName(last)}
               invalid={update && !validateName(last)}
+              style={{backgroundColor:'white',fontSize:'1.2vw'}}
+              disabled={!update}
             />
           </InputGroup>
         </div>

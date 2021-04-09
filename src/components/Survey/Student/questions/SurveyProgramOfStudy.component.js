@@ -18,7 +18,7 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
     const handleChangeGraduatePOS = (e) => {
       setGraduatePOS(e);
       storeGraduatePOS(e);
-  };
+    };
     const handleChangeMinor = (e) => {
         setMinor(e);
         storeMinor(e);
@@ -65,7 +65,7 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
     </div>
 };
 
-const colourStyles = {
+export const colourStyles = {
     control: styles => ({ ...styles, backgroundColor: 'white',width:'38vw'}),
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
       return {
