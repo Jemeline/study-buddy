@@ -16,7 +16,7 @@ function App(){
   
   
   return (
-    <div className="App">
+    <div className="App" data-testid="App">
       <BrowserRouter>
         <Header isLoggedIn={isLoggedIn} isHome={isHome} setIsLoggedIn={setIsLoggedIn} setIsOpenDrawer={setIsOpenDrawer}></Header>
         <NavDrawer isOpenDrawer={isOpenDrawer} isHome={isHome} setIsOpenDrawer={setIsOpenDrawer} isLoggedIn={isLoggedIn}/>
