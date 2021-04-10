@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route, Redirect} from 'react-router-dom';
-import {getRole,getIsVerified,getRoleLiteral,getLoginStatus} from "../../utils/common";
+import {getRole,getRoleLiteral,getLoginStatus} from "../../utils/common";
 
-const StudentRoute = ({ component: Component,setIsHome, ...path }) => {
-    setIsHome(false);
+const StudentRoute = ({ component: Component, ...path }) => {
     return(
         <Route {...path}  component={(props)=>{
             if (getLoginStatus()){

@@ -9,14 +9,15 @@ import {colorPalette} from '../../utils/design';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {Link} from 'react-router-dom';
 import {getRoleLiteral,logout} from '../../utils/common';
-import { useHistory } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 
 
 
-function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer,isHome}){ 
-  const history = useHistory();
+function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer}){ 
+    const history = useHistory();
+    const location = useLocation().pathname;
 
-    return <div hidden={!isLoggedIn || isHome} style={{flexGrow: 1}}>
+    return <div hidden={!isLoggedIn || (location==='/auth') || (location==='/')} style={{flexGrow: 1}}>
       <AppBar position="static" style={{ background: colorPalette.secondaryA,height:'65px'}}>
         <Toolbar>
           <IconButton edge="start" style={{ background: colorPalette.secondaryA }}
