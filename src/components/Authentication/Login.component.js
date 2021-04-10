@@ -28,7 +28,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
     setAlertMessageLogin('');
   };
 
-  return <div> 
+  return <div className="Login" data-testid="Login"> 
       <Container style={{width:'35vw',margin: "auto"}} >     
         <Col>
           <img src={logo} style={{height: '35vh'}}/>
@@ -68,6 +68,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                 </FormGroup>
                 </Form>
                 <Button
+                  data-testid="login-button"
                   size="lg"
                   type="submit"
                   hidden={loadingLogin}
@@ -90,9 +91,9 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                 </div>
               <br/>
               Don't Have an Account?
-              <Link to="/auth" onClick={()=>{setTab('register')}}> Sign Up Now</Link>
+              <Button color="link" onClick={()=>{setTab('register')}}> Sign Up Now</Button>
               <br/>
-              <Link to="/auth" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
+              <Button color="link" onClick={()=>{setTab('recover')}}>Forgot Password?</Button>
           </Col>  
       </Container>  
   </div>
