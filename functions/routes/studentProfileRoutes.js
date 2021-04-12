@@ -15,8 +15,9 @@ app.get("/student-profile", async (req, res) => {
 });
 
 app.get("/student-profile/find-by-id/:id", async (req, res) => {
-  const profile = await StudentProfileModel.findOne({"_userId": req.params.id});
   try {
+    const profile = await StudentProfileModel.findOne({"_userId": req.params.id});
+  
     res.send(profile);
   } catch (err) {
     res.status(500).send(err);

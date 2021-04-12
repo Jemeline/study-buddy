@@ -14,11 +14,13 @@ import StudentRoute from './RouteClasses/Student.route';
 import TutorRoute from './RouteClasses/Tutor.route';
 import AdminRoute from './RouteClasses/Admin.route';
 import UnverifiedRoute from './RouteClasses/Unverified.route';
+import Calendar from '../components/Calendar/Calendar.component'
 
 const Routes = ({setIsLoggedIn}) => (
     <Switch>
       <Route exact path="/" render={() => (<Home/>)}/>
       <Route exact path="/auth/" render={() => (<AuthenticationHome  setIsLoggedIn={setIsLoggedIn}/>)}/>
+      <Route exact path="/student-calendar" component={Calendar}/>
       <StudentRoute exact path="/dashboard/student" component={StudentDashboard}/>
       <StudentRoute exact path="/student-survey" component={Survey}/>
       <StudentRoute exact path="/student-profile" component={StudentProfile}/>

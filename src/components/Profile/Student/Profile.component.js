@@ -15,6 +15,7 @@ import {getUser,getIsSurveyed} from '../../../utils/common';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import {apiGetStudentProfile} from '../../../utils/api';
 import DashboardUnsurveyed from '../../Dashboard/DashboardUnsurveyed.component';
+import Calendar from '../../Calendar/Calendar.component'
 
 function StudentProfile(){
   const theme = useTheme();
@@ -64,7 +65,7 @@ function StudentProfile(){
     :(value === 1) ? <ContactInfo user={user} setUser={setUser}/>
     :(value === 2) ? (getIsSurveyed()) ? <StudyPreferences user={user} setUser={setUser} profile={profile} loading={loading} error={error} setProfile={setProfile}/> 
       : <DashboardUnsurveyed/>
-    :(value === 3) ? <p>3</p> // Clayton put your calendar thing here
+    :(value === 3) ? <Calendar user={user}/> // Clayton put your calendar thing here
     :(value === 4) ? <p>4</p>
     :<p>5</p>}
     </div>
