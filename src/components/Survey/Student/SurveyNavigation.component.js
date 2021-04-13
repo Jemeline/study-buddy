@@ -5,7 +5,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {storeCurrPage} from './utils/common';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import {apiCreateStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
+import {apiCreateStudentProfile,apiGetStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
 import {getIsSurveyed, getUser} from '../../../utils/common';
 import { useHistory } from "react-router-dom";
 import {getWeightedSum} from "../MatchingAlgorithm";
@@ -80,23 +80,7 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
 
             // Retrieve profile of logged in user
             const user = JSON.parse(getUser());
-            const getUserProfiles = await axios({
-                method: 'get',
-                url: `https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile`
-            });
-            const users = getUserProfiles.data;
-            let userProfileId = 0;
-            for (let i = 0; i < users.length; i++) {
-                if (users[i]._userId == user._id) {
-                    userProfileId = users[i]._id;
-                    break;
-                }
-            }
-            const getUserProfile = await axios({
-                method: 'get',
-                url: `https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile/find-by-id/${userProfileId}`
-            });
-            const userProfile = getUserProfile.data;
+            const userProfile = (await apiGetStudentProfile(user._id)).data;
 
             // Use algorithm to sort other users
             const sums = await getWeightedSum(userProfile);
@@ -116,23 +100,7 @@ async function handleSurveyResubmit(payload,setCurrPage,storeCurrPage){
 
         // Retrieve profile of logged in user
         const user = JSON.parse(getUser());
-        const getUserProfiles = await axios({
-            method: 'get',
-            url: `https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile`
-        });
-        const users = getUserProfiles.data;
-        let userProfileId = 0;
-        for (let i = 0; i < users.length; i++) {
-            if (users[i]._userId == user._id) {
-                userProfileId = users[i]._id;
-                break;
-            }
-        }
-        const getUserProfile = await axios({
-            method: 'get',
-            url: `https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile/find-by-id/${userProfileId}`
-        });
-        const userProfile = getUserProfile.data;
+        const userProfile = (await apiGetStudentProfile(user._id)).data;
 
         // Use algorithm to sort other users
         const sums = await getWeightedSum(userProfile);

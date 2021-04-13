@@ -32,7 +32,7 @@ function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn}){
       </List>
       <Divider/>
       <List>
-        <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+        <ListItem button onClick={()=>history.push(`/${getRoleLiteral()}-help`)}>
             <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"UNC Help Center"} />
         </ListItem>
