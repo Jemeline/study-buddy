@@ -1,11 +1,8 @@
-import React,{useState,useEffect} from 'react';
-import {getUser,capitalizeFirst,login} from '../../../utils/common';
-import {validateName} from '../../../utils/regex';
+import React,{useState} from 'react';
 import {colorPalette} from '../../../utils/design';
-import {apiGetStudentProfile,apiUpdateUser,apiResubmitStudentProfile} from '../../../utils/api';
+import {apiResubmitStudentProfile} from '../../../utils/api';
 import { useHistory } from "react-router-dom";
-import avatar from './unknown-avatar.jpg';
-import { InputGroup,InputGroupAddon,InputGroupText,Input,FormFeedback} from 'reactstrap';
+import { InputGroup,InputGroupAddon,InputGroupText,Input} from 'reactstrap';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -17,7 +14,7 @@ import {LearningTypes} from '../../Survey/Student/utils/common';
 import {Link} from 'react-router-dom';
 
  
-function StudyPreferences({user,setUser,profile,error,loading,setProfile}) {
+function StudyPreferences({user,profile,error,loading,setProfile,hidden}) {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [update, setUpdate] = useState(false);
@@ -37,7 +34,6 @@ function StudyPreferences({user,setUser,profile,error,loading,setProfile}) {
     const [studentType, setStudentType] = useState(profile.studentType);
     const now = new Date().getFullYear();
     const years = [...Array(8).keys()].map(i => i + now);
-
 
     const handleChangeMajor = (e) => {
         setMajor(e);
@@ -61,10 +57,9 @@ function StudyPreferences({user,setUser,profile,error,loading,setProfile}) {
         setLearningType((profile.learningType.includes('prefer not to answer')) ?  []: profile.learningType.map((e)=> {return {label:e,value:e}}));
     };
     
-
     return <div style={{width:'65vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white'}}>
       <h5 style={{marginTop:'1vw',float:'left',paddingLeft:'1vw',fontSize:'1.5vw'}}>Study Preferences</h5>
-      <IconButton style={{float:'right'}} onClick={handleClick}>
+      <IconButton hidden={hidden} style={{float:'right'}} onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Menu
@@ -176,7 +171,6 @@ function StudyPreferences({user,setUser,profile,error,loading,setProfile}) {
 async function handleUpdate(payload,revertChanges,setProfile,profile,user,studentType,graduationYear,graduatePOS,major,minor,learningType){
     try {
         const data = await apiResubmitStudentProfile(payload);
-        console.log(data);
         const newProfile = profile;
         if (data){
             if (studentType === 'graduate') {
@@ -203,28 +197,6 @@ async function handleUpdate(payload,revertChanges,setProfile,profile,user,studen
         console.log(error);
     };
 };
-
-// async function handleUpdate(first,last,user,setFirst,setLast,login,setUser){
-//   try{
-//     const body = {"first":first,"last":last}
-//     const data = await apiUpdateUser(user._id,body);
-//     if (data){
-//       const newUser = JSON.parse(getUser());
-//       newUser.first = first;
-//       newUser.last = last;
-//       login(newUser,newUser.role,newUser.isVerified,newUser.isSurveyed);
-//       setUser(newUser);
-//     } else {
-//       setFirst(capitalizeFirst(user.first));
-//       setLast(capitalizeFirst(user.last));
-//     }
-//   } catch (error){
-//     console.log(error);
-//     setFirst(capitalizeFirst(user.first));
-//     setLast(capitalizeFirst(user.last));
-//   };
-// };
- 
 function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,studentType,learningType,user,courseSchedule){
     if (studentType === 'graduate') {
         const graduateObj = {
