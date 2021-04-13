@@ -1,10 +1,16 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import MyAds from "../Advertisements/MyAds";
+import CreateAd from "../Advertisements/CreateAd";
  
-function TutorDashboard(props) {
-    return <div>
+const TutorDashboard = () => (
+    <Container>
       <h4>Tutor Dashboard</h4>
-      <p>This is the Tutor Dashboard.</p>
-    </div>
-};
+      <Row>
+        <Col><MyAds /></Col>
+        <Col><CreateAd /></Col>
+      </Row>
+    </Container>
+);
  
 export default TutorDashboard;
