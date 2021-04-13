@@ -56,5 +56,15 @@ async (req, res) => {
 }
 );
 
+app.post("/user/update/:id", async (req, res) => {
+  try {
+    const user = await UserModel.findByIdAndUpdate(req.params.id, req.body);
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
 
 module.exports = app;

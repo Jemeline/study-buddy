@@ -8,22 +8,24 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import HomeIcon from '@material-ui/icons/Home';
 import {getRoleLiteral} from '../../utils/common';
-import { useHistory } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import PersonIcon from '@material-ui/icons/Person';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import {colorPalette} from '../../utils/design';
 
-function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn,isHome}){
+function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn}){
     const history = useHistory();
-    return <div hidden={!isLoggedIn || isHome}>
+    const location = useLocation().pathname;
+
+    return <div hidden={!isLoggedIn || (location==='/auth') || (location==='/')}>
         <Drawer anchor={"left"} open={isOpenDrawer} onClose={()=>setIsOpenDrawer(false)}>
         <List>
           <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
             <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItem>
-          <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+          <ListItem button onClick={()=>history.push(`/${getRoleLiteral()}-profile`)}>
             <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>

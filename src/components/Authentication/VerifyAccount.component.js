@@ -50,10 +50,10 @@ function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
               <Col>
                 <img src={logo} style={{height: '35vh'}}/>
                 <br/>
-                <Alert variant="danger" show={alertVerify} onClose={() => setAlertVerify(false)} dismissible transition={false}>
+                <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertVerify} onClose={() => setAlertVerify(false)} dismissible transition={false}>
                 {alertMessageVerify}
                 </Alert>
-                <Alert variant="danger" show={alertInvalidToken} onClose={() => setAlertInvalidToken(false)} dismissible transition={false}>
+                <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertInvalidToken} onClose={() => setAlertInvalidToken(false)} dismissible transition={false}>
                     Your token is incorrect or expired. Please <Link to="/auth" onClick={()=>{getNewToken();}}>request a new token</Link> or try again.
                 </Alert>
                 <h5>{h5TagVerify}</h5>
@@ -77,7 +77,7 @@ function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
                     </FormGroup> 
                 </Form>
                 <Button 
-                size="lg"
+                size="md"
                 style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'40%',borderRadius:14}} 
                 hidden={tokenVerify || loadingVerify}
                 disabled={!(email.length > 0)}
@@ -91,7 +91,7 @@ function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
                 > Send Me a Code
                 </Button>
                 <Button 
-                    size="lg"
+                    size="md"
                     style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'40%',borderRadius:14}} 
                     hidden={!tokenVerify || verified || loadingVerify}
                     onClick={async () => {
@@ -106,7 +106,7 @@ function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
                   > Confirm My Email
                   </Button>
                   <Button 
-                    size="lg"
+                    size="md"
                     style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14}} 
                     hidden={!verified || loadingVerify}
                     onClick={() => {

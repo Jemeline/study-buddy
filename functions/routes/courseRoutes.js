@@ -49,6 +49,17 @@ app.post("/course", async (req, res) => {
   }
 });
 
+app.post("/course/find-many-by-id", async (req, res) => {
+  const ids = req.body.ids;
+  try {
+    const courses = await CourseModel.find({"_id": {$in: ids}});
+    res.send(courses);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+
 app.delete("/course/:id", async (req, res) => {
   try {
     const course = await CourseModel.findByIdAndDelete(req.params.id);

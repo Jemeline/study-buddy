@@ -15,15 +15,15 @@ import TutorRoute from './RouteClasses/Tutor.route';
 import AdminRoute from './RouteClasses/Admin.route';
 import UnverifiedRoute from './RouteClasses/Unverified.route';
 
-const Routes = ({setIsLoggedIn,setIsHome}) => (
+const Routes = ({setIsLoggedIn}) => (
     <Switch>
-      <Route exact path="/" render={() => (<Home  setIsLoggedIn={setIsLoggedIn} setIsHome={setIsHome}/>)}/>
-      <Route exact path="/auth/" render={() => (<AuthenticationHome  setIsLoggedIn={setIsLoggedIn} setIsHome={setIsHome}/>)}/>
-      <StudentRoute exact path="/dashboard/student" component={StudentDashboard} setIsHome={setIsHome}/>
-      <StudentRoute exact path="/student-survey" component={Survey} setIsHome={setIsHome}/>
-      <StudentRoute exact path="/student-profile" component={StudentProfile} setIsHome={setIsHome}/>
-      <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard} setIsHome={setIsHome}/>
-      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard} setIsHome={setIsHome}/>  
+      <Route exact path="/" render={() => (<Home/>)}/>
+      <Route exact path="/auth/" render={() => (<AuthenticationHome  setIsLoggedIn={setIsLoggedIn}/>)}/>
+      <StudentRoute exact path="/dashboard/student" component={StudentDashboard}/>
+      <StudentRoute exact path="/student-survey" component={Survey}/>
+      <StudentRoute exact path="/student-profile" component={StudentProfile}/>
+      <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>
+      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/>  
     </Switch>
   );
   

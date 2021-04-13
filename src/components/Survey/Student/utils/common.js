@@ -61,3 +61,6 @@ export function storeLearningType(learningType){
 export function getLearningType(){
     return sessionStorage.getItem('learningType') || null;
 };
+
+export const LearningTypes = ["verbal", "visual", "auditory/musical", "physical/kinaesthetic",
+"logical/mathematical", "social", "solitary"];

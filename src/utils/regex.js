@@ -69,3 +69,27 @@ export function validateCourseInput(courseInput) {
     }
     return false;
 };
+
+export function validateName(name) {
+    const nameRegex = /[^a-zA-Z]/;
+    if (name.length !== 0 && !nameRegex.test(name)) {
+        return true;
+    }
+    return false;
+};
+
+export function validatePhoneProfile(phone) {
+    const phoneRegex = /^[0-9]{10}$/;
+    if (phone.length !== 0 && !phoneRegex.test(phone)) {
+        return true;
+    }
+    return false;
+};
+
+export function validateEmailProfile(email) {
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email.length !== 0 && !emailRegex.test(email)) {
+        return true;
+    }
+    return false;
+};

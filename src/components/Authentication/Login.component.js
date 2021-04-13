@@ -28,23 +28,24 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
     setAlertMessageLogin('');
   };
 
-  return <div> 
+  return <div className="Login" data-testid="Login"> 
       <Container style={{width:'35vw',margin: "auto"}} >     
         <Col>
           <img src={logo} style={{height: '35vh'}}/>
           <br/>
-            <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertLogin} onClose={() => setAlertLogin(false)} dismissible transition={false}>
+            <Alert data-testid="login-alert-incomplete-creds" style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertLogin} onClose={() => setAlertLogin(false)} dismissible transition={false}>
                 {alertMessageLogin}
             </Alert>
-            <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertInvalidLoginCreds} onClose={() => setAlertInvalidLoginCreds(false)} dismissible transition={false}>
+            <Alert data-testid="login-alert-invalid-creds" style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertInvalidLoginCreds} onClose={() => setAlertInvalidLoginCreds(false)} dismissible transition={false}>
                 We can't find that username and password. You can <Link to="/auth" onClick={()=>{setTab('recover')}}>reset your password</Link> or try again. 
             </Alert>
-            <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertAlreadyLoggedIn} onClose={() => setAlertAlreadyLoggedIn(false)} dismissible transition={false}>
+            <Alert data-testid="login-alert-3" style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertAlreadyLoggedIn} onClose={() => setAlertAlreadyLoggedIn(false)} dismissible transition={false}>
                 Please <Link to="/auth" onClick={()=>{setAlertAlreadyLoggedIn(false);logout()}}>Logout</Link> or <Link to="/dashboard/student">Go To Your Dashboard</Link>
             </Alert>
               <Form className="form">
                 <FormGroup>
                   <Input
+                    data-testid="login-email-input"
                     type="email"
                     name="Email"
                     placeholder="Email"
@@ -52,22 +53,26 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                     valid={ validateEmail(emailLogin) }
                     invalid={ emailLogin.length > 0 && !validateEmail(emailLogin)}
                     style={{borderRadius:14}}
+                    value={emailLogin}
                   />
-                  <FormFeedback>
+                  <FormFeedback data-testid="login-form-feedback">
                       There is an issue with your email. Please input a correct email.
                   </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                   <Input
+                      data-testid="login-password-input"
                       type="password"
                       name="passwordLogin"
                       placeholder="Password"
                       onChange={(e) => setPasswordLogin(e.target.value)}
                       style={{borderRadius:14}}
+                      value={passwordLogin}
                   />
                 </FormGroup>
                 </Form>
                 <Button
+                  data-testid="login-button"
                   size="lg"
                   type="submit"
                   hidden={loadingLogin}
@@ -90,9 +95,9 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                 </div>
               <br/>
               Don't Have an Account?
-              <Link to="/auth" onClick={()=>{setTab('register')}}> Sign Up Now</Link>
+              <Button color="link" onClick={()=>{setTab('register')}}> Sign Up Now</Button>
               <br/>
-              <Link to="/auth" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
+              <Button color="link" onClick={()=>{setTab('recover')}}>Forgot Password?</Button>
           </Col>  
       </Container>  
   </div>

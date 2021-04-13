@@ -5,13 +5,12 @@ import Register from './Register.component';
 import RecoverPassword from './RecoverPassword.component';
 import VerifyAccount from './VerifyAccount.component';
 
-function AuthenticationHome({setIsLoggedIn,setIsHome}){
+function AuthenticationHome({setIsLoggedIn}){
   const [tab,setTab] = useState('login');
   const [email,setEmail] = useState('');
   const [first,setFirst] = useState('');
   const [id,setId] = useState('');
 
-  setIsHome(true);
   return <div>
     <div style={{float:'right',backgroundImage: `url(${background})`,height:'100vh',width:'60vw',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed'}}/>
     <div style={{float:'right',width:'40vw',height:'100vh'}}>
