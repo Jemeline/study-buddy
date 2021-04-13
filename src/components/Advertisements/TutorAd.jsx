@@ -1,12 +1,15 @@
 import React from "react";
+import { Card } from "react-bootstrap";
+// import { Button } from "react-bootstrap";
 
 const TutorAd = ({ tutorEmail, text, courses }) => {
     return (
-        <div>
-            <p>Tutor Email: {tutorEmail}</p>
-            <p>Text: {text}</p>
+        <Card>
+            <p>Email: {tutorEmail}</p>
             <p>Courses: {courses}</p>
-        </div>
+            <p>{text}</p>
+            {/* <Button variant="danger">Delete</Button> */}
+        </Card>
     );
 };
 

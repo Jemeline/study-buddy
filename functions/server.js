@@ -12,7 +12,6 @@ const AdvertisementRouter = require("./routes/advertisementRoutes");
 const getClient = require("./db.js");
 
 const app7 = express();
-const port = 3000;
 
 app7.use(cors());
 app7.use(express.json());
@@ -22,9 +21,6 @@ app7.use("/api", tokenRouter);
 app7.use("/api", studentProfileRouter);
 app7.use("/api", AdvertisementRouter);
 
-app7.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-  getClient();
-});
+getClient();
 
 exports.app7 = functions.https.onRequest(app7);

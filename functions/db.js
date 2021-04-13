@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const mongoose = require("mongoose");
 const functions = require("firebase-functions");
 mongoose.Promise = global.Promise;

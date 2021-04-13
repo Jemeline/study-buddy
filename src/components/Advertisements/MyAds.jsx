@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TutorAdList from "./TutorAdList";
+import { getUser } from "../../utils/common";
+const axios = require("axios");
 
 // List of Ads by currently logged in tutor
 const MyAds = () => {
-    const adList = [{
-        "tutorEmail": "email@tutor.com",
-        "text": "my advertisement text",
-        "courses": "COMP-523, COMP-550"
-    }, {
-        "tutorEmail": "email@tutor.com",
-        "text": "my other advertisement text",
-        "courses": "COMP-410, COMP-411"
-    }];
+    const [ads, setAds] = useState(null);
+    useEffect(() => {
+        const base = "https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api"
+        axios.post(`${base}/advertisement/email`, {"email": JSON.parse(getUser()).email})
+        .then(res => {
+            console.log(res.data);
+            setAds(res.data);
+        })
+        .catch(err => console.error(err));
+    }, []);
+
     return (
         <div>
             <h4>My Advertisements</h4>
-            <TutorAdList list={adList} />
+            {ads ? <TutorAdList list={ads} /> : "Loading..."}
         </div>
     );
 };

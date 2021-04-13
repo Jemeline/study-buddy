@@ -13,12 +13,14 @@ app.get("/advertisement", async (req, res) => {
   }
 });
 
-// Get advertisements by ID
-app.get("/advertisement/:id", async (req, res) => {
+// Find advertisements by email
+app.post("/advertisement/email", async (req, res) => {
   try {
-    // console.log(req.params.id);
+    if (!req.body.email) {
+      res.status(400).send("Must include an email in the request body.");
+    }
     const ads = await AdvertisementModel
-        .findById(req.params.id).exec()
+        .find({"tutorEmail": req.body.email}).exec()
         .catch((err) => res.status(500).send(err));
     res.send(ads);
   } catch (err) {

@@ -6,7 +6,6 @@ import TutorAd from "./TutorAd";
 const TutorAdList = ({ list }) => {
     return (
         <div>
-            <h4>Tutor Advertisements</h4>
             {list.map((item, key) => 
                 <TutorAd key={key} tutorEmail={item.tutorEmail} text={item.text} courses={item.courses} />
             )}

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable max-len */
 const Majors = [
   "African, African American, and Diaspora Studies Major, B.A.",
