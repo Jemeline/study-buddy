@@ -14,7 +14,7 @@ const UnverifiedRoute = ({ component: Component, ...path }) => {
                     return <Redirect to={{pathname:`/dashboard/${getRoleLiteral()}`}} /> 
                 }
             } else {
-                return <Redirect to="/login" />
+                return <Redirect to="/" />
             }
         }}
         />                         

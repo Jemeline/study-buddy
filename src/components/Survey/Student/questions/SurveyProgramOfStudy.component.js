@@ -1,8 +1,8 @@
 import React from 'react';
-import {colorPalette} from '../../../utils/design';
-import {Majors,Minors,GraduatePrograms} from './StudyPrograms';
+import {colorPalette} from '../../../../utils/design';
+import {Majors,Minors,GraduatePrograms} from '../utils/StudyPrograms';
 import Select from 'react-select';
-import {storeMajor,storeMinor,storeGraduatePOS} from './common';
+import {storeMajor,storeMinor,storeGraduatePOS} from '../utils/common';
 
 function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGraduatePOS,hidden,studentType}){
     const selectMajors = (Majors.map((e)=> {return {label:e,value:e}}))
@@ -18,15 +18,15 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
     const handleChangeGraduatePOS = (e) => {
       setGraduatePOS(e);
       storeGraduatePOS(e);
-  };
+    };
     const handleChangeMinor = (e) => {
         setMinor(e);
         storeMinor(e);
     };
+
     return <div hidden={hidden}> 
-            <h4>SELECT YOUR PROGRAM(S) OF STUDY</h4>
-            <br></br>
-            <div hidden={studentType==='undergraduate'}>
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>SELECT YOUR PROGRAM(S) OF STUDY</h4>
+            <div hidden={studentType==='undergraduate'} style={{margin:'auto',paddingBottom:'1.5vw'}}>
             <Select
                 placeholder={"Select Your Program of Study (Required)"}
                 isMulti
@@ -35,9 +35,11 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
                 noOptionsMessage={()=>'Max 1 Selection'}
                 styles={colourStyles}
                 value={graduatePOS}
+                menuPlacement="auto"
             />
             </div>
-            <div hidden={studentType==='graduate'}>
+            <div hidden={studentType==='graduate'} style={{margin:'auto',paddingBottom:'1.5vw'}}>
+            <div style={{paddingBottom:'1.5vw'}}>
             <Select
                 placeholder={"Select Your Major(s) (Required)"}
                 isMulti
@@ -46,8 +48,9 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
                 noOptionsMessage={()=>'Max 3 Selections'}
                 styles={colourStyles}
                 value={major}
+                menuPlacement="auto"
             />
-            <br></br>
+            </div>
             <Select
                 placeholder={"Select Your Minor(s)"}
                 isMulti
@@ -56,22 +59,23 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
                 noOptionsMessage={()=>'Max 3 Selections'}
                 styles={colourStyles}
                 value={minor}
+                menuPlacement="auto"
             />
             </div>
     </div>
 };
 
-const colourStyles = {
-    control: styles => ({ ...styles, backgroundColor: 'white' }),
+export const colourStyles = {
+    control: styles => ({ ...styles, backgroundColor: 'white',width:'38vw'}),
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
       return {
         ...styles,
         backgroundColor: isDisabled
         ? null
         : isSelected
-        ? colorPalette.secondaryB
+        ? colorPalette.secondary
         : isFocused
-        ? colorPalette.secondaryB
+        ? colorPalette.secondary
         : null,
         color: isDisabled
         ? null
@@ -85,7 +89,7 @@ const colourStyles = {
     multiValue: (styles, { data }) => {
       return {
         ...styles,
-        backgroundColor: colorPalette.secondaryB,
+        backgroundColor: colorPalette.secondary,
       };
     },
     multiValueLabel: (styles, { data }) => ({

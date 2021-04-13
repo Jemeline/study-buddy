@@ -11,11 +11,11 @@ import NavDrawer from './components/Navigation/NavDrawer.component';
 function App(){
   document.title = "Study Buddy";
   const [isLoggedIn, setIsLoggedIn] = useState(getLoginStatus());
-  const [isOpenDrawer, setIsOpenDrawer] = useState(false);  
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   
   
   return (
-    <div className="App">
+    <div className="App" data-testid="App">
       <BrowserRouter>
         <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsOpenDrawer={setIsOpenDrawer}></Header>
         <NavDrawer isOpenDrawer={isOpenDrawer} setIsOpenDrawer={setIsOpenDrawer} isLoggedIn={isLoggedIn}/>

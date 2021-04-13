@@ -1,16 +1,15 @@
 import React, {useState,useEffect} from 'react';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SchoolIcon from '@material-ui/icons/School';
-import '../survey.css';
-import {storeStudentType,storeMajor} from './common';
+import '../../survey.css';
+import {storeStudentType} from '../utils/common';
 
 function SurveyStudentType({studentType,setStudentType,hidden}){
     const [graduateClassName, setGraduateClassName] = useState((studentType==='graduate') ? 'selected': '');
     const [undergraduateClassName, setUndergraduateClassName] = useState((studentType==='undergraduate') ? 'selected': '');
 
     return <div hidden={hidden}> 
-            <h4>WHICH TYPE OF STUDENT ARE YOU?</h4>
-            <br></br>
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>WHICH TYPE OF STUDENT ARE YOU?</h4>
             <div style={{display: 'flex',justifyContent: "space-between"}}>
                 <div className={graduateClassName} onClick={(e)=>{setGraduateClassName('selected');setUndergraduateClassName('');setStudentType('graduate');storeStudentType('graduate');}} style={{marginLeft:"8%",width: '40%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
                     <br></br>
@@ -28,6 +27,5 @@ function SurveyStudentType({studentType,setStudentType,hidden}){
             <br></br>
     </div>
 };
-
 
 export default SurveyStudentType;

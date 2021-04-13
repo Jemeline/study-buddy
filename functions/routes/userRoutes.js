@@ -57,5 +57,33 @@ async (req, res) => {
 }
 );
 
+app.post("/user/update/:id", async (req, res) => {
+  try {
+    const user = await UserModel.findByIdAndUpdate(req.params.id, req.body);
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+app.get("/user", async (req, res) => {
+  const users = await UserModel.find();
+  try {
+    res.send(users);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get("/user/student", async (req, res) => {
+  const users = await UserModel.find({role: "student"});
+  try {
+    res.send(users);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 
 module.exports = app;

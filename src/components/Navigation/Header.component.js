@@ -7,19 +7,18 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {colorPalette} from '../../utils/design';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
 import {Link} from 'react-router-dom';
-import {logout} from '../../utils/common';
-import { useHistory } from "react-router-dom";
+import {getRoleLiteral,logout} from '../../utils/common';
+import { useHistory,useLocation } from "react-router-dom";
+
 
 
 function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer}){ 
-  const history = useHistory();
+    const history = useHistory();
+    const location = useLocation().pathname;
 
-    return <div style={{flexGrow: 1}}>
-      <AppBar position="static" style={{ background: colorPalette.secondaryA }}>
+    return <div hidden={!isLoggedIn || (location==='/auth') || (location==='/')} style={{flexGrow: 1}}>
+      <AppBar position="static" style={{ background: colorPalette.secondaryA,height:'65px'}}>
         <Toolbar>
           <IconButton edge="start" style={{ background: colorPalette.secondaryA }}
             onClick={() => {
@@ -30,37 +29,20 @@ function Header({isLoggedIn,setIsLoggedIn,setIsOpenDrawer}){
           <Typography variant="h6" style={{flexGrow: 1,textAlign: "left"}}>
             Study Buddy
           </Typography>
-          <IconButton hidden={!isLoggedIn}>
-              <Badge badgeContent={4} color="primary">
-                <MailIcon style={{ color: colorPalette.white }}/>
-              </Badge>
-            </IconButton>
-            <IconButton hidden={!isLoggedIn}>
-              <Badge badgeContent={17} color="primary">
-                <NotificationsIcon style={{ color: colorPalette.white }}/>
-              </Badge>
-            </IconButton>
-            <IconButton hidden={!isLoggedIn}>
-              <AccountCircle style={{ color: colorPalette.white }}/>
-            </IconButton>
-            <Button
-                hidden={isLoggedIn}
-                style={{ background: colorPalette.white }}
-                onClick={() => {
-                    history.push('/login');
-                }}
-                >Sign In</Button>
-            <Button 
-                as={Link}
-                hidden={!isLoggedIn}
-                style={{ color: colorPalette.white }}
-                onClick={() => {
-                    logout();
-                    setIsLoggedIn(false);
-                    history.push('/login');
-                }}
-                to="/login">Sign Out
-            </Button>
+          <IconButton hidden={!isLoggedIn} onClick={() => {history.push(`/${getRoleLiteral()}-profile`)}}>
+            <AccountCircle style={{ color: colorPalette.white }}/>
+          </IconButton>
+          <Button 
+              as={Link}
+              hidden={!isLoggedIn}
+              style={{ color: colorPalette.white }}
+              onClick={() => {
+                  logout();
+                  setIsLoggedIn(false);
+                  history.push('/auth');
+              }}
+              to="/auth">Sign Out
+          </Button>
         </Toolbar>
       </AppBar>
     </div>

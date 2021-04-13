@@ -10,3 +10,6 @@ Study Buddy helps students at UNC connect with each other to find their ideal st
   - Run react app with live reload on localhost
 - **npm run serve**
   - Build optimized react app and serve on localhost
+- **npm run test**
+  - Run test suites found in src/tests
+  - [Docs](https://testing-library.com/docs/)

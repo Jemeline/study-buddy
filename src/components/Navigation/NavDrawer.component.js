@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import HomeIcon from '@material-ui/icons/Home';
 import {getRoleLiteral} from '../../utils/common';
-import { useHistory } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import PersonIcon from '@material-ui/icons/Person';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
@@ -16,26 +16,24 @@ import {colorPalette} from '../../utils/design';
 
 function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn}){
     const history = useHistory();
-    return <div>
+    const location = useLocation().pathname;
+
+    return <div hidden={!isLoggedIn || (location==='/auth') || (location==='/')}>
         <Drawer anchor={"left"} open={isOpenDrawer} onClose={()=>setIsOpenDrawer(false)}>
         <List>
-          <ListItem button onClick={()=>history.push('/home')}>
-            <ListItemIcon><HomeIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
-            <ListItemText primary={"Home"} style={{paddingRight:"20%"}}/>
-          </ListItem>
-          <ListItem button hidden={!isLoggedIn} onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
-            <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+          <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+            <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItem>
-          <ListItem button hidden={!isLoggedIn} onClick={()=>history.push(`/home`)}>
-            <ListItemIcon><PersonIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+          <ListItem button onClick={()=>history.push(`/${getRoleLiteral()}-profile`)}>
+            <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>
       </List>
       <Divider/>
       <List>
-        <ListItem button onClick={()=>history.push('/home')}>
-            <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
+        <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+            <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"UNC Help Center"} />
         </ListItem>
       </List>

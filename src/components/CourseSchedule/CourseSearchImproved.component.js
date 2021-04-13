@@ -44,14 +44,13 @@ function CourseSearchImproved({courseSchedule,setCourseSchedule}){
                 <InputGroupAddon addonType="append">
                     <Button
                         size="small"
-                        style={{backgroundColor:colorPalette.secondaryB,color:colorPalette.white}}
+                        style={{backgroundColor:colorPalette.secondary,color:colorPalette.white}}
                         onClick={async () => {setCourseInput("");setFilteredCourses([]);setError(false);setNotFound('');setLoading(false)}}
                     > Clear</Button>
                 </InputGroupAddon>
             </InputGroup>
-            <FormText>Ex: COMP 523, CHEM 101-001, CHEM 262L-002, AMST</FormText>
-            <br></br>
-            <div style={{height:'60vh'}}>
+            <FormText style={{margin: "auto",fontSize:'1vw',paddingTop:'0.5vh'}}>Ex: COMP 523, CHEM 101-001, CHEM 262L-002, AMST</FormText>
+            <div style={{height:'calc(66vh - 70px)'}}>
             {error && <div>
                 <h6>Something went wrong...</h6>
                 <Button
@@ -62,13 +61,13 @@ function CourseSearchImproved({courseSchedule,setCourseSchedule}){
                 > Try Again</Button>
             </div>} 
             {loading ? (
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <ReactLoading type={"cylon"} color={"#000080"} height={'15%'} width={'15%'} /> 
+            <div style={{display: 'flex', justifyContent: 'center',alignItems:'center'}}>
+                <ReactLoading type={"cylon"} color={colorPalette.secondary} height={'25%'} width={'25%'} /> 
             </div>) : 
             (
             <div>
                 <h6><em>{notFound}</em></h6>
-            <div style={{flexGrow: 1,height:'60vh',overflowY:'auto'}}><Grid
+            <div style={{flexGrow: 1,height:'calc(66vh - 70px)',overflowY:'auto',overflowX:'hidden'}}><Grid
                 container
                 direction="row"
                 justify="flex-start"
