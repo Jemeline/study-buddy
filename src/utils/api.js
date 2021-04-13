@@ -90,3 +90,23 @@ export async function apiGetStudentProfile(id) {
     }    
 };
 
+export async function apiGetStudents() {
+    try {
+        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/student`);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
+export async function apiGetStudentProfiles() {
+    try {
+        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/student-profile`);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
