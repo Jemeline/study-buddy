@@ -6,8 +6,12 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {storeCurrPage} from './utils/common';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import {apiCreateStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
-import {getIsSurveyed,getUser} from '../../../utils/common';
+import {getIsSurveyed, getUser} from '../../../utils/common';
 import { useHistory } from "react-router-dom";
+import {getWeightedSum} from "../MatchingAlgorithm";
+import {StudentDashboard} from "../../Dashboard/StudentDashboard.component"
+import axios from 'axios';
+
 
 function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSchedule,profilePayload,graduatePOS,studentType}){ 
     const history = useHistory();
@@ -73,6 +77,31 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
         } else {
             const data = await apiCreateStudentProfile(payload);
             sessionStorage.setItem('isSurveyed',true);
+
+            // Retrieve profile of logged in user
+            const user = JSON.parse(getUser());
+            const getUserProfiles = await axios({
+                method: 'get',
+                url: `https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile`
+            });
+            const users = getUserProfiles.data;
+            let userProfileId = 0;
+            for (let i = 0; i < users.length; i++) {
+                if (users[i]._userId == user._id) {
+                    userProfileId = users[i]._id;
+                    break;
+                }
+            }
+            const getUserProfile = await axios({
+                method: 'get',
+                url: `https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile/find-by-id/${userProfileId}`
+            });
+            const userProfile = getUserProfile.data;
+
+            // Use algorithm to sort other users
+            const sums = await getWeightedSum(userProfile);
+            console.log(sums);
+           
             setCurrPage(6);
             storeCurrPage(6);
         }
@@ -84,6 +113,31 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
 async function handleSurveyResubmit(payload,setCurrPage,storeCurrPage){
     try {
         const data = await apiResubmitStudentProfile(payload);
+
+        // Retrieve profile of logged in user
+        const user = JSON.parse(getUser());
+        const getUserProfiles = await axios({
+            method: 'get',
+            url: `https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile`
+        });
+        const users = getUserProfiles.data;
+        let userProfileId = 0;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i]._userId == user._id) {
+                userProfileId = users[i]._id;
+                break;
+            }
+        }
+        const getUserProfile = await axios({
+            method: 'get',
+            url: `https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile/find-by-id/${userProfileId}`
+        });
+        const userProfile = getUserProfile.data;
+
+        // Use algorithm to sort other users
+        const sums = await getWeightedSum(userProfile);
+        console.log(sums);
+
         setCurrPage(6);
         storeCurrPage(6);
     } catch (error){

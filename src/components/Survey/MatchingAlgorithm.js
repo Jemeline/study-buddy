@@ -22,7 +22,10 @@ export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
     let sums = [];
     for (let i = 0; i < studentProfiles.length; i++) {
-        if (studentProfiles[i].id !== student.id) {
+        sums[i] = 0;
+    }
+    for (let i = 0; i < studentProfiles.length; i++) {
+        if (studentProfiles[i]._id !== student._id) {
             for (let j = 0; j < student.courseSchedule.length; j++) {
                 if (studentProfiles[i].courseSchedule.includes(student.courseSchedule[j])) {
                     // Add a large value if the students have a class in common, so that they show up at the top of the results
@@ -32,17 +35,23 @@ export async function getWeightedSum(student) {
             }
             for (let k = 0; k < student.learningType.length; k++) {
                 if (studentProfiles[i].learningType.includes(student.learningType[k])) {
-                    sums[i] += student.weights[0];
+
+                    // sums[i] += student.weights[0];
+                    sums[i] += 3;
                 }
             }
             for (let l = 0; l < student.studyLocation.length; l++) {
                 if (studentProfiles[i].studyLocation.includes(student.studyLocation[l])) {
-                    sums[i] += student.weights[1];
+
+                    // sums[i] += student.weights[1];
+                    sums[i] += 2;
                 }
             }
             for (let m = 0; m < student.identifiers.length; m++) {
                 if (studentProfiles[i].identifiers.includes(student.identifiers[m])) {
-                    sums[i] += student.weights[2];
+
+                    // sums[i] += student.weights[2];
+                    sums[i] += 1;
                 }
             }
         }
