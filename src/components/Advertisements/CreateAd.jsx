@@ -15,8 +15,8 @@ const CreateAd = () => {
             text: text,
             courses: courses
         };
-        // const base = "http://localhost:5001/study-buddy-d452c/us-central1/app7/api";
-        const base = "https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api"
+        // const base = "http://localhost:5001/study-buddy-d452c/us-central1/app8/api";
+        const base = "https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api"
         const res = await axios
             .post(`${base}/advertisement`, data)
             .catch(err => console.error(err));

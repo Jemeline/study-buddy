@@ -7,7 +7,7 @@ const axios = require("axios");
 const MyAds = () => {
     const [ads, setAds] = useState(null);
     useEffect(() => {
-        const base = "https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api"
+        const base = "https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api"
         axios.post(`${base}/advertisement/email`, {"email": JSON.parse(getUser()).email})
         .then(res => {
             console.log(res.data);

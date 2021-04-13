@@ -19,7 +19,7 @@ function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn}){
     return <div>
         <Drawer anchor={"left"} open={isOpenDrawer} onClose={()=>setIsOpenDrawer(false)}>
         <List>
-          <ListItem button onClick={()=>history.push('/')}>
+          <ListItem button onClick={()=>history.push('/home')}>
             <ListItemIcon><HomeIcon style={{ color: colorPalette.secondaryC }}/></ListItemIcon>
             <ListItemText primary={"Home"} style={{paddingRight:"20%"}}/>
           </ListItem>
