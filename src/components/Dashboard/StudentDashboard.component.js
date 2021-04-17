@@ -3,24 +3,22 @@ import {getIsSurveyed} from '../../utils/common';
 import DashboardUnsurveyed from './DashboardUnsurveyed.component';
 import Grid from '@material-ui/core/Grid';
 import {colorPalette} from '../../utils/design';
+import StudentUserList from './Student/StudentUserList.component';
  
 function StudentDashboard() {
-
-  
-
-    return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center'}}>
+    return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
       {getIsSurveyed() ?
-      <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          spacing={1}
-      >
-        <Grid xs={12} sm={6} md={3} style={{border: "3px solid black"}}>
-          <h6 >Top Matches For You</h6>
-        </Grid>
-        
-      </Grid>  
+      // <Grid
+      //     container
+      //     direction="row"
+      //     justify="flex-start"
+      //     spacing={1}
+      // >
+      //   <Grid xs={12} sm={6} md={3}>
+          
+      //   </Grid>
+      // </Grid>  
+      <StudentUserList/>
       : <DashboardUnsurveyed/>}
     </div>
 };

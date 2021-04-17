@@ -1,12 +1,12 @@
-import React,{useState,useEffect} from 'react';
-import {getUser,capitalizeFirst,login} from '../../../utils/common';
+import React,{useState} from 'react';
+import {getUser,login} from '../../../utils/common';
 import {validateEmail,validatePhone,validateToken} from '../../../utils/regex';
 import {colorPalette} from '../../../utils/design';
 import {apiUpdateUser,apiVerify,apiToken} from '../../../utils/api';
 import { useHistory } from "react-router-dom";
 import avatar from './unknown-avatar.jpg';
 import { InputGroup,InputGroupAddon,InputGroupText,Input,Form,FormGroup} from 'reactstrap';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody} from 'reactstrap';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -15,12 +15,12 @@ import {Alert} from 'react-bootstrap';
 import ReactLoading from 'react-loading';
 
  
-function ContactInfo({user,setUser}) {
+function ContactInfo({user,setUser,hidden}) {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [update, setUpdate] = useState(false);
     const [updateType, setUpdateType] = useState('');
-    const [phone, setPhone] = useState(user.phoneNumber);
+    const [phone, setPhone] = useState((user.phoneNumber === null) ? '' : user.phoneNumber);
     const [email, setEmail] = useState(user.email);
     const handleClick = (event) => {setAnchorEl(event.currentTarget);};
     const handleClose = () => {setAnchorEl(null);};
@@ -39,7 +39,7 @@ function ContactInfo({user,setUser}) {
         {alertMessage}
       </Alert>
       <h5 style={{marginTop:'1vw',float:'left',paddingLeft:'1vw',fontSize:'1.5vw'}}>Contact Info</h5>
-      <IconButton style={{float:'right'}} onClick={handleClick}>
+      <IconButton hidden={hidden} style={{float:'right'}} onClick={handleClick}>
         <MoreVertIcon/>
       </IconButton>
       <Menu

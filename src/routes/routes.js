@@ -8,7 +8,7 @@ import AuthenticationHome from '../components/Authentication/AuthenticationHome.
 import RecoverPassword from '../components/Authentication/RecoverPassword.component';
 import VerifyAccount from '../components/Authentication/VerifyAccount.component';
 import Survey from '../components/Survey/Student/Survey.component';
-import StudentProfile from '../components/Profile/Student/Profile.component';
+import StudentProfile from '../components/Profile/Student/StudentProfile.component';
 import IncorrectEmail from '../components/Authentication/IncorrectEmail.component';
 import StudentRoute from './RouteClasses/Student.route';
 import TutorRoute from './RouteClasses/Tutor.route';
