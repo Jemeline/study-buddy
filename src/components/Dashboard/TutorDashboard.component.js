@@ -4,11 +4,11 @@ import MyAds from "../Advertisements/MyAds";
 import CreateAd from "../Advertisements/CreateAd";
  
 const TutorDashboard = () => (
-    <Container>
+    <Container data-testid="tutorDash" style={{"marginBottom": "5vh"}}>
       <h4>Tutor Dashboard</h4>
       <Row>
-        <Col><MyAds /></Col>
-        <Col><CreateAd /></Col>
+        <Col lg><CreateAd /></Col>
+        <Col lg><MyAds /></Col>
       </Row>
     </Container>
 );
