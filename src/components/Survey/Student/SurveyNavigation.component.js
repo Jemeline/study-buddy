@@ -6,7 +6,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {storeCurrPage} from './utils/common';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import {apiCreateStudentProfile,apiGetStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
-import {getIsSurveyed, getUser} from '../../../utils/common';
+import {getIsSurveyed,getUser,login} from '../../../utils/common';
 import { useHistory } from "react-router-dom";
 import {getWeightedSum} from "../MatchingAlgorithm";
 import {StudentDashboard} from "../../Dashboard/StudentDashboard.component"
@@ -77,6 +77,9 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
         } else {
             const data = await apiCreateStudentProfile(payload);
             sessionStorage.setItem('isSurveyed',true);
+            const newUser = JSON.parse(getUser());
+            newUser.isSurveyed = true;
+            login(newUser,newUser.role,newUser.isVerified,newUser.isSurveyed);
 
             // Retrieve profile of logged in user
             const user = JSON.parse(getUser());

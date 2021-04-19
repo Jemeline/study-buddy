@@ -44,6 +44,7 @@ const UserSchema = new mongoose.Schema({
   isSurveyed: {type: Boolean, default: false},
   passwordResetToken: String,
   passwordResetExpires: Date,
+  disabled: {type: Boolean, default: false},
 });
 
 UserSchema.pre("save", function(next) {
