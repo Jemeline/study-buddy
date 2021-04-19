@@ -37,7 +37,6 @@ function Profile({hidden,user,setUser,surveyed,loading,error,profile,setProfile}
       <Tab label="Study Preferences" icon={<SchoolIcon />} style={{flexShrink: 0}}/>
       <Tab label="Class Schedule" icon={<ScheduleIcon />} style={{flexShrink: 0}}/>
       <Tab label="Settings" icon={<SettingsIcon />} style={{flexShrink: 0}} hidden={hidden}/>
-      <Tab label="Security" icon={<SecurityIcon />} style={{flexShrink: 0}} hidden={hidden}/>
     </Tabs>
     <div style={{zIndex:-1,height:'calc(100vh - 160px)',display:'flex',justifyContent:'center',alignItems: 'center'}}>
     {(value === 0) ? <UserDetails user={user} setUser={setUser} hidden={hidden} loading={loading}/>
