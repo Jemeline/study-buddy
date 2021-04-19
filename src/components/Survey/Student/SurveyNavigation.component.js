@@ -5,9 +5,13 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {storeCurrPage} from './utils/common';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import {apiCreateStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
+import {apiCreateStudentProfile,apiGetStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
 import {getIsSurveyed,getUser,login} from '../../../utils/common';
 import { useHistory } from "react-router-dom";
+import {getWeightedSum} from "../MatchingAlgorithm";
+import {StudentDashboard} from "../../Dashboard/StudentDashboard.component"
+import axios from 'axios';
+
 
 function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSchedule,profilePayload,graduatePOS,studentType}){ 
     const history = useHistory();
@@ -76,6 +80,15 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
             const newUser = JSON.parse(getUser());
             newUser.isSurveyed = true;
             login(newUser,newUser.role,newUser.isVerified,newUser.isSurveyed);
+
+            // Retrieve profile of logged in user
+            const user = JSON.parse(getUser());
+            const userProfile = (await apiGetStudentProfile(user._id)).data;
+
+            // Use algorithm to sort other users
+            const sums = await getWeightedSum(userProfile);
+            console.log(sums);
+           
             setCurrPage(6);
             storeCurrPage(6);
         }
@@ -87,6 +100,15 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
 async function handleSurveyResubmit(payload,setCurrPage,storeCurrPage){
     try {
         const data = await apiResubmitStudentProfile(payload);
+
+        // Retrieve profile of logged in user
+        const user = JSON.parse(getUser());
+        const userProfile = (await apiGetStudentProfile(user._id)).data;
+
+        // Use algorithm to sort other users
+        const sums = await getWeightedSum(userProfile);
+        console.log(sums);
+
         setCurrPage(6);
         storeCurrPage(6);
     } catch (error){
