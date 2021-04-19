@@ -110,3 +110,22 @@ export async function apiGetStudentProfiles() {
     }    
 };
 
+export async function apiDeleteUser(id) {
+    try {
+        const res = await axios.delete(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/${id}`);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
+export async function apiUpdatePassword(id,userData) {
+    try {
+        const res = await axios.post(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/update/password/${id}`, userData);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};

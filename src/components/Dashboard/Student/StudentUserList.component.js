@@ -9,10 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import {getUser,capitalizeFirst} from '../../../utils/common';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
-import Fab from '@material-ui/core/Fab';
 
 function createData(name, email, phone, user,profile) {
   return { name, email, phone, user, profile};
@@ -47,8 +44,6 @@ function StudentUserList(){
       setError(false);
       const data = await apiGetStudents();
       const data1 = await apiGetStudentProfiles();
-      console.log(data);
-      console.log(data1);
       if (data.data != null) {
         setUsers(data.data);
         setRows(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
@@ -60,7 +55,7 @@ function StudentUserList(){
       setError(true);
     }  
   }, []);
-  
+
   
   return <div>
     <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',maxHeight:'70vh'}}>
@@ -78,14 +73,14 @@ function StudentUserList(){
           <TableBody>
             {!loading ? 
             rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow hover key={row.user._id} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
+              <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
                 <TableCell align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
                 <TableCell align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major[0]:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
               </TableRow>
-            )) : <TableRow/>}
+            )): <TableRow/>}
           </TableBody>
         </Table>
         </TableContainer>
