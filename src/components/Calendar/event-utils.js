@@ -15,9 +15,10 @@ export async function get_initial_events({user}) {
 
   const classes = await apiGetCourseById(current_student.courseSchedule[1])
   let classInfo = classes.data
+  
   //const classes = await apiGetCoursesById(current_student.courseSchedule)
-  console.log(classes.data)
-  console.log(classes.data.courseSchedule)
+  //console.log(classes.data)
+  //console.log(classes.data.courseSchedule)
 
   const INITIAL_EVENTS = [];
 
@@ -25,8 +26,8 @@ export async function get_initial_events({user}) {
     INITIAL_EVENTS.push({
       id: createEventId(),
       title: classInfo["courseSubject"] + " " + classInfo["courseNumber"] + " - " + classInfo["courseTitle"],
-      start: "2021-04-12" + "T12:00:00"
-    })
+      start: "2021-04-13 " + "T12:00:00"
+    })}
     //   {
     //     id: createEventId(),
     //     title: 'curr',
@@ -38,7 +39,7 @@ export async function get_initial_events({user}) {
     //     start: todayStr + 'T12:00:00'
     //   }
     // ] 
-  }
+  //}
   // const INITIAL_EVENTS = [
   //   {
   //     id: createEventId(),
@@ -51,7 +52,7 @@ export async function get_initial_events({user}) {
   //     start: todayStr + 'T12:00:00'
   //   }
   // ]
-  console.log(INITIAL_EVENTS)
+  //console.log(INITIAL_EVENTS)
   return INITIAL_EVENTS;
 }
 

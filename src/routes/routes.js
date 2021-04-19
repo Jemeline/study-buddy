@@ -20,7 +20,6 @@ const Routes = ({setIsLoggedIn}) => (
     <Switch>
       <Route exact path="/" render={() => (<Home/>)}/>
       <Route exact path="/auth/" render={() => (<AuthenticationHome  setIsLoggedIn={setIsLoggedIn}/>)}/>
-      <Route exact path="/student-calendar" component={Calendar}/>
       <StudentRoute exact path="/dashboard/student" component={StudentDashboard}/>
       <StudentRoute exact path="/student-survey" component={Survey}/>
       <StudentRoute exact path="/student-profile" component={StudentProfile}/>

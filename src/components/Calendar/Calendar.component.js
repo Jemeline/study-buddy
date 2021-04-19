@@ -1,141 +1,147 @@
-import React from 'react';
+import React, {useEffect, useState}from 'react';
+import { render } from 'react-dom'
+// import FullCalendar from 'fullcalendar/react';
 import FullCalendar, { formatDate } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { get_initial_events, createEventId } from './event-utils';
+import {apiGetStudentProfile, apiGetCoursesById, apiGetCourseById} from '../../utils/api'
+import { getUser } from '../../utils/common';
 
-class Calendar extends React.Component {
+let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
-  constructor({user}){
-    super({user})
-    this.state = {
-      user: {user},
-      weekendsVisible: true,
-      currentEvents: []
-    }
-  }
-  
+function Calendar(user) {
 
-  render() {
+        
+        const [ events, setEvents ] = useState(null);
+        
+        // console.log(user)
+        // useEffect(async () => {
+        //     try {    
+        //         console.log("here1")
+        //         const profile = await apiGetStudentProfile(user['_id'])
+        //         profile.then( async res => {
+        //             console.log("here2")
+        //             console.log(res)
+        //             const schedule = await apiGetCourseById(res.courseSchedule[1])
+        //             schedule.then(
+        //                 res => {
+        //                     console.log("here3")
+        //                     console.log(res)
+        //                     setEvents(res.data)
+        //                     console.log(events)
+        //                 })
+        //         // const schedule = await getCurrentStudent(user['_id'])
+        //         // console.log(schedule)
+        //         // setEvents(schedule)
+                
+        //         });
+        //     } catch(error){
+        //         console.log(error)
+        //     }
+
+        //     // get_initial_events(user).then(res =>{
+        //     //     console.log(res)
+        //     //     setEvents(res)
+        //     // })
+        // }, []);
+
+
+        const [loading, setLoading] = useState(false);
+        function createData(id,title,start){
+            return({id: id, title: title, start: start})
+        }
+        useEffect(async () => {
+            try{
+                getCurrentStudent(user.user._id)
+                setLoading(true)
+                apiGetStudentProfile(user.user._id).then((res) => {
+                    apiGetCourseById(res.data.courseSchedule[1]).then((res) => {
+                        console.log(res)
+                        if (res.data!= null){
+                            setEvents([createData(createEventId(),res.data.courseSubject + " " + res.data.courseNumber + " - " + res.data.courseTitle,"2021-04-13 " + "T12:00:00")]);
+                            setLoading(false)
+                            console.log(events)
+                        }
+                    })
+                })
+                
+                // const event = await get_initial_events(user);
+                // const current_student = await getCurrentStudent(JSON.parse(getUser())._id);
+                // //const classes = await 
+                // console.log(classes)
+                
+                // console.log(createData(createEventId(),classes.data.courseSubject + " " + classes.data.courseNumber + " - " + classes.data.courseTitle,"2021-04-13 " + "T12:00:00"));
+               
+                
+                // console.log(events);
+                // console.log(classes)
+                
+            } catch(error){
+                console.log(error)
+            }
+        }, [])
+
+    //console.log(events)
+
+    
+    // let classInfo = events
+
+    // const INITIAL_EVENTS = [];
+
+    // for (let i=0; i < 1; i++) {
+    //     INITIAL_EVENTS.push({
+    //     id: createEventId(),
+    //     title: classInfo["courseSubject"] + " " + classInfo["courseNumber"] + " - " + classInfo["courseTitle"],
+    //     start: "2021-04-13 " + "T12:00:00"
+    //     })}
+    
+    
+    // await get_initial_events(user)
+    //console.log(events)
     return (
-      <div className='demo-app'>
-        {this.renderSidebar()}
         <div className='demo-app-main'>
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            }}
-            initialView='dayGridMonth'
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            weekends={this.state.weekendsVisible}
-            //initialEvents={get_initial_events(this.state.user)} // alternatively, use the `events` setting to fetch from a feed
-            initialEvents={get_initial_events(this.state.user)}
-            select={this.handleDateSelect}
-            eventContent={renderEventContent} // custom render function
-            eventClick={this.handleEventClick}
-            eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
-            /* you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventChange={function(){}}
-            eventRemove={function(){}}
-            */
-          />
+                <FullCalendar
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                headerToolbar={{
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                }}
+                initialView='dayGridMonth'
+                editable={false}
+                selectable={true}
+                selectMirror={true}
+                dayMaxEvents={true}
+                weekends={true}
+                initialEvents={events}
+                // initialEvents={[{
+                //     id: createEventId(),
+                //     title: 'Timed event',
+                //     start: '2021-04-13' + 'T12:00:00'
+                // }]}
+                />
         </div>
-      </div>
-    )
-  }
 
-  renderSidebar() {
-    return (
-      <div className='demo-app-sidebar'>
-        <div className='demo-app-sidebar-section'>
-          <h2>Instructions</h2>
-          <ul>
-            <li>Select dates and you will be prompted to create a new event</li>
-            <li>Drag, drop, and resize events</li>
-            <li>Click an event to delete it</li>
-          </ul>
-        </div>
-        <div className='demo-app-sidebar-section'>
-          <label>
-            <input
-              type='checkbox'
-              checked={this.state.weekendsVisible}
-              onChange={this.handleWeekendsToggle}
-            ></input>
-            toggle weekends
-          </label>
-        </div>
-        {/* <div className='demo-app-sidebar-section'>
-          <h2>All Events ({this.state.currentEvents.length})</h2>
-          <ul>
-            {this.state.currentEvents.map(renderSidebarEvent)}
-          </ul>
-        </div> */}
-      </div>
-    )
-  }
-
-  handleWeekendsToggle = () => {
-    this.setState({
-      weekendsVisible: !this.state.weekendsVisible
-    })
-  }
-
-  handleDateSelect = (selectInfo) => {
-    let title = prompt('Please enter a new title for your event')
-    let calendarApi = selectInfo.view.calendar
-
-    calendarApi.unselect() // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      })
-    }
-  }
-
-  /*handleEventClick = (clickInfo) => {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove()
-    }
-  }*/
-
-  handleEvents = (events) => {
-    this.setState({
-      currentEvents: events
-    })
-  }
-
+    ) 
 }
 
-function renderEventContent(eventInfo) {
-  return (
-    <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
-    </>
-  )
+async function getCurrentStudent(userId) {
+    try {
+    //   const profile = await apiGetStudentProfile(userId);
+    //   return profile.data
+        apiGetStudentProfile(userId).then( async res => {
+                    console.log(res.data.courseSchedule[0])
+                    apiGetCourseById(res.data.courseSchedule[0]).then(
+                        res => {
+                            console.log(res)
+                            return res.data
+                            //console.log(events)
+                        })
+                
+                });
+    } catch (err){console.log(err) }
 }
 
-function renderSidebarEvent(event) {
-  return (
-    <li key={event.id}>
-      <b>{formatDate(event.start, {year: 'numeric', month: 'short', day: 'numeric'})}</b>
-      <i>{event.title}</i>
-    </li>
-  )
-}
-
-export default  Calendar;
+export default Calendar;
