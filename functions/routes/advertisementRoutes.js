@@ -44,4 +44,34 @@ app.post("/advertisement", async (req, res) => {
   }
 });
 
+// Update advertisement
+// Body must contain advertisement object
+app.put("/advertisement", async (req, res) => {
+  try {
+    const {ad} = req.body;
+    if (!ad) {
+      res.status(400).send("Body must contain an Advertisement object.");
+    }
+    console.log(ad);
+    const newAd = await AdvertisementModel
+        .findByIdAndUpdate(ad._id, ad)
+        .catch((err) => res.status(500).send(err));
+    res.status(200).send(newAd);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+// Delete advertisement by ID
+app.delete("/advertisement/:id", async (req, res) => {
+  try {
+    if (!req.params.id) return res.status(400).send("Must send an ID");
+    const ad = await AdvertisementModel.findByIdAndDelete(req.params.id);
+    // console.log(ad);
+    res.status(200).send(ad);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 module.exports = app;

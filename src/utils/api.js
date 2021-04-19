@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+// deployed API (firebase deploy --only functions)
+const baseAPI = "https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api";
+// Testing API (npm run serve)
+// const baseAPI = "http://localhost:5001/study-buddy-d452c/us-central1/app8/api";
+
 export async function apiLogin(userData) {
     try { // app
         const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/login', userData);
@@ -128,4 +133,40 @@ export async function apiUpdatePassword(id,userData) {
         console.log(error.response);
         throw error;
     }    
+};
+
+export const createAd = async data => {
+    try {
+        const res = await axios.post(`${baseAPI}/advertisement`, data);
+        return res;
+    } catch(err) {
+        console.error(err)
+    }
+};
+
+export const getAdsByEmail = async email => {
+    try {
+        const ads = await axios.post(`${baseAPI}/advertisement/email`, {"email": email});
+        return ads;
+    } catch(err) {
+        console.error(err);
+    }
+};
+
+export const deleteAd = async id => {
+    try {
+        const res = await axios.delete(`${baseAPI}/advertisement/${id}`);
+        return res;
+    } catch(err) {
+        console.error(err);
+    }
+};
+
+export const editAd = async ad => {
+    try {
+        const res = await axios.put(`${baseAPI}/advertisement`, {"ad": ad});
+        return res;
+    } catch(err) {
+        console.error(err);
+    }
 };
