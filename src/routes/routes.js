@@ -10,6 +10,8 @@ import StudentProfile from '../components/Profile/Student/StudentProfile.compone
 import StudentRoute from './RouteClasses/Student.route';
 import TutorRoute from './RouteClasses/Tutor.route';
 import AdminRoute from './RouteClasses/Admin.route';
+import UnverifiedRoute from './RouteClasses/Unverified.route';
+import Calendar from '../components/Calendar/Calendar.component'
 import HelpCenter from '../components/Help/HelpCenter.component';
 import StudentFindTutors from "../components/Advertisements/StudentFindTutors";
 import StudentUserList from '../components/Dashboard/Student/StudentUserList.component';

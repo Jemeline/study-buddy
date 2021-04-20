@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fullcalendar/daygrid": "^5.6.0",
+    "@fullcalendar/interaction": "^5.6.0",
+    "@fullcalendar/react": "^5.6.0",
+    "@fullcalendar/timegrid": "^5.6.0",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.9",
@@ -16,6 +20,7 @@
     "firebase": "^8.2.9",
     "firebase-functions": "^3.13.2",
     "firebase-tools": "^9.4.0",
+    "fullcalendar": "^5.6.0",
     "lodash": "^4.17.21",
     "mongoose": "^5.11.18",
     "react": "^17.0.1",

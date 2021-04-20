@@ -15,6 +15,7 @@ import StudyPreferences from './StudyPreferences.component';
 import Settings from './Settings.component';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import DashboardUnsurveyed from '../../Dashboard/DashboardUnsurveyed.component';
+import Calendar from '../../Calendar/Calendar.component'
 
 function Profile({hidden,user,setUser,surveyed,loading,error,profile,setProfile}){
   const theme = useTheme();
@@ -43,7 +44,7 @@ function Profile({hidden,user,setUser,surveyed,loading,error,profile,setProfile}
     :(value === 1) ? <ContactInfo user={user} setUser={setUser} hidden={hidden}/>
     :(value === 2) ? ((surveyed) ? <StudyPreferences user={user} setUser={setUser} hidden={hidden} profile={profile} loading={loading} error={error} setProfile={setProfile}/> 
       : (!hidden) ? <DashboardUnsurveyed/> : <StudentUnsurveyed/>)
-    :(value === 3) ? <p>This wil be the calendar component from Clayton Saunders</p>
+    :(value === 3) ? <Calendar user={user}/>
     :(value === 4) ? <Settings user={user} setUser={setUser} hidden={hidden}/>
     :<p>5</p>}
     </div>
