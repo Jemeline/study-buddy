@@ -9,9 +9,6 @@ import {apiCreateStudentProfile,apiGetStudentProfile,apiResubmitStudentProfile} 
 import {getIsSurveyed,getUser,login} from '../../../utils/common';
 import { useHistory } from "react-router-dom";
 import {getWeightedSum} from "../MatchingAlgorithm";
-import {StudentDashboard} from "../../Dashboard/StudentDashboard.component"
-import axios from 'axios';
-
 
 function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSchedule,profilePayload,graduatePOS,studentType}){ 
     const history = useHistory();

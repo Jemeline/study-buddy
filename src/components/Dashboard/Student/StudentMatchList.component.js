@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {apiGetStudents,apiGetStudentProfiles} from '../../../utils/api';
+import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles} from '../../../utils/api';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,14 +10,13 @@ import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import {getUser,capitalizeFirst} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
-import {colorPalette} from '../../../utils/design';
-import { makeStyles } from "@material-ui/core/styles";
+import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
 
 function createData(name, email, phone, user,profile) {
   return { name, email, phone, user, profile};
 };
 
-function StudentUserList(){
+function StudentMatchList(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [users, setUsers] = useState({});
@@ -25,10 +24,10 @@ function StudentUserList(){
     const [profile, setProfile] = useState({});
     const [rows, setRows] = useState([]);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [hiddenTable,setHiddenTable] = useState(false);
     const [hiddenProfile,setHiddenProfile] = useState(true);
-    const classes = useStyles();
+    const [userSums, setUserSums] = useState(getSums());
 
     
     const handleChangePage = (event, newPage) => {
@@ -40,16 +39,27 @@ function StudentUserList(){
       setPage(0);
     };
 
+    async function getSums() {
+      const user = JSON.parse(getUser());
+      const profile = (await apiGetStudentProfile(user._id)).data;
+      const sums = await getWeightedSum(profile);
+      return sums;
+    }
+
   
   useEffect(async () => {
     try{
       setLoading(true);
       setError(false);
-      const data = await apiGetStudents();
-      const data1 = await apiGetStudentProfiles();
-      if (data.data != null) {
-        setUsers(data.data);
-        setRows(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
+
+      const students = (await apiGetStudents()).data;
+      const studentProfiles = (await apiGetStudentProfiles()).data;
+      const awaitedUserSums = await userSums;
+      const orderedProfiles = awaitedUserSums.map(userSum => studentProfiles.find(profile => profile._id === userSum[0]));
+      const orderedStudents = awaitedUserSums.map(u => students.find(student => student._id === studentProfiles.find(profile => profile._id === u[0])._userId));
+      if (students != null) {
+        setUsers(students);
+        setRows(await orderedStudents.map(student=> createData((capitalizeFirst(student.first) + ' '+ capitalizeFirst(student.last)),student.email,student.phoneNumber,student,studentProfiles.find(element => element._userId === student._id))));
         setLoading(false);
       } else {
         setError(true);
@@ -60,10 +70,9 @@ function StudentUserList(){
   }, []);
 
   
-  return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
-    <div>
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',maxHeight:'70vh',height:'70vh'}}>
-    <TableContainer>
+  return <div>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',maxHeight:'70vh'}}>
+    <TableContainer >
         <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
@@ -77,7 +86,7 @@ function StudentUserList(){
           <TableBody>
             {!loading ? 
             rows.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow className={classes.tableRow} hover key={row.user._id} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
+              <TableRow hover key={row.user._id} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
@@ -87,10 +96,8 @@ function StudentUserList(){
             )): <TableRow/>}
           </TableBody>
         </Table>
-        </TableContainer>   
-    </Paper>
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw'}}>
-    <TablePagination
+        </TableContainer>
+        <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
           count={rows.length-rows.filter((row)=>((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).length}
@@ -98,21 +105,12 @@ function StudentUserList(){
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-    />
+      />
     </Paper>
       <div hidden={hiddenProfile}>
         <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile}/>
       </div>
     </div>
-    </div>
 }; 
 
-const useStyles = makeStyles((theme) => ({
-  tableRow: {
-   '&&:hover': {
-      background: colorPalette.primary
-    },
-   },
-}));
-
-export default StudentUserList;
+export default StudentMatchList;
