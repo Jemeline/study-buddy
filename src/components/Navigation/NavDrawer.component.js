@@ -6,10 +6,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import HomeIcon from '@material-ui/icons/Home';
 import {getRoleLiteral} from '../../utils/common';
 import { useHistory,useLocation } from "react-router-dom";
-import ScheduleIcon from '@material-ui/icons/Schedule';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import PersonIcon from '@material-ui/icons/Person';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import {colorPalette} from '../../utils/design';
@@ -29,10 +28,14 @@ function NavDrawer({isOpenDrawer,setIsOpenDrawer,isLoggedIn}){
             <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>
+          <ListItem button onClick={()=>history.push(`/find-students`)}>
+            <ListItemIcon><EmojiPeopleIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Find A Study Buddy"} />
+          </ListItem>
       </List>
       <Divider/>
       <List>
-        <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
+        <ListItem button onClick={()=>history.push(`/${getRoleLiteral()}-help`)}>
             <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"UNC Help Center"} />
         </ListItem>

@@ -31,7 +31,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
   return <div className="Login" data-testid="Login"> 
       <Container style={{width:'35vw',margin: "auto"}} >     
         <Col>
-          <img src={logo} style={{height: '35vh'}}/>
+          <img src={logo} alt="logo" style={{height: '35vh'}}/>
           <br/>
             <Alert data-testid="login-alert-incomplete-creds" style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertLogin} onClose={() => setAlertLogin(false)} dismissible transition={false}>
                 {alertMessageLogin}

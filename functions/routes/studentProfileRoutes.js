@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable max-len */
 const express = require("express");
 const StudentProfileModel = require("../models/studentProfile");

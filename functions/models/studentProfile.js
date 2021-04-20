@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const mongoose = require("mongoose");
 const {Majors, Minors, GraduatePrograms} = require("../utils/StudyPrograms.js");
 

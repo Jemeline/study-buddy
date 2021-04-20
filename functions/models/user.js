@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const SALT_WORK_FACTOR = 10;
@@ -43,12 +44,12 @@ const UserSchema = new mongoose.Schema({
   isSurveyed: {type: Boolean, default: false},
   passwordResetToken: String,
   passwordResetExpires: Date,
+  disabled: {type: Boolean, default: false},
 });
 
 UserSchema.pre("save", function(next) {
-/* eslint-disable */
+  // eslint-disable-next-line no-invalid-this
   const user = this;
- /* eslint-enable */
   if (!user.isModified("password")) return next();
   bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
     if (err) return next(err);

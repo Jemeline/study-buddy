@@ -1,18 +1,17 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import {getUser,capitalizeFirst,login} from '../../../utils/common';
 import {validateName} from '../../../utils/regex';
-import {colorPalette} from '../../../utils/design';
 import {apiUpdateUser} from '../../../utils/api';
 import { useHistory } from "react-router-dom";
 import avatar from './unknown-avatar.jpg';
-import { InputGroup,InputGroupAddon,InputGroupText,Input,FormFeedback} from 'reactstrap';
+import { InputGroup,InputGroupAddon,InputGroupText,Input} from 'reactstrap';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 
  
-function UserDetails({user,setUser}) {
+function UserDetails({user,setUser,hidden}) {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [update, setUpdate] = useState(false);
@@ -21,10 +20,9 @@ function UserDetails({user,setUser}) {
     const handleClick = (event) => {setAnchorEl(event.currentTarget);};
     const handleClose = () => {setAnchorEl(null);};
 
-
     return <div style={{width:'65vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white'}}>
       <h5 style={{marginTop:'1vw',float:'left',paddingLeft:'1vw',fontSize:'1.5vw'}}>User Details</h5>
-      <IconButton style={{float:'right'}} onClick={handleClick}>
+      <IconButton hidden={hidden} style={{float:'right'}} onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Menu
