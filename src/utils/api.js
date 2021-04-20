@@ -93,7 +93,7 @@ export async function apiGetStudentProfile(id) {
 export async function apiGetCoursesById(ids) {
     try { // app6
         const data = {"ids": ids}
-        const res = await axios.post(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/course/find-many-by-id/`, data);
+        const res = await axios.post(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/course/find-many-by-id/`, data);
         return res;
     } catch (error){
         console.log(error.response);
@@ -103,7 +103,7 @@ export async function apiGetCoursesById(ids) {
 
 export async function apiGetCourseById(id) {
     try { // app6
-        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/course/find-by-id/${id}`);
+        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/course/find-by-id/${id}`);
         return res;
     } catch (error){
         console.log(error.response);
