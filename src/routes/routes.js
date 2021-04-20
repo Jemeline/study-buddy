@@ -15,6 +15,7 @@ import TutorRoute from './RouteClasses/Tutor.route';
 import AdminRoute from './RouteClasses/Admin.route';
 import UnverifiedRoute from './RouteClasses/Unverified.route';
 import HelpCenter from '../components/Help/HelpCenter.component';
+import StudentFindTutors from "../components/Advertisements/StudentFindTutors";
 
 const Routes = ({setIsLoggedIn}) => (
     <Switch>
@@ -24,6 +25,7 @@ const Routes = ({setIsLoggedIn}) => (
       <StudentRoute exact path="/student-survey" component={Survey}/>
       <StudentRoute exact path="/student-profile" component={StudentProfile}/>
       <StudentRoute exact path="/student-help" component={HelpCenter}/>
+      <StudentRoute exact path="/find-tutors" component={StudentFindTutors}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>
       <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/>  
     </Switch>

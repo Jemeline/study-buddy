@@ -30,7 +30,7 @@ function HelpCenter() {
                     </Grid>
                     <Grid item xs={3} sm={6} md={3} style={{border: "2px solid black", margin: "10px"}}>
                         <h6>Find a Tutor</h6>
-                        <a href="/student-help">Search for a tutor</a>
+                        <a href="/find-tutors">Search for a tutor</a>
                     </Grid>
                 </Grid>
                 

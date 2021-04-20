@@ -144,6 +144,15 @@ export const createAd = async data => {
     }
 };
 
+export const getAllAds = async () => {
+    try {
+        const ads = await axios.get(`${baseAPI}/advertisement`);
+        return ads;
+    } catch(err) {
+        console.error(err);
+    }
+};
+
 export const getAdsByEmail = async email => {
     try {
         const ads = await axios.post(`${baseAPI}/advertisement/email`, {"email": email});
