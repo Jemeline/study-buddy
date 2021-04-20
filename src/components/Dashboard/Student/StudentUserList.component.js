@@ -89,7 +89,7 @@ function StudentUserList(){
         </Table>
         </TableContainer>   
     </Paper>
-    <Paper style={{overflow:'auto',width:'70vw'}}>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw'}}>
     <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
