@@ -107,6 +107,7 @@ async function handleSurveyResubmit(payload,setCurrPage,storeCurrPage){
 
         // Use algorithm to sort other users
         const sums = await getWeightedSum(userProfile);
+
         console.log(sums);
 
         setCurrPage(6);

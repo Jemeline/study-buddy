@@ -11,7 +11,7 @@ import axios from 'axios';
 async function getStudentProfiles() {
     const profileData = await axios({
         method: 'get',
-        url: 'https://us-central1-study-buddy-d452c.cloudfunctions.net/app7/api/student-profile',
+        url: 'https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/student-profile',
     });
     const studentProfiles = profileData.data;
     return studentProfiles;
@@ -20,6 +20,7 @@ async function getStudentProfiles() {
 // Use survey responses to generate weighted sum of similar answers
 export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
+
     let sums = [];
     for (let i = 0; i < studentProfiles.length; i++) {
         sums[i] = [studentProfiles[i]._id, 0];
