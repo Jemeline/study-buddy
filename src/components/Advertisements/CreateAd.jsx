@@ -8,16 +8,15 @@ const CreateAd = () => {
     const [courses, setCourses] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const submitForm = async e => {
+    const submitForm = async () => {
         const { email } = JSON.parse(getUser());
-        const data = {
-            tutorEmail: email,
-            text: text,
-            courses: courses
-        };
         try {
             setLoading(true);
-            const res = await createAd(data);
+            const res = await createAd({
+                tutorEmail: email,
+                text: text,
+                courses: courses
+            });
             // console.log(res);
             setLoading(false);
             alert("Successfully posted advertisement.");

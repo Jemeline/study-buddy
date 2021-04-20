@@ -71,9 +71,9 @@ const TutorAd = ({ isTutor, ad }) => {
         </Form>
     </Card> 
     : <Card className={"shadow"} style={style}>
-        {isTutor ? null : <p>Email: {ad.tutorEmail}</p>}
         <p>{ad.text}</p>
         <p>Courses: {ad.courses}</p>
+        {isTutor ? null : <p>Email: {ad.tutorEmail}</p>}
         {isTutor ? <ButtonGroup>
             <Button variant="primary" data-testid="editBtn" onClick={e => setEditMode(true)}>Edit</Button>
             <Button variant="danger" data-testid="deleteBtn" onClick={handleDelete}>Delete</Button>
