@@ -15,6 +15,7 @@ import Calendar from '../components/Calendar/Calendar.component'
 import HelpCenter from '../components/Help/HelpCenter.component';
 import StudentFindTutors from "../components/Advertisements/StudentFindTutors";
 import StudentUserList from '../components/Dashboard/Student/StudentUserList.component';
+import InviteLink from '../components/InviteLink/InviteLink.component'
 
 const Routes = ({setIsLoggedIn}) => (
     <Switch>
@@ -27,7 +28,9 @@ const Routes = ({setIsLoggedIn}) => (
       <StudentRoute exact path="/find-tutors" component={StudentFindTutors}/>
       <StudentRoute exact path="/find-students" component={StudentUserList}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>
-      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/>  
+      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/> 
+      <Route exact path="/invitelink" render={() => (<InviteLink/>)}/>
+      
     </Switch>
   );
   
