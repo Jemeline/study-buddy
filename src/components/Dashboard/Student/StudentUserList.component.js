@@ -31,6 +31,8 @@ function StudentUserList(){
     const [graduationYear, setGraduationYear] = useState([]);
     const [programOfStudy, setProgramOfStudy] = useState([]);
     const classes = useStyles();
+    const [optionsStudentNames, setOptionsStudentNames] = useState([]);
+    const [studentName, setStudentName] = useState([]);
 
 
     const handleChangePage = (event, newPage) => {
@@ -44,45 +46,69 @@ function StudentUserList(){
 
     const handleChangeStudentType = (e) => {
       setStudentType(e);
+      setStudentName([]);
       if (graduationYear.length===0 && programOfStudy.length===0 && e.length ===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
+        (
           (typeof(row.profile)!=='undefined') &&
           ((graduationYear.length>0)?graduationYear.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
           ((e.length>0)?row.profile.studentType===e[0].value:true) &&
           ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+        )
         ));
       }
     };
 
     const handleChangeGraduationYear = (e) => {
       setGraduationYear(e);
+      setStudentName([]);
       if (studentType.length===0 && programOfStudy.length===0 && e.length ===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
+        (
           (typeof(row.profile)!=='undefined') &&
           ((e.length>0)?e.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
           ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&
           ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+        )
         ));
       }
     };
 
     const handleChangePOS = (e) => {
       setProgramOfStudy(e);
+      setStudentName([]);
       if (studentType.length===0 && graduationYear.length===0 && e.length===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
+        (
           (typeof(row.profile)!=='undefined') &&
           ((graduationYear.length>0)?graduationYear.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
-          ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) && 
+          ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&
           ((e.length>0)?e.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1 || row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+        ) 
         ));
       }
     };
+
+    const handleChangeStudentName = (e) => {
+      setStudentName(e);
+      setStudentType([]);
+      setGraduationYear([]);
+      setProgramOfStudy([]);
+      if (e.length===0){
+        setRowsFiltered(rows);
+      } else {
+        setRowsFiltered(rows.filter((row)=>
+          ((e.length>0)?e.map((ele)=>ele.value).includes(capitalizeFirst(row.user.first)+' '+capitalizeFirst(row.user.last)):true)
+        ));
+      }
+    };
+
     
   useEffect(async () => {
     try{
@@ -92,6 +118,7 @@ function StudentUserList(){
       const data1 = await apiGetStudentProfiles();
       if (data.data != null) {
         setUsers(data.data);
+        setOptionsStudentNames([... new Set(await data.data.filter((e)=>!(e.disabled || e._id===JSON.parse(getUser())._id)).map(e => capitalizeFirst(e.first)+" "+capitalizeFirst(e.last)))].map((e)=> {return {label:e,value:e}}));
         setRows(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
         setRowsFiltered(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
         setLoading(false);
@@ -106,6 +133,8 @@ function StudentUserList(){
   
   return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'space-evenly',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
     <div hidden={hiddenTable} style={{width:'20vw',height:'calc(70vh + 55px)'}}>
+      <p style={{margin:0,color:colorPalette.secondary}}>Search By Attribute</p>
+      <hr style={{borderTop: `3px solid ${colorPalette.secondary}`,marginTop:0}}/>
       <Select
         isMulti
         options={(studentType.length===1) ? [] : optionsStudentType}
@@ -114,6 +143,7 @@ function StudentUserList(){
         value={studentType}
         menuPlacement="auto"
         noOptionsMessage={()=>'Max 1 Selection'}
+        styles={colourStyles}
       />
       <br/>
       <Select
@@ -123,6 +153,7 @@ function StudentUserList(){
         onChange={(e)=> handleChangeGraduationYear(e)}
         value={graduationYear}
         menuPlacement="auto"
+        styles={colourStyles}
       />
       <br/>
       <Select
@@ -132,6 +163,19 @@ function StudentUserList(){
         onChange={(e)=> handleChangePOS(e)}
         value={programOfStudy}
         menuPlacement="auto"
+        styles={colourStyles}
+      />
+      <br/>
+      <p style={{margin:0,color:colorPalette.secondary}}>Search By Name</p>
+      <hr style={{borderTop: `3px solid ${colorPalette.secondary}`,marginTop:0}}/>
+      <Select
+        isMulti
+        options={optionsStudentNames}
+        placeholder={"Student Name"}
+        onChange={(e)=> handleChangeStudentName(e)}
+        value={studentName}
+        menuPlacement="auto"
+        styles={colourStyles}
       />
     </div>
     <div style={{width:"70vw"}}>
@@ -150,7 +194,8 @@ function StudentUserList(){
           <TableBody>
             {!loading ? 
             rowsFiltered.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow className={classes.tableRow} hover key={row.user._id} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
+              <TableRow className={classes.tableRow}
+              hover key={row.user._id} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
@@ -183,9 +228,9 @@ function StudentUserList(){
 const useStyles = makeStyles((theme) => ({
   tableRow: {
    '&&:hover': {
-      background: colorPalette.primary
+      // backgroundColor: colorPalette.primary,
     },
-   },
+  },
 }));
 
 const optionsStudentType = [
@@ -201,6 +246,52 @@ const optionsGraduationYear = years.map((e)=> {return {label:e,value:e}});
 
 function createData(name, email, phone, user,profile) {
   return { name, email, phone, user, profile};
+};
+
+export const colourStyles = {
+  control: styles => ({ ...styles, backgroundColor: 'white'}),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+      backgroundColor: isDisabled
+      ? null
+      : isSelected
+      ? colorPalette.secondary
+      : isFocused
+      ? colorPalette.secondary
+      : null,
+      color: isDisabled
+      ? null
+      : isSelected
+      ? colorPalette.white
+      : isFocused
+      ? colorPalette.white
+      : null,
+    };
+  },
+  multiValue: (styles, { data }) => {
+    return {
+      ...styles,
+      backgroundColor: colorPalette.secondary,
+    };
+  },
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: colorPalette.white,
+    fontSize:'1.2vw'
+  }),
+  placeholder: (styles, { data }) => ({
+      ...styles,
+      fontSize:'1.2vw'
+  }),
+  multiValueRemove: (styles, { data }) => ({
+    ...styles,
+    color: colorPalette.white,
+    ':hover': {
+      backgroundColor: colorPalette.secondaryA,
+      color: colorPalette.white,
+    },
+  }),
 };
 
 export default StudentUserList;
