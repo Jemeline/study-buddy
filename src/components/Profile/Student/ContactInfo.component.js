@@ -1,10 +1,10 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {getUser,login} from '../../../utils/common';
 import {validateEmail,validatePhone,validateToken} from '../../../utils/regex';
 import {colorPalette} from '../../../utils/design';
 import {apiUpdateUser,apiVerify,apiToken} from '../../../utils/api';
 import { useHistory } from "react-router-dom";
-import avatar from './unknown-avatar.jpg';
+import avatarUnknown from './unknown-avatar.jpg';
 import { InputGroup,InputGroupAddon,InputGroupText,Input,Form,FormGroup} from 'reactstrap';
 import { Button, Modal, ModalHeader, ModalBody} from 'reactstrap';
 import Menu from '@material-ui/core/Menu';
@@ -13,6 +13,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 import {Alert} from 'react-bootstrap';
 import ReactLoading from 'react-loading';
+
 
  
 function ContactInfo({user,setUser,hidden}) {
@@ -32,7 +33,26 @@ function ContactInfo({user,setUser,hidden}) {
     const [token, setToken] = useState('');
     const [alertModal, setAlertModal] = useState(false);
     const [alertModalMessage, setAlertModalMessage] = useState('');
+    const [avatar, setAvatar] = useState('');
+    const [loadingAvatar, setLoadingAvatar] = useState(false);
+    const [error, setError] = useState(false);
 
+    useEffect(async () => {
+      try{
+        setLoadingAvatar(true);
+        setError(false);
+        const data = await apiUpdateUser(user._id,{});
+        if (data.data != null) {
+          console.log(data.data);
+          setAvatar(data.data.avatar);
+          setLoadingAvatar(false);
+        } else {
+          setError(true);
+        }  
+      } catch (err){
+        setError(true);
+      }  
+    }, []);
 
     return <div style={{width:'65vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white'}}>
       <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14, margin:'1vw'}} show={alert} onClose={() => setAlert(false)} dismissible transition={false}>
@@ -65,7 +85,11 @@ function ContactInfo({user,setUser,hidden}) {
       </Menu>
       <div style={{width:'65vw',display:'flex',alignItems: 'center',justifyContent:'space-evenly',padding:'1vw'}}>
         <div style={{margin:'1vw'}}>
+        {(loadingAvatar)?
+          <ReactLoading hidden={!loadingAvatar} type={"cylon"} color={colorPalette.secondary} height={'10%'} width={'10%'} /> :
+          (!avatar)?<img src={avatarUnknown} style={{maxHeight: '10vw',maxWidth: '10vw'}}/>:
           <img src={avatar} style={{height: '10vw'}}/>
+        }
         </div>
         <div style={{margin:'1vw'}}>
           <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>

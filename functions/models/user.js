@@ -45,6 +45,7 @@ const UserSchema = new mongoose.Schema({
   passwordResetToken: String,
   passwordResetExpires: Date,
   disabled: {type: Boolean, default: false},
+  avatar: {type: String},
 });
 
 UserSchema.pre("save", function(next) {

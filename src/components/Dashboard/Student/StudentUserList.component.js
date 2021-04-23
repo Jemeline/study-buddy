@@ -14,6 +14,7 @@ import {colorPalette} from '../../../utils/design';
 import { makeStyles } from "@material-ui/core/styles";
 import Select from 'react-select';
 import {Majors,Minors,GraduatePrograms} from '../../Survey/Student/utils/StudyPrograms';
+import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 
 function StudentUserList(){
     const [loading, setLoading] = useState(false);
@@ -184,6 +185,7 @@ function StudentUserList(){
         <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
+              <TableCell align="left"></TableCell>
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Student Type</TableCell>
@@ -196,6 +198,7 @@ function StudentUserList(){
             rowsFiltered.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow className={classes.tableRow}
               hover key={row.user._id} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
+                <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>

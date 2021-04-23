@@ -85,6 +85,16 @@ export async function apiUpdateUser(id,userData) {
     }    
 };
 
+export async function apiUpdateAvatar(formData,headers) {
+    try {
+        const res = await axios.post(`https://api.Cloudinary.com/v1_1/teamc523comp/image/upload`, formData,headers);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
 export async function apiGetStudentProfile(id) {
     try {
         const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/student-profile/find-by-id/${id}`);
