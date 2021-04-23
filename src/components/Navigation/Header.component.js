@@ -20,6 +20,9 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import PersonIcon from '@material-ui/icons/Person';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import {colorPalette} from '../../utils/design';
+import MailIcon from '@material-ui/icons/Mail';
+
 
 
 
@@ -70,10 +73,14 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><EmojiPeopleIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Find A Study Buddy"} />
           </ListItem>
+          <ListItem button onClick={()=>history.push(`/mass-study-invite`)}>
+            <ListItemIcon><MailIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Send A Study Invite"} />
+          </ListItem>
       </List>
       <Divider/>
       <List>
-        <ListItem button onClick={()=>history.push(`/${getRoleLiteral()}-help`)}>
+        <ListItem button onClick={()=>history.push(`/student-help`)}>
             <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"UNC Help Center"} />
         </ListItem>

@@ -15,6 +15,7 @@ import HelpCenter from '../components/Help/HelpCenter.component';
 import StudentFindTutors from "../components/Advertisements/StudentFindTutors";
 import StudentUserList from '../components/Dashboard/Student/StudentUserList.component';
 import InviteLink from '../components/InviteLink/InviteLink.component'
+import MassStudyInvite from '../components/MassInvite/MassInvite.component';
 
 const Routes = ({setIsLoggedIn}) => (
     <Switch>
@@ -24,6 +25,7 @@ const Routes = ({setIsLoggedIn}) => (
       <StudentRoute exact path="/student-survey" component={Survey}/>
       <StudentRoute exact path="/student-profile" component={StudentProfile}/>
       <StudentRoute exact path="/student-help" component={HelpCenter}/>
+      <StudentRoute exact path="/mass-study-invite" component={MassStudyInvite}/>
       <StudentRoute exact path="/find-tutors" component={StudentFindTutors}/>
       <StudentRoute exact path="/find-students" component={StudentUserList}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>
