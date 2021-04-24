@@ -12,8 +12,9 @@ import StudentUnsurveyed from '../Student/StudentUnsurveyed.component';
 import StudyPreferencesRead from './StudyPreferencesRead.component';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import UndoIcon from '@material-ui/icons/Undo';
+import Calendar from '../../Calendar/Calendar.component'
 
-function ProfileRead({user,profile,setHiddenProfile,setHiddenTable}){
+function ProfileRead({user,profile,setHiddenProfile,setHiddenTable,setHideProfileTabs,hideProfileTabs}){
   const theme = useTheme();
   const scrollableTabs = useMediaQuery(theme.breakpoints.down('sm'));
   const [value, setValue] = useState(1);
@@ -29,7 +30,7 @@ function ProfileRead({user,profile,setHiddenProfile,setHiddenTable}){
       scrollButtons="on"
       centered={!scrollableTabs}
     >
-      <Tab label="Back" onClick={() => {setHiddenTable(false);setHiddenProfile(true);setValue(1);}} icon={<UndoIcon />} style={{flexShrink: 0}}/>
+      <Tab label="Back" onClick={() => {setHiddenTable(false);setHiddenProfile(true);setValue(1);if(hideProfileTabs)setHideProfileTabs(false);}} icon={<UndoIcon />} style={{flexShrink: 0}}/>
       <Tab label="User Details" icon={<PersonIcon />} style={{flexShrink: 0}}/>
       <Tab label="Contact Info" icon={<PhoneIcon />} style={{flexShrink: 0}}/>
       <Tab label="Study Preferences" icon={<SchoolIcon />} style={{flexShrink: 0}}/>
@@ -39,6 +40,7 @@ function ProfileRead({user,profile,setHiddenProfile,setHiddenTable}){
     {(value === 1) ? <UserDetailsRead user={user}/>
     :(value === 2) ? <ContactInfoRead user={user}/>
     :(value === 3) ? ((user.isSurveyed) ? <StudyPreferencesRead profile={profile}/> : <StudentUnsurveyed/>)
+    :(value === 4) ? <Calendar user={user}/>
     :<p>3</p>}
     </div>
 </div>

@@ -43,7 +43,6 @@ function ContactInfo({user,setUser,hidden}) {
         setError(false);
         const data = await apiUpdateUser(user._id,{});
         if (data.data != null) {
-          console.log(data.data);
           setAvatar(data.data.avatar);
           setLoadingAvatar(false);
         } else {
@@ -92,7 +91,7 @@ function ContactInfo({user,setUser,hidden}) {
         }
         </div>
         <div style={{margin:'1vw'}}>
-          <InputGroup style={{paddingBottom:'1vw',margin:'auto'}}>
+          <InputGroup style={{paddingBottom:'1vw',margin:'auto',width:'25vw'}}>
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{fontSize:'1.2vw'}}>Email</InputGroupText>
             </InputGroupAddon>
