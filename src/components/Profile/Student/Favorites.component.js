@@ -90,7 +90,7 @@ function Favorites({setHideProfileTabs}){
         </Table>
         </TableContainer>   
     </Paper>
-    <Paper hidden={hiddenTable} style={{height:'55px',width:'70vw',marginBottom:'5vh',}}>
+    <Paper hidden={hiddenTable} style={{height:'55px',width:'70vw',marginBottom:'30px',}}>
     <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
