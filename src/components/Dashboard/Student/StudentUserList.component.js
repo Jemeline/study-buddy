@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {apiGetStudents,apiGetStudentProfiles} from '../../../utils/api';
+import {apiGetStudents,apiGetStudentProfiles,apiAddFavorite,apiRemoveFavorite} from '../../../utils/api';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,6 +15,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Select from 'react-select';
 import {Majors,Minors,GraduatePrograms} from '../../Survey/Student/utils/StudyPrograms';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 function StudentUserList(){
     const [loading, setLoading] = useState(false);
@@ -34,6 +36,8 @@ function StudentUserList(){
     const classes = useStyles();
     const [optionsStudentNames, setOptionsStudentNames] = useState([]);
     const [studentName, setStudentName] = useState([]);
+    const [favorites,setFavorites]=useState([]);
+    const [hideProfileTabs, setHideProfileTabs] = useState(false);
 
 
     const handleChangePage = (event, newPage) => {
@@ -119,6 +123,7 @@ function StudentUserList(){
       const data1 = await apiGetStudentProfiles();
       if (data.data != null) {
         setUsers(data.data);
+        setFavorites(data.data.filter(ele=>ele._id===JSON.parse(getUser())._id)[0].favorites);
         setOptionsStudentNames([... new Set(await data.data.filter((e)=>!(e.disabled || e._id===JSON.parse(getUser())._id)).map(e => capitalizeFirst(e.first)+" "+capitalizeFirst(e.last)))].map((e)=> {return {label:e,value:e}}));
         setRows(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
         setRowsFiltered(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
@@ -130,6 +135,14 @@ function StudentUserList(){
       setError(true);
     }  
   }, []);
+
+  function getFavorites(user){
+    if (favorites.includes(user._id)){
+      return colorPalette.secondary;
+    } else {
+      return colorPalette.gray;
+    }
+  };
 
   
   return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'space-evenly',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
@@ -191,19 +204,21 @@ function StudentUserList(){
               <TableCell align="left">Student Type</TableCell>
               <TableCell align="left">Graduation Year</TableCell>
               <TableCell align="left">Program of Study</TableCell>
+              <TableCell align="left">Add To Favorites</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {!loading ? 
             rowsFiltered.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow className={classes.tableRow}
-              hover key={row.user._id} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
-                <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
-                <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.email}</TableCell>
-                <TableCell align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
-                <TableCell align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
-                <TableCell align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
+              hover key={row.user._id}>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
+                <TableCell align="left"><IconButton onClick={async () => {await handleFavorite(row.user,favorites,setFavorites);}}><FavoriteIcon style={{color:getFavorites(row.user)}}/></IconButton></TableCell>
               </TableRow>
             )): <TableRow/>}
           </TableBody>
@@ -222,11 +237,35 @@ function StudentUserList(){
     />
     </Paper>
       <div hidden={hiddenProfile}>
-        <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile}/>
+        <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile} setHideProfileTabs={setHideProfileTabs} hideProfileTabs={false}/>
       </div>
     </div>
     </div>
 }; 
+
+async function handleFavorite(rowUser,favorites,setFavorites){
+  try{
+    if (favorites.includes(rowUser._id)){
+      const body = {"favorite":rowUser._id};
+      const removeData = await apiRemoveFavorite(JSON.parse(getUser())._id,body);
+      if (removeData){
+        if (removeData.data.nModified === 1){
+          setFavorites(favorites.filter(item => item !== rowUser._id ));
+        }
+      }
+    } else {
+      const body = {"favorite":rowUser._id};
+      const addData = await apiAddFavorite(JSON.parse(getUser())._id,body);
+      if (addData){
+        if (addData.data.nModified === 1){
+          setFavorites(prevArray => [...prevArray, rowUser._id]);
+        }
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  };
+};
 
 const useStyles = makeStyles((theme) => ({
   tableRow: {

@@ -210,3 +210,23 @@ export const editAd = async ad => {
         console.error(err);
     }
 };
+
+export async function apiAddFavorite(id,data) {
+    try {
+        const res = await axios.post(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/add/favorites/${id}`,data);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
+export async function apiRemoveFavorite(id,data) {
+    try {
+        const res = await axios.post(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/remove/favorites/${id}`,data);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
