@@ -61,6 +61,7 @@ function UserDetails({user,setUser,hidden}) {
       >
         <MenuItem hidden={update} onClick={() => {handleClose();setUpdate(true);setUpdateType('details');}}>Update Details</MenuItem>
         <MenuItem hidden={update} onClick={() =>{handleClose();setUpdate(true);setUpdateType('avatar');setModal(true);}}>Update Avatar</MenuItem>
+        <MenuItem hidden={update} onClick={async () =>{handleClose();await handleRemoveAvatar(user,setAvatar,currentAvatar,setAlert);}}>Remove Avatar</MenuItem>
         <MenuItem hidden={!update || !validateName(first) || !validateName(last)} 
           onClick={async () => {
             handleClose();
@@ -179,6 +180,20 @@ async function handleUpdateAvatar(uploadAvatar,user,setUser,setAvatar,testAvatar
     setAvatar(testAvatar);
     setModal(false);
     setUpdate(false);
+  } catch (error){
+    setAlert(true);
+    setAvatar(currentAvatar);
+    console.log(error);
+  };
+};
+
+async function handleRemoveAvatar(user,setAvatar,currentAvatar,setAlert){
+  setAlert(false);
+  try{
+    const body = {"avatar":''}
+    const dataUpdate = await apiUpdateUser(user._id,body);
+    const newUser = JSON.parse(getUser());
+    setAvatar('');
   } catch (error){
     setAlert(true);
     setAvatar(currentAvatar);

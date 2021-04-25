@@ -58,8 +58,8 @@ function Favorites({setHideProfileTabs}){
     }, []);
 
   
-  return <div style={{marginTop:'30px',marginBottom:'30px',height:'calc(100vh - 200px)'}}>
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',height:'65vh',marginTop:'5vh'}}>
+  return <div style={{marginBottom:'5vh',height:'calc(100vh - 200px)'}}>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',height:'65vh',marginTop:'5vh',}}>
     <TableContainer>
         <Table stickyHeader size="medium">
           <TableHead>
@@ -90,7 +90,7 @@ function Favorites({setHideProfileTabs}){
         </Table>
         </TableContainer>   
     </Paper>
-    <Paper hidden={hiddenTable} style={{height:'55px',width:'70vw',marginBottom:'30px',}}>
+    <Paper hidden={hiddenTable} style={{height:'55px',width:'70vw',marginBottom:'5vh'}}>
     <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
@@ -101,6 +101,7 @@ function Favorites({setHideProfileTabs}){
           onChangeRowsPerPage={handleChangeRowsPerPage}
     />
     </Paper>
+    <br/>
       <div hidden={hiddenProfile}>
         <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile} setHideProfileTabs={setHideProfileTabs} hideProfileTabs={true}/>
       </div>

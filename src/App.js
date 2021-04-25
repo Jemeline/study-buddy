@@ -11,7 +11,6 @@ function App(){
   document.title = "Study Buddy";
   const [isLoggedIn, setIsLoggedIn] = useState(getLoginStatus());
   
-  
   return (
     <div className="App" data-testid="App">
       <BrowserRouter>
