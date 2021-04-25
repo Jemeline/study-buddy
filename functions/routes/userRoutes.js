@@ -147,5 +147,35 @@ app.delete("/user/:id", async (req, res) => {
   }
 });
 
+app.post("/user/admin", [
+  check("email", "Email is not valid").not().isEmpty().isEmail().normalizeEmail({remove_dots: false}),
+  check("password", "Password required").isLength({min: 8}),
+  check("first", "Firstname required").notEmpty(),
+  check("last", "Lastname required").notEmpty(),
+],
+async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).jsonp(errors.array());
+
+  try {
+    const newuser = new UserModel(req.body);
+    newuser.role = "admin";
+    newuser.dateMember = new Date();
+    newuser.isVerified = false;
+    newuser.save(function(err) {
+      if (err) {
+        if (err.code === 11000) {
+          return res.status(401).send({msg: "The email address you have entered is already associated with another account."});
+        }
+        return res.status(500).send({msg: err.message});
+      }
+      res.send({user: newuser.toJSON()});
+    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+);
+
 
 module.exports = app;
