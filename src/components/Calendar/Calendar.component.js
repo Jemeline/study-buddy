@@ -3,9 +3,10 @@ import FullCalendar, { formatDate, getDayClassNames, getSectionClassNames } from
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import {apiGetStudentProfile, apiGetCoursesById, apiGetCourseById} from '../../utils/api'
+import {apiGetStudentProfile, apiGetCoursesById, apiGetCourseById} from '../../utils/api';
+import tippy, {followCursor} from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
 
-let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 let semesterStart = "2021-01-19"
 let semesterEnd = "2021-05-05"
 let eventGuid = 0
@@ -20,7 +21,6 @@ function Calendar(user) {
     const [loading, setLoading] = useState(true);
 
         useEffect(async () => {
-            console.log("loading")
             apiGetStudentProfile(user.user._id).then((res) => {
                 apiGetCoursesById(res.data.courseSchedule).then((res) => {
                     if (res.data!= null){
@@ -72,7 +72,7 @@ function Calendar(user) {
        
     if (!loading) {
         return (
-            <div className='demo-app-main'>
+            <div className='demo-app-main' style={{width:'70vw'}}>
                     <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     headerToolbar={{
@@ -87,6 +87,15 @@ function Calendar(user) {
                     dayMaxEvents={true}
                     weekends={true}
                     initialEvents={iEvents}
+                    height='70vh'
+                    eventMouseEnter={(info) =>{
+                        console.log(info.event.title);
+                        tippy(info.el, {
+                            content: info.event.title,
+                            followCursor: true,
+                            plugins: [followCursor],
+                        })
+                    }}
                     />
             </div>
         ) 
@@ -95,5 +104,6 @@ function Calendar(user) {
     }
     
 }
+
 
 export default Calendar;
