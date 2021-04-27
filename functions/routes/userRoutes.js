@@ -68,6 +68,26 @@ app.post("/user/update/:id", async (req, res) => {
   }
 });
 
+app.post("/user/add/favorites/:id", async (req, res) => {
+  try {
+    const user = await UserModel.updateOne({_id: req.params.id}, {"$addToSet": {"favorites": req.body.favorite}});
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+app.post("/user/remove/favorites/:id", async (req, res) => {
+  try {
+    const user = await UserModel.updateOne({_id: req.params.id}, {"$pull": {"favorites": req.body.favorite}}).exec();
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
 app.post("/user/update/password/:id", [
   check("oldPassword", "Old password required").not().isEmpty(),
   check("newPassword", "New Password required").notEmpty(),

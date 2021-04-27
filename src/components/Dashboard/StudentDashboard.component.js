@@ -10,18 +10,16 @@ import Calendar from '../Calendar/Calendar.component';
 function StudentDashboard() {
     return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
       {getIsSurveyed() ?
-      // <Grid
-      //     container
-      //     direction="row"
-      //     justify="flex-start"
-      //     spacing={1}
-      // >
-      //   <Grid xs={12} sm={6} md={3}>
-          
-      //   </Grid>
-      // </Grid>  
-      <StudentMatchList/>
-      
+      <Grid
+          container
+          direction="row"
+          justify="center"
+          spacing={1}
+      >
+          <Grid item  xs="auto" sm="auto" md="auto">
+            <StudentMatchList />
+          </Grid>
+      </Grid>
       : <DashboardUnsurveyed/>}
     </div>
 };

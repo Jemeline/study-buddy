@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles} from '../../../utils/api';
+import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles, apiGetCourseById} from '../../../utils/api';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,12 +11,19 @@ import Paper from '@material-ui/core/Paper';
 import {getUser,capitalizeFirst} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SchoolIcon from '@material-ui/icons/School';
+import HearingIcon from '@material-ui/icons/Hearing';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import FingerprintIcon from '@material-ui/icons/Fingerprint';
+import { colorPalette } from '../../../utils/design';
 
-function createData(name, email, phone, user,profile) {
-  return { name, email, phone, user, profile};
+
+function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType) {
+  return { name, email, phone, user, profile, sharedClasses, sharedLearningType };
 };
 
-function StudentMatchList(){
+function TopMatches(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [users, setUsers] = useState({});
@@ -27,7 +34,7 @@ function StudentMatchList(){
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [hiddenTable,setHiddenTable] = useState(false);
     const [hiddenProfile,setHiddenProfile] = useState(true);
-    const [userSums, setUserSums] = useState(getSums());
+    const [userMatches, setUserMatches] = useState(getMatches());
 
     
     const handleChangePage = (event, newPage) => {
@@ -39,27 +46,34 @@ function StudentMatchList(){
       setPage(0);
     };
 
-    async function getSums() {
+    async function getMatches() {
       const user = JSON.parse(getUser());
       const profile = (await apiGetStudentProfile(user._id)).data;
-      const sums = await getWeightedSum(profile);
-      return sums;
+      const matches = await getWeightedSum(profile);
+      return matches;
     }
 
   
   useEffect(async () => {
     try{
       setLoading(true);
-      setError(false);
-
+      setError(false);  
       const students = (await apiGetStudents()).data;
       const studentProfiles = (await apiGetStudentProfiles()).data;
-      const awaitedUserSums = await userSums;
-      const orderedProfiles = awaitedUserSums.map(userSum => studentProfiles.find(profile => profile._id === userSum[0]));
-      const orderedStudents = awaitedUserSums.map(u => students.find(student => student._id === studentProfiles.find(profile => profile._id === u[0])._userId));
+      const awaitedUserMatches = await userMatches;
+      // const orderedProfiles = awaitedUserMatches.map(match => studentProfiles.find(profile => profile._id === match[0]));
+      const orderedStudents = awaitedUserMatches.map(match => students.find(student => student._id === studentProfiles.find(profile => profile._id === match["id"])._userId));
       if (students != null) {
         setUsers(students);
-        setRows(await orderedStudents.map(student=> createData((capitalizeFirst(student.first) + ' '+ capitalizeFirst(student.last)),student.email,student.phoneNumber,student,studentProfiles.find(element => element._userId === student._id))));
+        setRows(await orderedStudents.map(student=> createData(
+          (capitalizeFirst(student.first) + ' '+ capitalizeFirst(student.last)),
+          student.email,
+          student.phoneNumber,
+          student,
+          studentProfiles.find(element => element._userId === student._id),
+          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
+          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"]
+          )));
         setLoading(false);
       } else {
         setError(true);
@@ -71,27 +85,37 @@ function StudentMatchList(){
 
   
   return <div>
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',maxHeight:'70vh'}}>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'80vw',maxHeight:'70vh'}}>
     <TableContainer >
         <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Email</TableCell>
-              <TableCell align="left">Student Type</TableCell>
-              <TableCell align="left">Graduation Year</TableCell>
-              <TableCell align="left">Program of Study</TableCell>
+              <TableCell align="center"></TableCell>
+              <TableCell align="center"></TableCell>
+              <TableCell align="center"></TableCell>
+              <TableCell align="center"><h5><strong>Top Matches For You</strong></h5></TableCell>
+              <TableCell align="center"></TableCell>
+              <TableCell align="center"></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="center"></TableCell>
+              <TableCell align="center"></TableCell>
+              <TableCell align="center"></TableCell>
+              <TableCell align="center"></TableCell>
+              <TableCell align="center"><HearingIcon /><VisibilityIcon /><FingerprintIcon /></TableCell>
+              <TableCell align="center"><SchoolIcon /></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {!loading ? 
-            rows.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow hover key={row.user._id} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
-                <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.email}</TableCell>
-                <TableCell align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
-                <TableCell align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
-                <TableCell align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major[0]:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
+            rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+              <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
+                <TableCell align="center"><AccountCircleIcon /></TableCell>
+                <TableCell align="center">{row.name}</TableCell>
+                <TableCell align="center">{row.email}</TableCell>
+                <TableCell align="center"></TableCell>
+                <TableCell align="center"><p style={{color: colorPalette.darkGray}}>{row.sharedLearningType.length > 0 ? "You're both "  + row.sharedLearningType.join(", ") + " learners" : ""}</p></TableCell>
+                <TableCell align="center"><p style={{color: colorPalette.darkGray}}>{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</p></TableCell>
               </TableRow>
             )): <TableRow/>}
           </TableBody>
@@ -100,7 +124,7 @@ function StudentMatchList(){
         <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
-          count={rows.length-rows.filter((row)=>((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).length}
+          count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -113,4 +137,4 @@ function StudentMatchList(){
     </div>
 }; 
 
-export default StudentMatchList;
+export default TopMatches;

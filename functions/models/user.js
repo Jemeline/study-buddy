@@ -45,6 +45,8 @@ const UserSchema = new mongoose.Schema({
   passwordResetToken: String,
   passwordResetExpires: Date,
   disabled: {type: Boolean, default: false},
+  avatar: {type: String},
+  favorites: {type: [mongoose.Schema.Types.ObjectId]},
 });
 
 UserSchema.pre("save", function(next) {
