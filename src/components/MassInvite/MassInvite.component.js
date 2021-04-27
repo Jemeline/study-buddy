@@ -5,6 +5,8 @@ import { colorPalette } from '../../utils/design';
 import { apiGetCourseById, apiGetStudentProfile, apiGetStudentProfiles, apiGetStudents, sendMassStudyInvite } from '../../utils/api';
 import { getUser } from '../../utils/common';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
+import Grid from '@material-ui/core/Grid';
+
 // import { size } from 'lodash';
 // const nodemailer = require("nodemailer");
 // const functions = require("firebase-functions");
@@ -17,8 +19,8 @@ function MassStudyInvite() {
     const [user, setUser] = useState(JSON.parse(getUser()));
     // const [chosenClass, setChosenClass] = useState("");
     const [myClasses, setMyClasses] = useState([]);
-    // const [errorMessage, setErrorMessage] = useState("");
-    // const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
     // const [message, setMessage] = useState("");
     // const [classId, setClassId] = useState("");
     const {register, handleSubmit, formState: { errors }} = useForm();
@@ -63,8 +65,13 @@ function MassStudyInvite() {
         try {
             const res = await sendMassStudyInvite(classmates, message);
             console.log(res);
+            setSuccessMessage("Your email was sent!");
+            setErrorMessage("");
         } catch (err) {
             console.log(err);
+            setSuccessMessage("");
+            
+            setErrorMessage("There was a problem sending your email. Try again");
         }
 
         
@@ -72,33 +79,50 @@ function MassStudyInvite() {
 
 
     return (
-        <div style={{backgroundColor: colorPalette.gray, display: "flex", justifyContent: "space-around", zIndex: "-1", height: "100vh"}}>
-            <div style={{width: "40vw", height: "50vh", display: "flex", justifyContent: "center", alignItems: "center", margin: "5vh 5vw", overflow: "scroll"}}>
-                <Paper elevation={8} style={{margin: "5%", backgroundColor: colorPalette.primary, height: "80%", justifyContent: "center"}}>
-                    <p style={{paddingBottom: "2%", borderBottom: "1px solid black", height: "20%"}}>What better way to start a study group than by inviting your whole class! </p>
+        <Grid container style={{boxSizing: "border-box", display: "flex", backgroundColor: colorPalette.gray, height: "92vh"}}>
+            <Grid item xs={1}>
 
-                    <p style={{height: "40%", padding: "2%"}}>Select the class on the right that you want to study with, write a message, and an email will be sent to all Study Buddy users in that class. <br></br> <em>You should probably include the date, time, and location</em></p>
-                    <p style={{padding: "5%", borderTop: "1px solid black", boxSizing: "border-box", width: "40%", margin: "auto", height: "10%"}}>Happy Studying!</p>
-                </Paper>
-            </div>
-            <div style={{width: "40vw", height: "80vh", display: "flex", justifyContent: "center", alignItems: "center", margin: "5vh 5vw", overflow: "scroll"}}>
-                <Paper elevation={5} style={{backgroundColor: colorPalette.primary, width: "90%", height: "90%"}}>
-                    {/* <h3>Let people know you want to study!</h3> */}
-                    <form onSubmit={handleSubmit(onSubmit)} style={{height: "80%", margin: "10% auto"}}>
-                        <select {...register("chosenClass", {required: true})} name="chosenClass" style={{width: "50%", padding: "5px", border: "1px solid black", marginBottom: "5%"}} >
-                            <option value="" defaultValue key="placeholder">Choose a class...</option>
-                            {myClasses.map(c => <option key={c[0]} value={c[0]}>{c[1]}</option>)}
-                        </select>
-                        {errors.chosenClass && <p><strong>Please choose a class</strong></p>}
-                        <textarea {...register("message", {required: true})} name="message" placeholder={"What do you want to say..."} style={{width: "80%", height: "50%", resize: "none", margin: "10% auto", border: "1px solid black"}} ></textarea>
-                        {errors.message && <p><strong>Please write a message</strong></p>}
-                        <button type="submit" style={{width: "25%", marginTop: "10%"}}><SendRoundedIcon /></button>
-                    </form>
-                    {/* <p>{successMessage}</p>
-                    <p>{errorMessage}</p> */}
-                </Paper>
-            </div>
-        </div>
+            </Grid>
+            <Grid item xs={4} style={{display: "flex"}}>
+                {/* <div style={{boxSizing: "border-box", backgroundColor: colorPalette.gray, display: "flex", justifyContent: "space-around", zIndex: "-1", height: "100vh"}}> */}
+                    {/* <div style={{width: "40vw", height: "50vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "50px", margin: "5vh 10vw", overflow: "scroll"}}> */}
+                        <Paper elevation={8} style={{backgroundColor: colorPalette.primary, width: "40vw", height: "80%", justifyContent: "flex-start", alignSelf: "center"}}>
+                            <p style={{paddingBottom: "2%", borderBottom: "1px solid black", height: "20%"}}>What better way to start a study group than by inviting your whole class! </p>
+
+                            <p style={{height: "40%", padding: "2%"}}>Select the class on the right that you want to study with, write a message, and an email will be sent to all Study Buddy users in that class. <br></br> <em>You should probably include the date, time, and location</em></p>
+                            <p style={{padding: "5%", borderTop: "1px solid black", boxSizing: "border-box", width: "40%", margin: "auto", height: "10%"}}>Happy Studying!</p>
+                        </Paper>
+                    {/* </div> */}
+                    
+                {/* </div> */}
+            </Grid>
+            <Grid item xs={1}>
+
+            </Grid>
+            <Grid item xs={5} style={{display: "flex"}}>
+                {/* <div style={{width: "40vw", height: "80vh", display: "flex", justifyContent: "center", alignItems: "center", margin: "5vh 10vw", overflow: "scroll"}}> */}
+                    <Paper elevation={5} style={{backgroundColor: colorPalette.primary, height: "90%", width: "50vw", justifyContent: "flex-end", alignSelf: "center"}}>
+                        {/* <h3>Let people know you want to study!</h3> */}
+                        <form onSubmit={handleSubmit(onSubmit)} style={{height: "80%", margin: "10% auto"}}>
+                            <select {...register("chosenClass", {required: true})} name="chosenClass" style={{width: "50%", padding: "5px", border: "1px solid black", marginBottom: "5%"}} >
+                                <option value="" defaultValue key="placeholder">Choose a class...</option>
+                                {myClasses.map(c => <option key={c[0]} value={c[0]}>{c[1]}</option>)}
+                            </select>
+                            {errors.chosenClass && <p style={{height: "2%"}}><strong>Please choose a class</strong></p>}
+                            <textarea {...register("message", {required: true})} name="message" placeholder={"What do you want to say..."} style={{width: "80%", height: "50%", resize: "none", margin: "10% auto", border: "1px solid black"}} ></textarea>
+                            {errors.message && <p><strong>Please write a message</strong></p>}
+                            <button type="submit" style={{width: "25%"}}><SendRoundedIcon /></button>
+                            <p>{successMessage}</p>
+                            <p>{errorMessage}</p>
+                        </form>
+                    </Paper>
+                {/* </div> */}
+            </Grid>
+            <Grid item xs={1}>
+
+            </Grid>
+        </Grid>
+        
     )
 }
 

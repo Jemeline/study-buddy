@@ -249,6 +249,7 @@ export async function apiRemoveFavorite(id,data) {
         throw error;
     }    
 };
+
 export async function sendMassStudyInvite(classmates, message) {
     try {
         const res = await axios({
