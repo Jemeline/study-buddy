@@ -104,13 +104,13 @@ function MassStudyInvite() {
                     <Paper elevation={5} style={{backgroundColor: colorPalette.primary, height: "90%", width: "50vw", justifyContent: "flex-end", alignSelf: "center"}}>
                         {/* <h3>Let people know you want to study!</h3> */}
                         <form onSubmit={handleSubmit(onSubmit)} style={{height: "80%", margin: "10% auto"}}>
-                            <select {...register("chosenClass", {required: true})} name="chosenClass" style={{width: "50%", padding: "5px", border: "1px solid black", marginBottom: "5%"}} >
+                            <select {...register("chosenClass", {required: true})} name="chosenClass" style={{width: "50%", padding: "5px", border: "1px solid black"}} >
                                 <option value="" defaultValue key="placeholder">Choose a class...</option>
                                 {myClasses.map(c => <option key={c[0]} value={c[0]}>{c[1]}</option>)}
                             </select>
-                            {errors.chosenClass && <p style={{height: "2%"}}><strong>Please choose a class</strong></p>}
-                            <textarea {...register("message", {required: true})} name="message" placeholder={"What do you want to say..."} style={{width: "80%", height: "50%", resize: "none", margin: "10% auto", border: "1px solid black"}} ></textarea>
-                            {errors.message && <p><strong>Please write a message</strong></p>}
+                            {errors.chosenClass && <p style={{height: "5px"}}><strong>Please choose a class</strong></p>}
+                            <textarea {...register("message", {required: true})} name="message" placeholder={"What do you want to say..."} style={{width: "80%", height: "50%", resize: "none", margin: "5% auto auto auto", border: "1px solid black"}} ></textarea>
+                            {errors.message && <p style={{height: "5px", marginBottom: "10%"}}><strong>Please write a message</strong></p>}
                             <button type="submit" style={{width: "25%"}}><SendRoundedIcon /></button>
                             <p>{successMessage}</p>
                             <p>{errorMessage}</p>
