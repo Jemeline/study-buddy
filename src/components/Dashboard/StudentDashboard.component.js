@@ -4,6 +4,7 @@ import DashboardUnsurveyed from './DashboardUnsurveyed.component';
 import Grid from '@material-ui/core/Grid';
 import {colorPalette} from '../../utils/design';
 import StudentMatchList from './Student/StudentMatchList.component';
+import Calendar from '../Calendar/Calendar.component';
 
  
 function StudentDashboard() {

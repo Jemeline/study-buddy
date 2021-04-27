@@ -14,6 +14,7 @@ import AdminSettings from '../components/Profile/AdminSettings';
 import HelpCenter from '../components/Help/HelpCenter.component';
 import StudentFindTutors from "../components/Advertisements/StudentFindTutors";
 import StudentUserList from '../components/Dashboard/Student/StudentUserList.component';
+import InviteLink from '../components/InviteLink/InviteLink.component'
 
 const Routes = ({setIsLoggedIn}) => (
     <Switch>
@@ -28,6 +29,7 @@ const Routes = ({setIsLoggedIn}) => (
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>
       <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/>
       <AdminRoute exact path="/admin-profile" component={AdminSettings}/>  
+      <Route exact path="/invitelink" render={() => (<InviteLink/>)}/>
     </Switch>
   );
   

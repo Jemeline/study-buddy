@@ -63,6 +63,13 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
             hidden={currPage !==5}
         >Yes, Resubmit
         </Button>
+        <Button 
+            variant="contained"
+            style={{width:'12vw',backgroundColor:colorPalette.secondary,color:colorPalette.white,fontSize:'0.9vw'}}
+            onClick={() => history.push('/dashboard/student')}
+            hidden={currPage !==6}
+        > Go To Dashboard
+        </Button>
     </div>
 };
 

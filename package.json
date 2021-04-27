@@ -16,6 +16,7 @@
     "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "emailjs-com": "^2.6.4",
     "express": "^4.17.1",
     "firebase": "^8.2.9",
     "firebase-functions": "^3.13.2",
