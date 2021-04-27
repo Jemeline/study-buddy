@@ -14,26 +14,23 @@ const TutorAd = ({ isTutor, ad }) => {
         "color": colorPalette.white,
         "margin": "10px",
     };
-    const handleSubmitEdit = async () => {
+    const handleSubmitEdit = async e => {
         try {
-            const res = await editAd({
+            e.preventDefault();
+            await editAd({
                 "_id": ad._id, 
                 "tutorEmail": ad.tutorEmail,
                 "text": text,
                 "courses": courses
             });
-            if(res.status === 200) {
-                alert("Edit posted.");
-            } else {
-                console.log(res);
-                alert("Something went wrong");
-            }
+            window.location.reload();
         } catch(err) {
             console.error(err);
         }
     }
-    const handleDelete = async () => {
+    const handleDelete = async e => {
         try {
+            e.preventDefault();
             const res = await deleteAd(ad._id);
             if(res.status === 200) {
                 // alert("Ad deleted");
