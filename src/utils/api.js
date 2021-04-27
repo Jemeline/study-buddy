@@ -166,6 +166,25 @@ export async function apiUpdatePassword(id,userData) {
     }    
 };
 
+export const getUsers = async () => {
+    try {
+        const res = await axios.get(`${baseAPI}/user`);
+        return res;
+    } catch(err) {
+        console.error(err);
+    }
+};
+
+export async function createAdmin(user) {
+    try {
+        const res = await axios.post(`${baseAPI}/user/admin`, user);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
 export const createAd = async data => {
     try {
         const res = await axios.post(`${baseAPI}/advertisement`, data);

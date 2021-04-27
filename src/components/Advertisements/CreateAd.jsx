@@ -9,20 +9,24 @@ const CreateAd = () => {
     const [loading, setLoading] = useState(false);
 
     const submitForm = async () => {
-        const { email } = JSON.parse(getUser());
-        try {
-            setLoading(true);
-            const res = await createAd({
-                tutorEmail: email,
-                text: text,
-                courses: courses
-            });
-            // console.log(res);
-            setLoading(false);
-            alert("Successfully posted advertisement.");
-            return res;
-        } catch(err) {
-            console.error(err);
+        if (!text || !courses) {
+            alert("Please fill in all fields");
+        } else {
+            const { email } = JSON.parse(getUser());
+            try {
+                setLoading(true);
+                const res = await createAd({
+                    tutorEmail: email,
+                    text: text,
+                    courses: courses
+                });
+                // console.log(res);
+                setLoading(false);
+                alert("Successfully posted advertisement.");
+                return res;
+            } catch (err) {
+                console.error(err);
+            }
         }
     };
 
@@ -33,7 +37,7 @@ const CreateAd = () => {
                     <Form.Group>
                         <h4>Create Advertisement</h4>
                         <Form.Control
-                            style={{"width": "40vw"}}
+                            style={{ width: "40vw" }}
                             rows={3}
                             as="textarea"
                             placeholder="Enter the text of your advertisement."
@@ -45,7 +49,7 @@ const CreateAd = () => {
                     <Form.Group>
                         <Form.Label>Courses</Form.Label>
                         <Form.Control
-                            style={{"width": "40vw"}}
+                            style={{ width: "40vw" }}
                             rows={3}
                             as="textarea"
                             placeholder="Enter the courses you would like to tutor."
@@ -54,9 +58,13 @@ const CreateAd = () => {
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
-                    {loading ? "Loading..." 
-                        : <Button variant="primary" type="submit">Submit</Button>
-                    }
+                    {loading ? (
+                        "Loading..."
+                    ) : (
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    )}
                 </Form.Row>
             </Form>
         </Container>

@@ -8,9 +8,9 @@ import TutorAd from "./TutorAd";
 //     "text": "ad text", 
 //     "courses": "COMP-523, COMP-110"} ]
 const TutorAdList = ({ isTutor, list }) => {
-    return list.map((item) => 
-        <Row><Col>
-            <TutorAd key={item._id} isTutor={isTutor} ad={item} />
+    return list.map(item => 
+        <Row key={item._id}><Col>
+            <TutorAd isTutor={isTutor} ad={item} />
         </Col></Row>
     );
 };

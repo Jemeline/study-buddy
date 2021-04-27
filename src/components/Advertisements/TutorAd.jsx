@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form } from "react-bootstrap";
+import { Card, Form, Container } from "react-bootstrap";
 import "./TutorAd.css";
 import { colorPalette } from "../../utils/design";
 import { Button, ButtonGroup } from "react-bootstrap";
@@ -60,8 +60,9 @@ const TutorAd = ({ isTutor, ad }) => {
                 value={courses}
                 onChange={e => setCourses(e.target.value)}
             />
-            <ButtonGroup>
+            <ButtonGroup style={{"marginBottom": "5vh"}}>
                 <Button variant="primary" type="submit">Submit</Button>
+                <Button variant="danger" data-testid="deleteBtn" onClick={handleDelete}>Delete Ad</Button>
                 <Button variant="danger" onClick={e => {
                     setText(ad.text);
                     setCourses(ad.courses);
@@ -74,10 +75,9 @@ const TutorAd = ({ isTutor, ad }) => {
         <p>{ad.text}</p>
         <p>Courses: {ad.courses}</p>
         {isTutor ? null : <p>Email: {ad.tutorEmail}</p>}
-        {isTutor ? <ButtonGroup>
-            <Button variant="primary" data-testid="editBtn" onClick={e => setEditMode(true)}>Edit</Button>
-            <Button variant="danger" data-testid="deleteBtn" onClick={handleDelete}>Delete</Button>
-        </ButtonGroup> : null}
+        {isTutor ? <Container>
+            <Button variant="primary" style={{"marginBottom": "5vh"}} data-testid="editBtn" onClick={e => setEditMode(true)}>Edit</Button>
+        </Container> : null}
     </Card>;
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch,Route} from 'react-router-dom';
 import StudentDashboard from '../components/Dashboard/StudentDashboard.component';
 import TutorDashboard from '../components/Dashboard/TutorDashboard.component';
-import AdminDashboard from '../components/Dashboard/AdminDashboard.component';
+import AdminDashboard from '../components/Dashboard/Admin/AdminDashboard.component';
 import Home from '../components/Home.component';
 import AuthenticationHome from '../components/Authentication/AuthenticationHome.component';
 import Survey from '../components/Survey/Student/Survey.component';
@@ -10,8 +10,7 @@ import StudentProfile from '../components/Profile/Student/StudentProfile.compone
 import StudentRoute from './RouteClasses/Student.route';
 import TutorRoute from './RouteClasses/Tutor.route';
 import AdminRoute from './RouteClasses/Admin.route';
-import UnverifiedRoute from './RouteClasses/Unverified.route';
-import Calendar from '../components/Calendar/Calendar.component'
+import AdminSettings from '../components/Profile/AdminSettings';
 import HelpCenter from '../components/Help/HelpCenter.component';
 import StudentFindTutors from "../components/Advertisements/StudentFindTutors";
 import StudentUserList from '../components/Dashboard/Student/StudentUserList.component';
@@ -28,9 +27,9 @@ const Routes = ({setIsLoggedIn}) => (
       <StudentRoute exact path="/find-tutors" component={StudentFindTutors}/>
       <StudentRoute exact path="/find-students" component={StudentUserList}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>
-      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/> 
+      <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/>
+      <AdminRoute exact path="/admin-profile" component={AdminSettings}/>  
       <Route exact path="/invitelink" render={() => (<InviteLink/>)}/>
-      
     </Switch>
   );
   
