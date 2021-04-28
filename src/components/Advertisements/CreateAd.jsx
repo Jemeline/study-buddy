@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { colorPalette } from "../../utils/design";
 import { Container, Form, Button } from "react-bootstrap";
+import ReactLoading from "react-loading";
 import { getUser } from "../../utils/common";
 import { createAd } from "../../utils/api";
 
@@ -13,13 +15,16 @@ const CreateAd = () => {
         if (!text || !courses) {
             alert("Please fill in all fields");
         } else {
-            const { email } = JSON.parse(getUser());
+            const { email, first, last } = JSON.parse(getUser());
             try {
                 setLoading(true);
                 const res = await createAd({
                     tutorEmail: email,
                     text: text,
-                    courses: courses
+                    courses: courses,
+                    first: first,
+                    last: last,
+                    ratings: []
                 });
                 // console.log(res);
                 setLoading(false);
@@ -61,7 +66,7 @@ const CreateAd = () => {
                 </Form.Row>
                 <Form.Row>
                     {loading ? (
-                        "Loading..."
+                        <ReactLoading type={"cylon"} color={colorPalette.secondary} />
                     ) : (
                         <Button variant="primary" type="submit">
                             Submit

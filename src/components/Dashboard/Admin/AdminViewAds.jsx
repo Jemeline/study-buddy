@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
-import TutorAdList from "../../Advertisements/TutorAdList";
+import { colorPalette } from "../../../utils/design";
+import { Container, Row, Col } from "react-bootstrap";
+import ReactLoading from "react-loading";
+import AdminAd from "./AdminAd";
 import { getAllAds } from "../../../utils/api";
 
 // Admin Dash - View Tutor Ads
@@ -18,9 +20,12 @@ const AdminViewAds = () => {
             <h4>Tutor Ads</h4>
             {ads ? 
                 ads.length !== 0 ? 
-                    <TutorAdList isTutor={true} list={ads} /> 
+                    ads.map(ad => 
+                        <Row key={ad._id}><Col>
+                            <AdminAd ad={ad} />
+                        </Col></Row>)
                 : "No Ads found" 
-            : "Loading..."}
+            : <ReactLoading type={"cylon"} color={colorPalette.secondary} />}
         </Container>
     );
 };

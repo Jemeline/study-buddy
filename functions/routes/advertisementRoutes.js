@@ -32,9 +32,9 @@ app.post("/advertisement/email", async (req, res) => {
 // Body must contain tutor email, text, and courses
 app.post("/advertisement", async (req, res) => {
   try {
-    const {tutorEmail, text, courses} = req.body;
-    if (!tutorEmail || !text || !courses) {
-      res.status(400).send("Body must contain tutor email, text, and courses.");
+    const {tutorEmail, text, courses, first, last, ratings} = req.body;
+    if (!tutorEmail || !text || !courses || !first || !last || !ratings) {
+      res.status(400).send("Body must contain all required fields.");
     }
     const ad = new AdvertisementModel(req.body);
     await ad.save();
