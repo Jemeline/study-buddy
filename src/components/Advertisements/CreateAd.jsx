@@ -8,7 +8,8 @@ const CreateAd = () => {
     const [courses, setCourses] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const submitForm = async () => {
+    const submitForm = async e => {
+        e.preventDefault();
         if (!text || !courses) {
             alert("Please fill in all fields");
         } else {
@@ -23,6 +24,7 @@ const CreateAd = () => {
                 // console.log(res);
                 setLoading(false);
                 alert("Successfully posted advertisement.");
+                window.location.reload();
                 return res;
             } catch (err) {
                 console.error(err);
