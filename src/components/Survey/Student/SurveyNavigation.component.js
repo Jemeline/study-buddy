@@ -85,13 +85,13 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
             newUser.isSurveyed = true;
             login(newUser,newUser.role,newUser.isVerified,newUser.isSurveyed);
 
-            // Retrieve profile of logged in user
-            const user = JSON.parse(getUser());
-            const userProfile = (await apiGetStudentProfile(user._id)).data;
+            // // Retrieve profile of logged in user
+            // const user = JSON.parse(getUser());
+            // const userProfile = (await apiGetStudentProfile(user._id)).data;
 
-            // Use algorithm to sort other users
-            const sums = await getWeightedSum(userProfile);
-            console.log(sums);
+            // // Use algorithm to sort other users
+            // const sums = await getWeightedSum(userProfile);
+            // console.log(sums);
            
             setCurrPage(6);
             storeCurrPage(6);
@@ -105,14 +105,14 @@ async function handleSurveyResubmit(payload,setCurrPage,storeCurrPage){
     try {
         const data = await apiResubmitStudentProfile(payload);
 
-        // Retrieve profile of logged in user
-        const user = JSON.parse(getUser());
-        const userProfile = (await apiGetStudentProfile(user._id)).data;
+        // // Retrieve profile of logged in user
+        // const user = JSON.parse(getUser());
+        // const userProfile = (await apiGetStudentProfile(user._id)).data;
 
-        // Use algorithm to sort other users
-        const sums = await getWeightedSum(userProfile);
+        // // Use algorithm to sort other users
+        // const sums = await getWeightedSum(userProfile);
 
-        console.log(sums);
+        // console.log(sums);
 
         setCurrPage(6);
         storeCurrPage(6);

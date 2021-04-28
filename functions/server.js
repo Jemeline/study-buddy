@@ -9,6 +9,7 @@ const userRouter = require("./routes/userRoutes.js");
 const tokenRouter = require("./routes/tokenRoutes.js");
 const studentProfileRouter = require("./routes/studentProfileRoutes.js");
 const AdvertisementRouter = require("./routes/advertisementRoutes");
+const massStudyInviteRouter = require("./routes/studyInviteRoutes.js");
 const getClient = require("./db.js");
 
 const app8 = express();
@@ -20,6 +21,8 @@ app8.use("/api", userRouter);
 app8.use("/api", tokenRouter);
 app8.use("/api", studentProfileRouter);
 app8.use("/api", AdvertisementRouter);
+app8.use("/api", massStudyInviteRouter);
+
 
 getClient();
 

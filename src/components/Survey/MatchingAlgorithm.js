@@ -22,7 +22,7 @@ async function getStudentProfiles() {
 // Use survey responses to generate weighted sum of similar answers
 export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
-
+    
     let matches = [];
     for (let i = 0; i < studentProfiles.length; i++) {
         matches[i] = {

@@ -58,7 +58,7 @@ async (req, res) => {
 
   try {
     await TokenModel.findOne({token: req.body.token, _userId: req.body._userId}, function(err, token) {
-      if (!token) return res.status(401).send({type: "not-verified", msg: "We were unable to find a valid token. Your token my have expired."});
+      if (!token) return res.status(401).send({type: "not-verified", msg: "We were unable to find a valid token. Your token may have expired."});
       UserModel.findOne({_id: req.body._userId}, function(err, user) {
         if (!user) return res.status(402).send({type: "not-verified", msg: "We were unable to find a user for this token."});
         if (user.isVerified) return res.status(403).send({type: "already-verified", msg: "This user has already been verified."});

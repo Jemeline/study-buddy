@@ -17,6 +17,7 @@ import HearingIcon from '@material-ui/icons/Hearing';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import { colorPalette } from '../../../utils/design';
+import ReactLoading from 'react-loading';
 
 
 function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType) {
@@ -117,7 +118,9 @@ function TopMatches(){
                 <TableCell align="center"><p style={{color: colorPalette.darkGray}}>{row.sharedLearningType.length > 0 ? "You're both "  + row.sharedLearningType.join(", ") + " learners" : ""}</p></TableCell>
                 <TableCell align="center"><p style={{color: colorPalette.darkGray}}>{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</p></TableCell>
               </TableRow>
-            )): <TableRow/>}
+            )): <TableRow>
+                    <ReactLoading type={"cylon"} color={colorPalette.secondary} height={'100%'} width={'100%'}/>
+                </TableRow>}
           </TableBody>
         </Table>
         </TableContainer>
