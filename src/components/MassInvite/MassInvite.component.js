@@ -37,15 +37,15 @@ function MassStudyInvite() {
 
     async function onSubmit(data) {
         const studentProfiles = (await apiGetStudentProfiles()).data;
+        const students = (await apiGetStudents()).data;
         const message = data.message;
         let classmateIds = [];
         let classmates = [];
         for (let i = 0; i < studentProfiles.length; i++) {
-            if (studentProfiles[i].courseSchedule.includes(data.chosenClass) && studentProfiles[i]._userId != user._id) {
+            if (studentProfiles[i].courseSchedule.includes(data.chosenClass) && studentProfiles[i]._userId != user._id && !students.find(student => studentProfiles[i]._userId === student._id).disabled) {
                 classmateIds.push(studentProfiles[i]._userId);
             }
         }
-        const students = (await apiGetStudents()).data;
         for (let i = 0; i < students.length; i++) {
             if (classmateIds.includes(students[i]._id)) {
                 classmates.push(students[i].email);
@@ -61,7 +61,6 @@ function MassStudyInvite() {
         } catch (err) {
             console.log(err);
             setSuccessMessage("");
-            
             setErrorMessage("There was a problem sending your email. Try again");
         }
 
