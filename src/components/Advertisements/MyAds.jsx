@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { colorPalette } from "../../utils/design";
 import TutorAdList from "./TutorAdList";
+import ReactLoading from "react-loading";
 import { getUser } from "../../utils/common";
 import { getAdsByEmail } from "../../utils/api";
 
@@ -21,7 +23,7 @@ const MyAds = () => {
                 ads.length !== 0 ? 
                     <TutorAdList isTutor={true} list={ads} /> 
                 : "Create your first Ad!" 
-            : "Loading..."}
+            : <ReactLoading type={"cylon"} color={colorPalette.secondary} />}
         </div>
     );
 };
