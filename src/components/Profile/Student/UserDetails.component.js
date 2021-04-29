@@ -96,15 +96,13 @@ function UserDetails({user,setUser,hidden}) {
                     Sorry... We could not update your avatar at this time. Please try again.
                 </Alert>
                   <form>
-                    <div>
-                    <Input onChange={(e)=>{setUploadAvatar(e.target.files[0]);setTestAvatar(URL.createObjectURL(e.target.files[0]))}} type="file" accept=".jpg,.jpeg,.png"/>
-                    </div>
+                  <Input onChange={(e)=>{setUploadAvatar(e.target.files[0]);setTestAvatar(URL.createObjectURL(e.target.files[0]))}} type="file" accept=".jpg,.jpeg,.png"/>
                     <div style={{margin:'1vw',display: 'flex', justifyContent: 'center'}}>
                     <img src={testAvatar} style={{maxHeight: '20vw',maxWidth:"20vw"}}/>
                     </div>
                     <Button 
                       size="md"
-                      style={{float:'right',backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'40%',borderRadius:14}} 
+                      style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'50%',borderRadius:14}} 
                       onClick={async () => await handleUpdateAvatar(uploadAvatar,user,setUser,setAvatar,testAvatar,currentAvatar,setModal,setAlert,setUpdate)}
                     > Update My Avatar
                     </Button>

@@ -203,7 +203,7 @@ export const getAllAds = async () => {
     }
 };
 
-export const getAdsByEmail = async email => {
+export async function getAdsByEmail(email){
     try {
         const ads = await axios.post(`${baseAPI}/advertisement/email`, {"email": email});
         return ads;
