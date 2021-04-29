@@ -10,7 +10,6 @@ const AdminViewAds = () => {
     const [ads, setAds] = useState(null);
     useEffect(() => {
         getAllAds().then(res => {
-            // console.log(res.data);
             setAds(res.data);
         }).catch(err => console.error(err));
     }, []);

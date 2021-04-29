@@ -17,6 +17,8 @@ import StudentUserList from '../components/Dashboard/Student/StudentUserList.com
 import StudentMatchList from '../components/Dashboard/Student/StudentMatchList.component';
 import InviteLink from '../components/InviteLink/InviteLink.component'
 import MassStudyInvite from '../components/MassInvite/MassInvite.component';
+import CreateAd from '../components/Advertisements/CreateAd';
+import TutorProfile from '../components/Profile/Tutor/TutorProfile.component';
 
 const Routes = ({setIsLoggedIn}) => (
     <Switch>
@@ -31,6 +33,8 @@ const Routes = ({setIsLoggedIn}) => (
       <StudentRoute exact path="/find-students" component={StudentUserList}/>
       <StudentRoute exact path="/match" component={StudentMatchList}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>
+      <TutorRoute exact path="/tutor-profile" component={TutorProfile}/>
+      <TutorRoute exact path="/create-ad" component={CreateAd}/>
       <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/>
       <AdminRoute exact path="/admin-profile" component={AdminSettings}/>  
       <Route exact path="/invitelink" render={() => (<InviteLink/>)}/>

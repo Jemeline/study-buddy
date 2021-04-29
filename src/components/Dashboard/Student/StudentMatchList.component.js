@@ -12,12 +12,9 @@ import {getUser,capitalizeFirst} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
-import SchoolIcon from '@material-ui/icons/School';
-import HearingIcon from '@material-ui/icons/Hearing';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import { colorPalette } from '../../../utils/design';
 import Grid from '@material-ui/core/Grid';
+import ReactLoading from 'react-loading';
 
 
 function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, sum) {
@@ -86,6 +83,7 @@ function TopMatches(){
 
   
   return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
+    {loading ? <ReactLoading hidden={!loading} type={"cylon"} color={colorPalette.secondary} height={'10%'} width={'10%'} /> :
     <Grid
           container
           direction="row"
@@ -107,7 +105,7 @@ function TopMatches(){
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+            {rows.filter(row=>row.sum>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sum+'%'}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
@@ -125,7 +123,7 @@ function TopMatches(){
         <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={rows.length-rows.filter(row=>!row.sum>0).length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -137,7 +135,8 @@ function TopMatches(){
       </div>
       </Grid>
     </Grid>
-    </div>
+  }
+  </div>
 }; 
 
 export default TopMatches;

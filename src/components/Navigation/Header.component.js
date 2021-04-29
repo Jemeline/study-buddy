@@ -23,7 +23,8 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import MailIcon from '@material-ui/icons/Mail';
 import Box from '@material-ui/core/Box';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
-
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 
 
@@ -82,6 +83,14 @@ function Header({isLoggedIn,setIsLoggedIn}){
           <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/mass-study-invite`)}>
             <ListItemIcon><MailIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Send A Study Invite"} />
+          </ListItem>
+          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/find-tutors`)}>
+            <ListItemIcon><LocalLibraryIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Browse Tutors"} />
+          </ListItem>
+          <ListItem button hidden={getRoleLiteral()!=='tutor'} onClick={()=>history.push(`/create-ad`)}>
+            <ListItemIcon><PostAddIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Post An Advertisement"} />
           </ListItem>
       </List>
       <Divider/>

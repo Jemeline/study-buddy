@@ -14,7 +14,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
     const history = useHistory();
     const user = JSON.parse(getUser());
 
-    return <div style={{display: 'flex',justifyContent: "space-between",height:'6vh',marginTop:'1vh',marginTop:'1vh'}}>
+    return <div style={{display: 'flex',justifyContent: "space-between",height:'6vh',marginTop:'1vh',marginBottom:'1vh'}}>
         <Button
             variant="contained"
             style={{width:'12vw',fontSize:'1vw',backgroundColor:colorPalette.secondary,color:colorPalette.white}}
