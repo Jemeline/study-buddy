@@ -29,7 +29,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
   };
 
   return <div className="Login" data-testid="Login"> 
-      <Container style={{width:'35vw',margin: "auto"}} >     
+      <Container style={{width:'30vw',margin: "auto"}} >     
         <Col>
           <img src={logo} alt="logo" style={{height: '35vh'}}/>
           <br/>
@@ -87,7 +87,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                       setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn,setLoadingLogin,setAlertAlreadyLoggedIn,
                       dismissAlerts,setFirst,setEmail,setId,setTab);
                   }}
-                  style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'50%',borderRadius:14}}                                                                                                                
+                  style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'30%',borderRadius:14}}                                                                                                                
                 > Sign In</Button>
                 <br/>
                 <div style={{display: 'flex', justifyContent: 'center'}}>

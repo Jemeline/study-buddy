@@ -118,7 +118,7 @@ const TutorAd = ({ isTutor, ad }) => {
             <p><strong>Name:</strong> {capitalizeFirst(ad.first)} {capitalizeFirst(ad.last)}</p>
             <p><strong>Email: </strong>{ad.tutorEmail}</p>
             <p>{ad.text}</p>
-            <p><strong>Courses:</strong> <br/>{ad.courses}</p>
+            <p style={{marginBottom:0,marginTop:0}}><strong>Courses:</strong></p>{ad.courses.map(e=> <p style={{marginBottom:0,marginTop:0}}>{e}, </p>)}
             {ad.ratings.length === 0 ? <p><strong>Average Rating:</strong> Unrated </p>: <p><strong>Average Rating:</strong> {Math.round((ad.ratings.reduce((acc, cur) => acc + cur) * 100 / ad.ratings.length)) / 100}</p>}
             <br/>
         </div>
@@ -142,7 +142,7 @@ const TutorAd = ({ isTutor, ad }) => {
             </Container>}
         </div>
         {isTutor ? <Container>
-            <Button variant="primary" style={{"marginBottom": "2vh"}} data-testid="editBtn" onClick={e => setEditMode(true)}>Edit</Button>
+            <Button variant="primary" style={{backgroundColor:colorPalette.secondary,"marginBottom": "2vh"}} data-testid="editBtn" onClick={e => setEditMode(true)}>Edit</Button>
         </Container> : null}
 
     </div>;
