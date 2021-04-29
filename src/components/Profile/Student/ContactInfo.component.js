@@ -86,8 +86,8 @@ function ContactInfo({user,setUser,hidden}) {
         <div style={{margin:'1vw'}}>
         {(loadingAvatar)?
           <ReactLoading hidden={!loadingAvatar} type={"cylon"} color={colorPalette.secondary} height={'10%'} width={'10%'} /> :
-          (!avatar)?<img src={avatarUnknown} style={{maxHeight: '10vw',maxWidth: '10vw'}}/>:
-          <img src={avatar} style={{height: '10vw'}}/>
+          (!avatar)?<img src={avatarUnknown} style={{height:'10vw',width: '10vw'}}/>:
+          <img src={avatar} style={{maxHeight:'10vw',maxWidth: '10vw',objectFit:'cover'}}/>
         }
         </div>
         <div style={{margin:'1vw'}}>

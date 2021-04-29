@@ -14,6 +14,7 @@ import AdminSettings from '../components/Profile/AdminSettings';
 import HelpCenter from '../components/Help/HelpCenter.component';
 import StudentFindTutors from "../components/Advertisements/StudentFindTutors";
 import StudentUserList from '../components/Dashboard/Student/StudentUserList.component';
+import StudentMatchList from '../components/Dashboard/Student/StudentMatchList.component';
 import InviteLink from '../components/InviteLink/InviteLink.component'
 import MassStudyInvite from '../components/MassInvite/MassInvite.component';
 
@@ -28,6 +29,7 @@ const Routes = ({setIsLoggedIn}) => (
       <StudentRoute exact path="/mass-study-invite" component={MassStudyInvite}/>
       <StudentRoute exact path="/find-tutors" component={StudentFindTutors}/>
       <StudentRoute exact path="/find-students" component={StudentUserList}/>
+      <StudentRoute exact path="/match" component={StudentMatchList}/>
       <TutorRoute exact path="/dashboard/tutor" component={TutorDashboard}/>
       <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/>
       <AdminRoute exact path="/admin-profile" component={AdminSettings}/>  

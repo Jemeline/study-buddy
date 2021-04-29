@@ -3,8 +3,6 @@ import {getIsSurveyed, getUser} from '../../utils/common';
 import DashboardUnsurveyed from './DashboardUnsurveyed.component';
 import Grid from '@material-ui/core/Grid';
 import {colorPalette} from '../../utils/design';
-import StudentMatchList from './Student/StudentMatchList.component';
-import Calendar from '../Calendar/Calendar.component';
 
  
 function StudentDashboard() {
@@ -17,7 +15,6 @@ function StudentDashboard() {
           spacing={1}
       >
           <Grid item  xs="auto" sm="auto" md="auto">
-            <StudentMatchList />
           </Grid>
       </Grid>
       : <DashboardUnsurveyed/>}
