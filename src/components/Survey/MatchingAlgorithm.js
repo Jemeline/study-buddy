@@ -8,7 +8,6 @@ import axios from 'axios';
 import {apiGetCourseById} from '../../utils/api';
 
 
-
 // Retrieve list of student profiles
 async function getStudentProfiles() {
     const profileData = await axios({

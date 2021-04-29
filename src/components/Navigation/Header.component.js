@@ -21,6 +21,8 @@ import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import PersonIcon from '@material-ui/icons/Person';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import MailIcon from '@material-ui/icons/Mail';
+import Box from '@material-ui/core/Box';
+import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 
 
 
@@ -59,6 +61,7 @@ function Header({isLoggedIn,setIsLoggedIn}){
         </Toolbar>
       </AppBar>
       <Drawer anchor={"left"} open={isOpenDrawer} onClose={()=>setIsOpenDrawer(false)}>
+        <Box minWidth={'20vw'}>
         <List>
           <ListItem button onClick={()=>history.push(`/dashboard/${getRoleLiteral()}`)}>
             <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
@@ -68,22 +71,27 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>
-          <ListItem button onClick={()=>history.push(`/find-students`)}>
+          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/find-students`)}>
             <ListItemIcon><EmojiPeopleIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Find A Study Buddy"} />
           </ListItem>
-          <ListItem button onClick={()=>history.push(`/mass-study-invite`)}>
+          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/match`)}>
+            <ListItemIcon><CompareArrowsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Explore My Matches"} />
+          </ListItem>
+          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/mass-study-invite`)}>
             <ListItemIcon><MailIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Send A Study Invite"} />
           </ListItem>
       </List>
       <Divider/>
       <List>
-        <ListItem button onClick={()=>history.push(`/student-help`)}>
+        <ListItem button hidden={getRoleLiteral()!== 'student'} onClick={()=>history.push(`/student-help`)}>
             <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"UNC Help Center"} />
         </ListItem>
       </List>
+      </Box>
       </Drawer>
     </div>
 };
