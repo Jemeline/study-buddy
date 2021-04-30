@@ -17,8 +17,8 @@ import Grid from '@material-ui/core/Grid';
 import ReactLoading from 'react-loading';
 
 
-function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, sum) {
-  return { name, email, phone, user, profile, sharedClasses, sharedLearningType, sum };
+function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch) {
+  return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch };
 };
 
 function TopMatches(){
@@ -70,7 +70,7 @@ function TopMatches(){
           studentProfiles.find(element => element._userId === student._id),
           awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
           awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"],
-          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sum"]
+          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"]
           )));
         setLoading(false);
       } else {
@@ -105,9 +105,9 @@ function TopMatches(){
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.filter(row=>row.sum>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+            {rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sum+'%'}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.percentMatch+'%'}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
@@ -123,7 +123,7 @@ function TopMatches(){
         <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
-          count={rows.length-rows.filter(row=>!row.sum>0).length}
+          count={rows.length-rows.filter(row=>!row.percentMatch>0).length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

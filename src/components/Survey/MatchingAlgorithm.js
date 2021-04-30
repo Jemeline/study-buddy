@@ -23,6 +23,9 @@ export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
     
     let matches = [];
+    const total = student.courseSchedule.length * 50 + student.learningType.length * 5;
+    console.log(total);
+
     for (let i = 0; i < studentProfiles.length; i++) {
         matches[i] = {
             "id": studentProfiles[i]._id, 
@@ -30,7 +33,8 @@ export async function getWeightedSum(student) {
             "sharedClasses": [], 
             "sharedLearningType": [], 
             "sharedStudyLocation": [], 
-            "sharedIdentifiers": []
+            "sharedIdentifiers": [],
+            "percentMatch": 0
         };
     }
     for (let i = 0; i < studentProfiles.length; i++) {
@@ -38,9 +42,8 @@ export async function getWeightedSum(student) {
             for (let j = 0; j < student.courseSchedule.length; j++) {
                 if (studentProfiles[i].courseSchedule.includes(student.courseSchedule[j])) {
                     // Add a large value if the students have a class in common, so that they show up at the top of the results
-                    if (matches[i]["sum"] < 50) {
-                        matches[i]["sum"] += 50;
-                    }
+                    // After the first class, the value added decreases because each additional class is less significant
+                    matches[i]["sum"] += 50;
                     const course = (await apiGetCourseById(student.courseSchedule[j])).data;
                     const courseClean = course.courseSubject + " " + course.courseNumber;
                     matches[i]["sharedClasses"].push(courseClean);
@@ -50,7 +53,7 @@ export async function getWeightedSum(student) {
                 if (studentProfiles[i].learningType.includes(student.learningType[k])) {
 
                     // matches[i] += student.weights[0];
-                    matches[i]["sum"] += 3;
+                    matches[i]["sum"] += 5;
                     matches[i]["sharedLearningType"].push(student.learningType[k])
                 }
             }
@@ -73,6 +76,11 @@ export async function getWeightedSum(student) {
             }
         }
     }
+
+    for (let i = 0; i < matches.length; i++) {
+        matches[i]["percentMatch"] = Math.floor(matches[i]["sum"] * 100 / total)
+    }
+
     matches.sort((a, b) => b["sum"] - a["sum"]);
     return matches;
 }
