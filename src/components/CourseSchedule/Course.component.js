@@ -44,9 +44,9 @@ function Course({course,courseSchedule,setCourseSchedule,hideAddButton}){
         <br></br>
         <h6 style={{color:colorPalette.secondary,fontSize:'1.4vw'}} hidden={isShown}>{course.courseSubject} </h6>
         <h6 style={{color:colorPalette.secondary,fontSize:'1.25vw'}} hidden={isShown}>{course.courseNumber}{course.courseIsHonors ? "H" : course.courseIsLab ? "L" : ""}-{zeroPad(course.courseSection,3)}</h6>
-        <p style={{color:colorPalette.secondary, fontSize:'0.9vw',marginLeft:'0.2vw',marginRight:'0.2vw'}} hidden={isShown}>{course.courseTitle}</p>
+        <p style={{color:colorPalette.secondary, fontSize:'0.8vw',marginLeft:'0.2vw',marginRight:'0.2vw'}} hidden={isShown}>{course.courseTitle}</p>
         <h6 hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1.25vw',paddingBottom:'1vh',marginLeft:'0.2vw',marginRight:'0.2vw'}}>{course.courseSchedule.map((ele)=> <li style={{color:colorPalette.secondary}}><em>{ele.day}</em> {(ele.time.includes('TBA')) ? "TBA": processTime(ele.time)}</li>)}</h6>
-        <p hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1vw',paddingBottom:'1vh',marginLeft:'0.2vw',marginRight:'0.2vw'}}>{course.courseInstructor.map((ele)=> <li style={{color:colorPalette.secondary}}>{ele.replace(/,/g, ', ').concat(" ")}</li>)}</p>
+        <p hidden={!isShown} style={{listStyleType:"none",margin:0,fontSize:'1vw',paddingBottom:'1vh',marginLeft:'0.2vw',marginRight:'0.2vw',fontSize:'0.8vw'}}>{course.courseInstructor.map((ele)=> <li style={{color:colorPalette.secondary}}>{ele.replace(/,/g, ', ').concat(" ")}</li>)}</p>
     </div>
 };
 

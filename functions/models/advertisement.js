@@ -11,8 +11,20 @@ const advertisementSchema = new mongoose.Schema({
     required: [true, "Text required"],
   },
   courses: {
-    type: String,
+    type: [String],
     required: [true, "Courses required"],
+  },
+  first: {
+    type: String,
+    required: [true, "First name required"],
+  },
+  last: {
+    type: String,
+    required: [true, "Last name required"],
+  },
+  ratings: {
+    type: [Number],
+    required: [true, "Ratings required"],
   },
 });
 

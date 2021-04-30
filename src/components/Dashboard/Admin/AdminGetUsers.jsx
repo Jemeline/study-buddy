@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, ListGroup, Row, Col } from "react-bootstrap";
+import ReactLoading from "react-loading";
 import { getUsers } from "../../../utils/api";
 import { colorPalette } from "../../../utils/design";
 import UserItem from "./UserItem";
@@ -40,7 +41,7 @@ const AdminGetUsers = () => {
                             </ListGroup.Item>
                         )
                     : "No users found" 
-                : "Loading..."}
+                : <ReactLoading type={"cylon"} color={colorPalette.secondary} />}
             </ListGroup>
         </Container>
     );

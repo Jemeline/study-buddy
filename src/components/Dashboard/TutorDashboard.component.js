@@ -2,15 +2,15 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import MyAds from "../Advertisements/MyAds";
 import CreateAd from "../Advertisements/CreateAd";
+import { colorPalette } from "../../utils/design";
  
 const TutorDashboard = () => (
-    <Container data-testid="tutorDash" style={{"marginBottom": "5vh"}}>
-      <h4>Tutor Dashboard</h4>
+  <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
+    <br/>
       <Row>
-        <Col lg><CreateAd /></Col>
-        <Col lg><MyAds /></Col>
+        <Col lg><MyAds/></Col>
       </Row>
-    </Container>
+  </div>
 );
  
 export default TutorDashboard;

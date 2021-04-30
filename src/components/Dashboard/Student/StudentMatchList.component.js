@@ -11,17 +11,14 @@ import Paper from '@material-ui/core/Paper';
 import {getUser,capitalizeFirst} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import SchoolIcon from '@material-ui/icons/School';
-import HearingIcon from '@material-ui/icons/Hearing';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import FingerprintIcon from '@material-ui/icons/Fingerprint';
+import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import { colorPalette } from '../../../utils/design';
+import Grid from '@material-ui/core/Grid';
 import ReactLoading from 'react-loading';
 
 
-function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType) {
-  return { name, email, phone, user, profile, sharedClasses, sharedLearningType };
+function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, sum) {
+  return { name, email, phone, user, profile, sharedClasses, sharedLearningType, sum };
 };
 
 function TopMatches(){
@@ -62,18 +59,18 @@ function TopMatches(){
       const students = (await apiGetStudents()).data;
       const studentProfiles = (await apiGetStudentProfiles()).data;
       const awaitedUserMatches = await userMatches;
-      // const orderedProfiles = awaitedUserMatches.map(match => studentProfiles.find(profile => profile._id === match[0]));
       const orderedStudents = awaitedUserMatches.map(match => students.find(student => student._id === studentProfiles.find(profile => profile._id === match["id"])._userId));
       if (students != null) {
         setUsers(students);
-        setRows(await orderedStudents.map(student=> createData(
+        setRows(await orderedStudents.filter((e)=>!(e.disabled || e._id===JSON.parse(getUser())._id)).map(student=> createData(
           (capitalizeFirst(student.first) + ' '+ capitalizeFirst(student.last)),
           student.email,
           student.phoneNumber,
           student,
           studentProfiles.find(element => element._userId === student._id),
           awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
-          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"]
+          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"],
+          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sum"]
           )));
         setLoading(false);
       } else {
@@ -85,49 +82,48 @@ function TopMatches(){
   }, []);
 
   
-  return <div>
+  return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
+    {loading ? <ReactLoading hidden={!loading} type={"cylon"} color={colorPalette.secondary} height={'10%'} width={'10%'} /> :
+    <Grid
+          container
+          direction="row"
+          justify="center"
+          spacing={1}
+    >
+    <Grid item  xs="auto" sm="auto" md="auto">
     <Paper hidden={hiddenTable} style={{overflow:'auto',width:'80vw',maxHeight:'70vh'}}>
     <TableContainer >
         <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"><h5><strong>Top Matches For You</strong></h5></TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"><HearingIcon /><VisibilityIcon /><FingerprintIcon /></TableCell>
-              <TableCell align="center"><SchoolIcon /></TableCell>
+              <TableCell align="left">Percent Match</TableCell>
+              <TableCell align="left"></TableCell>
+              <TableCell align="left">Name</TableCell>
+              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">Learning Type</TableCell>
+              <TableCell align="left">Shared Courses</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {!loading ? 
-            rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled} onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}}>
-                <TableCell align="center"><AccountCircleIcon /></TableCell>
-                <TableCell align="center">{row.name}</TableCell>
-                <TableCell align="center">{row.email}</TableCell>
-                <TableCell align="center"></TableCell>
-                <TableCell align="center"><p style={{color: colorPalette.darkGray}}>{row.sharedLearningType.length > 0 ? "You're both "  + row.sharedLearningType.join(", ") + " learners" : ""}</p></TableCell>
-                <TableCell align="center"><p style={{color: colorPalette.darkGray}}>{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</p></TableCell>
+            {rows.filter(row=>row.sum>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+              <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sum+'%'}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedLearningType.length > 0 ? "You're both "  + row.sharedLearningType.join(", ") + " learners" : ""}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</TableCell>
               </TableRow>
-            )): <TableRow>
-                    <ReactLoading type={"cylon"} color={colorPalette.secondary} height={'100%'} width={'100%'}/>
-                </TableRow>}
+            ))}
           </TableBody>
         </Table>
         </TableContainer>
+      </Paper>
+      <Paper hidden={hiddenTable} style={{overflow:'auto',width:'80vw',height:'55px'}}>
         <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={rows.length-rows.filter(row=>!row.sum>0).length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -137,7 +133,10 @@ function TopMatches(){
       <div hidden={hiddenProfile}>
         <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile}/>
       </div>
-    </div>
+      </Grid>
+    </Grid>
+  }
+  </div>
 }; 
 
 export default TopMatches;
