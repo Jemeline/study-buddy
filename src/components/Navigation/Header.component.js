@@ -25,6 +25,7 @@ import Box from '@material-ui/core/Box';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 
 
 
@@ -72,6 +73,7 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>
+          <Divider/>
           <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/find-students`)}>
             <ListItemIcon><EmojiPeopleIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Find A Study Buddy"} />
@@ -80,13 +82,18 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><CompareArrowsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Explore My Matches"} />
           </ListItem>
+          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/find-tutors`)}>
+            <ListItemIcon><LocalLibraryIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Browse Tutors"} />
+          </ListItem>
+          <Divider/>
           <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/mass-study-invite`)}>
             <ListItemIcon><MailIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Send A Study Invite"} />
           </ListItem>
-          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/find-tutors`)}>
-            <ListItemIcon><LocalLibraryIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
-            <ListItemText primary={"Browse Tutors"} />
+          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/student-survey`)}>
+            <ListItemIcon><QuestionAnswerIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Take Our Survey"} />
           </ListItem>
           <ListItem button hidden={getRoleLiteral()!=='tutor'} onClick={()=>history.push(`/create-ad`)}>
             <ListItemIcon><PostAddIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
