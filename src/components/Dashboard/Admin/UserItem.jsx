@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { apiDeleteUser, apiUpdateUser } from "../../../utils/api";
+import { colorPalette } from "../../../utils/design";
 import { Row, Col, Image, Button, ButtonGroup } from "react-bootstrap";
 
 const UserItem = ({ user }) => {
@@ -28,8 +29,8 @@ const UserItem = ({ user }) => {
             <Col>{user.role}</Col>
             <Col>
                 <ButtonGroup>
-                    {user.avatar ? <Button variant="primary" onClick={handlePic}>Delete Picture</Button> : null}
-                    <Button variant="primary" onClick={handleUser}>Delete User</Button>
+                    {user.avatar ? <Button style={{backgroundColor: colorPalette.secondary}} onClick={handlePic}>Delete Picture</Button> : null}
+                    <Button style={{backgroundColor: colorPalette.secondary}} onClick={handleUser}>Delete User</Button>
                     <Button variant="danger" onClick={() => setEdit(false)}>Cancel</Button>
                 </ButtonGroup>
             </Col>
@@ -41,7 +42,7 @@ const UserItem = ({ user }) => {
             <Col>{user.email}</Col>
             <Col>{user.phoneNumber}</Col>
             <Col>{user.role}</Col>
-            <Col><Button onClick={() => setEdit(true)}>Edit</Button></Col>
+            <Col><Button style={{backgroundColor:colorPalette.secondary}} onClick={() => setEdit(true)}>Edit</Button></Col>
         </Row>
     );
 };

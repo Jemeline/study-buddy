@@ -3,7 +3,7 @@ import { Form, Container, Row, Col } from "react-bootstrap";
 import { Slider } from "@material-ui/core";
 import "./TutorAd.css";
 import { colorPalette } from "../../utils/design";
-import { Button, ButtonGroup } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import {Input} from 'reactstrap';
 import { editAd, deleteAd } from "../../utils/api";
 import {capitalizeFirst} from '../../utils/common';
@@ -13,15 +13,9 @@ import { Modal, ModalHeader, ModalBody} from 'reactstrap';
 const TutorAd = ({ isTutor, ad }) => {
     const [editMode, setEditMode] = useState(false);
     const [text, setText] = useState(ad.text);
-    const [courses, setCourses]= useState(ad.courses)
     const [rating, setRating] = useState(5);
     const [modal, setModal] = useState(false);
     const [courseSchedule, setCourseSchedule] = useState([]);
-    const style = {
-        "backgroundColor": colorPalette.white,
-        "color": colorPalette.secondary,
-        "margin": "10px",
-    };
 
     const handleSubmitEdit = async e => {
         try {
@@ -100,7 +94,7 @@ const TutorAd = ({ isTutor, ad }) => {
         <Button
             size="small"
             style={{backgroundColor:colorPalette.secondary,color:colorPalette.white}}
-            onClick={() => {setCourseSchedule([]);setCourses('');}}
+            onClick={() => setCourseSchedule([])}
         > Clear Courses</Button>
         </div>
         <div style={{display:'flex',justifyContent:'space-between',marginBottom: "3%"}}>
@@ -108,7 +102,7 @@ const TutorAd = ({ isTutor, ad }) => {
             <Button style={{backgroundColor:colorPalette.secondary}} data-testid="deleteBtn" onClick={handleDelete}>Delete Ad</Button>
             <Button style={{backgroundColor:colorPalette.secondary}} onClick={e => {
                 setText(ad.text);
-                setCourses(ad.courses);
+                setCourseSchedule([]);
                 setEditMode(false);
             }}>Cancel</Button>
         </div>

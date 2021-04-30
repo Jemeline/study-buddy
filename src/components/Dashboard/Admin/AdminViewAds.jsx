@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { colorPalette } from "../../../utils/design";
-import { Container, Row, Col } from "react-bootstrap";
+import { Grid } from "@material-ui/core";
 import ReactLoading from "react-loading";
 import AdminAd from "./AdminAd";
 import { getAllAds } from "../../../utils/api";
@@ -9,24 +9,33 @@ import { getAllAds } from "../../../utils/api";
 const AdminViewAds = () => {
     const [ads, setAds] = useState(null);
     useEffect(() => {
-        getAllAds().then(res => {
-            setAds(res.data);
-        }).catch(err => console.error(err));
+        getAllAds()
+        .then(res => setAds(res.data))
+        .catch(err => console.error(err));
     }, []);
 
-    return (
-        <Container>
+    return ads ? (
+        <div>
             <h4>Tutor Ads</h4>
-            {ads ? 
-                ads.length !== 0 ? 
-                    ads.map(ad => 
-                        <Row key={ad._id}><Col>
+            <div style={{
+                flexGrow: 1,
+                height: "calc(100vh - 85px)",
+                overflowY: "auto",
+                overflowX: "hidden",
+                margin: "10px",
+                padding: "20px"
+            }}>
+                
+                <Grid container direction="row" justify="flex-start" spacing={1}>
+                    {ads.map(ad => (
+                        <Grid key={ad._id} item xs={12} sm={6} md={3}>
                             <AdminAd ad={ad} />
-                        </Col></Row>)
-                : "No Ads found" 
-            : <ReactLoading type={"cylon"} color={colorPalette.secondary} />}
-        </Container>
-    );
+                        </Grid>
+                    ))}
+                </Grid>
+            </div>
+        </div>
+    ) : <ReactLoading type={"cylon"} color={colorPalette.secondary} />;
 };
 
 export default AdminViewAds;
