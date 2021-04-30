@@ -3,6 +3,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import { getUser } from "../../utils/common";
 import emailjs from 'emailjs-com';
 import { init } from 'emailjs-com';
+import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles, apiGetCourseById} from '../../utils/api';
 
 
 function InviteLink() {
@@ -18,27 +19,44 @@ function InviteLink() {
     
     function submitForm () {
         
-        try {
+        checkemail(email).then((res) => {
+            if (res) {
+                alert("This friend is already a Study Buddy!");
+            } else {
+                try {
             
-            let templateParams = {
-                to_email: email,
-                to_name: name,
-                from_name: first+" "+last
+                    let templateParams = {
+                        to_email: email,
+                        to_name: name,
+                        from_name: first+" "+last
+                    }
+                    if (name != '') {
+                        emailjs.send("service_uy27b0i", "template_dq21kth", templateParams).then(() => {
+                            alert("Successfully sent your invite!");
+                        })
+                    }
+                } catch(err) {
+                    console.error(err);
+                }
             }
-            
-            if (name != '') {
-                emailjs.send("service_uy27b0i", "template_dq21kth", templateParams).then(() => {
-                    alert("Successfully sent your invite!");
-                })
-            }
-        } catch(err) {
-            console.error(err);
-        }
+        });
     };
 
     function handleSubmit(event) {
         event.preventDefault()
         submitForm()
+    }
+
+    async function checkemail(email) {
+        const students = (await apiGetStudents()).data;
+        console.log(students)
+        for (let i = 0; i < students.length; i++) {
+            if (students[i].email == email) {
+                return true
+            }
+        }
+
+        return false
     }
 
     return (
