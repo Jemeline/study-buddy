@@ -17,12 +17,8 @@ function FindAStudyBuddyDashboard() {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [user, setUser] = useState(JSON.parse(getUser()));
-    const [profile, setProfile] = useState({});
     const [rows, setRows] = useState([]);
-    const [hiddenTable,setHiddenTable] = useState(false);
-    const [hiddenProfile,setHiddenProfile] = useState(true);
-    const [hideProfileTabs, setHideProfileTabs] = useState(false);
+
     
     useEffect(async () => {
         try{
@@ -43,9 +39,9 @@ function FindAStudyBuddyDashboard() {
 
     return (
         <div>
-            {loading ? <div style={{backgroundColor:'white',zIndex:-1,height:'400px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
-            <Paper hidden={hiddenTable} style={{overflow:'auto',width:"100%",height:'400px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',cursor:'pointer'}} onClick={()=>history.push('/find-students')}>
-                <TableContainer>
+            {loading ? <div style={{backgroundColor:'white',zIndex:-1,height:'450px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
+            <Paper style={{overflow:'auto',width:"100%",height:'450px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',cursor:'pointer'}} onClick={()=>history.push('/find-students')}>
+                <TableContainer style={{height:'450px'}}>
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
@@ -64,10 +60,10 @@ function FindAStudyBuddyDashboard() {
                         {!loading ? 
                         rows.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).map((row) => (
                         <TableRow hover key={row.user._id}>
-                            <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
-                            <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
-                            <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
-                            <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
+                            <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
+                            <TableCell align="left">{row.name}</TableCell>
+                            <TableCell align="left">{row.email}</TableCell>
+                            <TableCell align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
                         </TableRow>
                         )): <TableRow/>}
                     </TableBody>

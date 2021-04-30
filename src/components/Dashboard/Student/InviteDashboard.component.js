@@ -59,7 +59,7 @@ function InviteDashboard() {
     }
 
     return (
-            <Paper style={{overflow:'auto',height:'200px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <Paper style={{overflow:'auto',height:'225px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div>
                     <h5 style={{marginTop:'5px',marginBottom:'0px',fontFamily: 'Garamond, serif'}}>Invite A Friend</h5>
                     <p style={{backgroundColor:colorPalette.secondary,color:'white',marginLeft:'2px',marginRight:'2px'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p>      
