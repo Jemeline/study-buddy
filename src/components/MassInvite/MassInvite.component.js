@@ -69,42 +69,62 @@ function MassStudyInvite() {
 
 
     return (
-        <Grid container style={{boxSizing: "border-box", display: "flex", backgroundColor: colorPalette.gray, height: "92vh"}}>
-            <Grid item xs={1}>
+        <div style={{boxSizing: "border-box", display: "flex", backgroundColor: colorPalette.gray, height: "92vh"}}>
+            <Grid container >
+                <Grid item xs={1}>
 
-            </Grid>
-            <Grid item xs={4} style={{display: "flex"}}>
-                <Paper elevation={8} style={{backgroundColor: colorPalette.primary, width: "40vw", height: "80%", justifyContent: "flex-start", alignSelf: "center"}}>
-                    <p style={{paddingBottom: "2%", borderBottom: "1px solid black", height: "20%"}}>What better way to start a study group than by inviting your whole class! </p>
+                </Grid>
+                <Grid item xs={4} style={{display: "flex"}}>
+                    <Paper elevation={8} style={{display: "flex", flexDirection: "column", backgroundColor: colorPalette.white, width: "40vw", height: "50%", justifyContent: "center", alignSelf: "center"}}>
+                        <p style={{}}>What better way to start a study group than by inviting your whole class! </p>
+                        <hr style={{width: "80%", border: `2px solid ${colorPalette.secondary}`}}></hr>
+                        <p style={{}}>Select a class, set the details, write a message, and an email will be sent to everyone in the selected class!</p>
+                        <hr style={{width: "80%", border: `2px solid ${colorPalette.secondary}`}}></hr>
+                        <p style={{}}>Happy Studying!</p>
+                    </Paper>                    
+                </Grid>
+                <Grid item xs={1}>
 
-                    <p style={{height: "40%", padding: "2%"}}>Select the class on the right that you want to study with, write a message, and an email will be sent to all Study Buddy users in that class. <br></br> <em>You should probably include the date, time, and location</em></p>
-                    <p style={{padding: "5%", borderTop: "1px solid black", boxSizing: "border-box", width: "40%", margin: "auto", height: "10%"}}>Happy Studying!</p>
-                </Paper>                    
-            </Grid>
-            <Grid item xs={1}>
+                </Grid>
+                <Grid item xs={5} style={{display: "flex"}}>
+                    <Paper elevation={5} style={{display: "flex", flexDirection: "column", backgroundColor: colorPalette.white, height: "90%", width: "50vw", justifyContent: "center", alignItems: "center", alignSelf: "center"}}>
+                        <form onSubmit={handleSubmit(onSubmit)} style={{height: "80%", width: "80%", margin: "10% auto"}}>
+                            <div style={{display: "flex", flexDirection: "column", alignContent: "flex-start"}}>
+                                <select {...register("chosenClass", {required: true})} name="chosenClass" style={{width: "50%", padding: "5px"}} >
+                                    <option value="" defaultValue key="placeholder">Choose a class...</option>
+                                    {myClasses.map(c => <option key={c[0]} value={c[0]}>{c[1]}</option>)}
+                                </select>
+                                {errors.chosenClass && <p style={{margin: "0", alignSelf: "flex-start"}}><strong>Please choose a class</strong></p>}
+                                <hr style={{margin: "6px auto"}}></hr>
+                                <select style={{width: "50%", padding: "5px"}}>
+                                    <option value="">Choose a date...</option>
+                                </select>
+                                {errors.chosenClass && <p style={{margin: "0", alignSelf: "flex-start"}}><strong>Please choose a class</strong></p>}
+                                <hr style={{margin: "6px auto"}}></hr>
+                                <select style={{width: "50%", padding: "5px"}}>
+                                    <option value="">Choose a time...</option>
+                                </select>
+                                {errors.chosenClass && <p style={{margin: "0", alignSelf: "flex-start"}}><strong>Please choose a class</strong></p>}
+                                <hr style={{margin: "6px auto"}}></hr>
+                                <input type="text" id="location" name="location" placeholder="Enter a location..." />
+                                {errors.chosenClass && <p style={{margin: "0", alignSelf: "flex-start"}}><strong>Please choose a class</strong></p>}
+                                <hr style={{margin: "6px auto"}}></hr>
+                            </div>
+                            <textarea {...register("message", {required: true})} name="message" placeholder={"Write an optional message..."} style={{width: "100%", height: "30%", margin: "auto", resize: "none"}} ></textarea>
+                            {errors.message && <p style={{marginTop: "0px"}}><strong>Please write a message</strong></p>}
+                            <div>
+                                <button type="submit" style={{width: "25%", backgroundColor: colorPalette.primary}}><SendRoundedIcon /></button>
+                            </div>
+                            <p>{successMessage}</p>
+                            <p>{errorMessage}</p>
+                        </form>
+                    </Paper>
+                </Grid>
+                <Grid item xs={1}>
 
+                </Grid>
             </Grid>
-            <Grid item xs={5} style={{display: "flex"}}>
-                <Paper elevation={5} style={{backgroundColor: colorPalette.primary, height: "90%", width: "50vw", justifyContent: "flex-end", alignSelf: "center"}}>
-                    <form onSubmit={handleSubmit(onSubmit)} style={{height: "80%", margin: "10% auto"}}>
-                        <select {...register("chosenClass", {required: true})} name="chosenClass" style={{width: "50%", padding: "5px", border: "1px solid black"}} >
-                            <option value="" defaultValue key="placeholder">Choose a class...</option>
-                            {myClasses.map(c => <option key={c[0]} value={c[0]}>{c[1]}</option>)}
-                        </select>
-                        {errors.chosenClass && <p style={{height: "5px"}}><strong>Please choose a class</strong></p>}
-                        <textarea {...register("message", {required: true})} name="message" placeholder={"What do you want to say..."} style={{width: "80%", height: "50%", resize: "none", margin: "5% auto auto auto", border: "1px solid black"}} ></textarea>
-                        {errors.message && <p style={{height: "5px", marginBottom: "10%"}}><strong>Please write a message</strong></p>}
-                        <button type="submit" style={{width: "25%"}}><SendRoundedIcon /></button>
-                        <p>{successMessage}</p>
-                        <p>{errorMessage}</p>
-                    </form>
-                </Paper>
-            </Grid>
-            <Grid item xs={1}>
-
-            </Grid>
-        </Grid>
-        
+        </div>
     )
 }
 
