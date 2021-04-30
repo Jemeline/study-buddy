@@ -24,7 +24,7 @@ const TutorAd = ({ isTutor, ad }) => {
                 "_id": ad._id, 
                 "tutorEmail": ad.tutorEmail,
                 "text": text,
-                "courses": courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber +'-' + String(e.courseSection).padStart(3, '0')),
+                "courses": courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber),
                 "first": ad.first,
                 "last": ad.last,
                 "ratings": ad.ratings
@@ -86,7 +86,7 @@ const TutorAd = ({ isTutor, ad }) => {
             style={{ width: "100%",backgroundColor:'white' }}
             type='text'
             placeholder="Courses You Add Show Up Here"
-            value={courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber +'-' + String(e.courseSection).padStart(3, '0'))}
+            value={courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber )}
             onClick={()=>setModal(true)}
         />
         </div>

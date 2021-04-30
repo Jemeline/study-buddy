@@ -24,7 +24,7 @@ const CreateAd = () => {
                 const res = await createAd({
                     tutorEmail: email,
                     text: text,
-                    courses: courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber +'-' + String(e.courseSection).padStart(3, '0')),
+                    courses: courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber),
                     first: first,
                     last: last,
                     ratings: []
@@ -67,7 +67,7 @@ const CreateAd = () => {
                             type='text'
                             disabled
                             placeholder="Courses You Add Show Up Here"
-                            value={courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber +'-' + String(e.courseSection).padStart(3, '0'))}
+                            value={courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber)}
                         />
                     </Form.Group>
                 </Form.Row>

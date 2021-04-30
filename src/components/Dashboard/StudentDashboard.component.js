@@ -6,6 +6,7 @@ import {colorPalette} from '../../utils/design';
 import ProfileDashboard from './Student/ProfileDashboard.component';
 import InviteDashboard from './Student/InviteDashboard.component';
 import FindAStudyBuddyDashboard from './Student/FindAStudyBuddyDashboard.component';
+import SuggestedTutorsDashboard from './Student/SuggestedTutorsDashboard.component';
 
  
 function StudentDashboard() {
@@ -28,10 +29,11 @@ function StudentDashboard() {
             <ProfileDashboard/>
           </Grid>
 
-          <Grid item xs={5}>
+          <Grid item xs={6}>
             <FindAStudyBuddyDashboard/>
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={6}>
+            <SuggestedTutorsDashboard/>
           </Grid>
 
           <Grid item xs={6}>
