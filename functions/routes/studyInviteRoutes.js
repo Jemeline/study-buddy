@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const express = require("express");
 // const UserModel = require("../models/user");
 // const TokenModel = require("../models/token");

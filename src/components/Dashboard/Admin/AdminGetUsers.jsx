@@ -20,23 +20,23 @@ const AdminGetUsers = () => {
     };
 
     return (
-        <Container >
+        <Container style={{marginTop: "3vh"}}>
             <h4>Users</h4>
             <ListGroup className="shadow">
                 <ListGroup.Item style={style}>
                     <Row>
-                        <Col>Profile Picture</Col>
-                        <Col>Name</Col>
-                        <Col>Email</Col>
-                        <Col>Phone Number</Col>
-                        <Col>Role</Col>
-                        <Col>       </Col>
+                        <Col><strong>Profile Picture</strong></Col>
+                        <Col><strong>Name</strong></Col>
+                        <Col><strong>Email   </strong></Col>
+                        <Col><strong>Phone Number</strong></Col>
+                        <Col><strong>Role</strong></Col>
+                        <Col>      </Col>
                     </Row>
                 </ListGroup.Item>
                 {users ? 
                     users.length !== 0 ? 
                         users.map(user => 
-                            <ListGroup.Item key={user._id} variant={user.role==="admin" ? "danger" : "info"}>
+                            <ListGroup.Item key={user._id} variant={user.role==="admin" ? "danger" : null}>
                                 <UserItem user={user} />
                             </ListGroup.Item>
                         )

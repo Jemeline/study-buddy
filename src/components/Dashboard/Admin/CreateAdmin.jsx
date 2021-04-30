@@ -41,63 +41,64 @@ const CreateAdmin = () => {
 
     return (
         <Container>
-        <Card
-            style={{
-                width: "80vw",
-                backgroundColor: colorPalette.secondaryA,
-                padding: "10px",
-                margin: "5vh",
-                color: colorPalette.white
-            }}
-        >
             <h4>Create Admin</h4>
-            <Container>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Control
-                        placeholder="Email Adress"
-                        type="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        style={{width: "37vw"}}
-                    />
-                    <Row>
-                        <Col>
-                            <Form.Control
-                                placeholder="Password"
-                                type="password"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </Col>
-                        <Col>
-                            <Form.Control
-                                placeholder="Confirm Password"
-                                type="password"
-                                value={confirmPass}
-                                onChange={e => setConfirmPass(e.target.value)}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Control
-                                placeholder="First Name"
-                                value={first}
-                                onChange={e => setFirst(e.target.value)}
-                            />
-                        </Col>
-                        <Col>
-                            <Form.Control
-                                placeholder="Last Name"
-                                value={last}
-                                onChange={e => setLast(e.target.value)}
-                            />
-                        </Col>
-                    </Row>
-                    <Button type="submit" style={{marginTop: "5vh"}}>Submit</Button>
-                </Form>
-            </Container>
-        </Card>
+            <Card
+                style={{
+                    width: "80vw",
+                    backgroundColor: colorPalette.secondaryA,
+                    padding: "10px",
+                    margin: "5vh",
+                    color: colorPalette.white
+                }}
+                className="shadow"
+            >
+                <Container>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Control
+                            placeholder="Email Adress"
+                            type="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            style={{width: "37vw", marginTop: "3vh"}}
+                        />
+                        <Row>
+                            <Col>
+                                <Form.Control
+                                    placeholder="Password"
+                                    type="password"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                />
+                            </Col>
+                            <Col>
+                                <Form.Control
+                                    placeholder="Confirm Password"
+                                    type="password"
+                                    value={confirmPass}
+                                    onChange={e => setConfirmPass(e.target.value)}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Control
+                                    placeholder="First Name"
+                                    value={first}
+                                    onChange={e => setFirst(e.target.value)}
+                                />
+                            </Col>
+                            <Col>
+                                <Form.Control
+                                    placeholder="Last Name"
+                                    value={last}
+                                    onChange={e => setLast(e.target.value)}
+                                />
+                            </Col>
+                        </Row>
+                        <Button type="submit" style={{backgroundColor:colorPalette.secondary, marginTop: "2vh"}}>Submit</Button>
+                    </Form>
+                </Container>
+            </Card>
         </Container>
     );
 };
