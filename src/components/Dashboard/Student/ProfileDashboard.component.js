@@ -24,36 +24,20 @@ function ProfileDashboard() {
     []);
 
     return (
-        <div style={{width:"100%"}}>
-            <Paper style={{overflow:'auto',maxHeight:'30vh',height:'30vh',margin:'10px',display:'flex',justifyContent:'center',alignItems:'center'}}>
-                <div style={{width:'100%'}}>
+        <Paper style={{overflow:'auto',width:"100%",height:'200px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer'}} onClick={()=>history.push('/student-profile')}>
+            <div style={{width:'100%'}}>
                 <div style={{display:'flex',alignItems: 'center',justifyContent:'space-between',margin:'auto'}}>
                     {(!avatar)?<img src={avatarUnknown} style={{height: '150px',width:"150px",borderRadius:'50%',margin:'10px'}}/>:
                     <div style={{overflow:'hidden',flexShrink: 0,flexBasis:'150px',flexGrow: 0}}><img src={avatar} style={{height: '150px',margin:'10px'}}/>
                     </div>}
                     <div style={{display:'flex',flexDirection:'column',alignItems: 'flex-end',justifyContent:'flex-end',margin:'10px'}}>
-                        <h5 style={{margin:'10px'}}>{capitalizeFirst(user.first)} {capitalizeFirst(user.last)}</h5>
-                        <p style={{margin:'10px'}}>{user.email}</p>
-                        <p style={{margin:'10px'}}>Class of {profile.graduationYear}</p>
+                        <h5 style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'25px'}}><strong>{capitalizeFirst(user.first)} {capitalizeFirst(user.last)}</strong></h5>
+                        <p style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'20px'}}>{user.email}</p>
+                        <p style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'20px'}}>Class of {profile.graduationYear}</p>
                     </div>
                 </div>
-                </div>
-            </Paper>
-        </div>
-        // <div style={{width:"100%"}}>
-        //     <Paper style={{overflow:'auto',maxHeight:'30vh',height:'30vh',margin:'auto',cursor:'pointer',alignItems:'center'}} onClick={()=> history.push('/student-profile')}>
-                // <div style={{display:'flex',alignItems: 'center',justifyContent:'space-between',margin:'auto'}}>
-                //     {(!avatar)?<img src={avatarUnknown} style={{height: '150px',width:"150px",borderRadius:'50%',margin:'q0px'}}/>:
-                //     <div style={{overflow:'hidden',flexShrink: 0,flexBasis:'150px',flexGrow: 0}}><img src={avatar} style={{height: '150px',margin:'10px'}}/>
-                //     </div>}
-                //     <div style={{display:'flex',flexDirection:'column',alignItems: 'flex-end',justifyContent:'flex-end',margin:'10px'}}>
-                //         <h5 style={{margin:'10px'}}>{capitalizeFirst(user.first)} {capitalizeFirst(user.last)}</h5>
-                //         <p style={{margin:'10px'}}>{user.email}</p>
-                //         <p style={{margin:'10px'}}>Class of {profile.graduationYear}</p>
-                //     </div>
-                // </div>
-        //     </Paper>
-        // </div>
+            </div>
+        </Paper>
     );
 }
 

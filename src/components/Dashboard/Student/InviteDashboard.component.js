@@ -59,37 +59,35 @@ function InviteDashboard() {
     }
 
     return (
-        <div style={{width:"100%"}}>
-            <Paper style={{overflow:'auto',maxHeight:'30vh',height:'30vh',margin:'10px',display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <Paper style={{overflow:'auto',height:'200px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div>
-                <h5 style={{marginTop:'5px',marginBottom:'0px'}}>Invite A Friend</h5>
-                <p style={{backgroundColor:colorPalette.secondary,color:'white',marginLeft:'2px',marginRight:'2px'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p>      
-                <Form onSubmit={handleSubmit} style={{marginLeft:'10px',marginRight:'10px'}}>
-                    <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}>
-                        <Form.Group>
-                            <Input
-                                placeholder="Name"
-                                onChange={e => {setName(e.target.value)}}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-                    <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}>
-                        <Form.Group>
-                            <Input
-                                placeholder="Email"
-                                onChange={e => {setEmail(e.target.value)}}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-                    <div style={{display:'flex',justifyContent:'center'}}>
-                    <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}> 
-                        <Button style={{backgroundColor:colorPalette.secondary}} variant="primary" type="submit">Submit</Button>
-                    </Form.Row>
-                    </div>
-                </Form>
-                </div>
-            </Paper>
-        </div>
+                    <h5 style={{marginTop:'5px',marginBottom:'0px',fontFamily: 'Garamond, serif'}}>Invite A Friend</h5>
+                    <p style={{backgroundColor:colorPalette.secondary,color:'white',marginLeft:'2px',marginRight:'2px'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p>      
+                    <Form onSubmit={handleSubmit} style={{marginLeft:'10px',marginRight:'10px'}}>
+                        <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}>
+                            <Form.Group>
+                                <Input
+                                    placeholder="Name"
+                                    onChange={e => {setName(e.target.value)}}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}>
+                            <Form.Group>
+                                <Input
+                                    placeholder="Email"
+                                    onChange={e => {setEmail(e.target.value)}}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <div style={{display:'flex',justifyContent:'center'}}>
+                        <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}> 
+                            <Button style={{backgroundColor:colorPalette.secondary}} variant="primary" type="submit">Submit</Button>
+                        </Form.Row>
+                        </div>
+                    </Form>
+            </div>
+        </Paper>
     );
 }
 
