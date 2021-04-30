@@ -66,8 +66,11 @@ function Calendar(user) {
         if (dayString == 'MW') { return [1,3]} else
         if (dayString == 'MWF') { return [1,3,5]} else 
         if (dayString == 'TH') { return [2,4]} else
-        if (dayString == 'F') {return [5]}
-        else { return [0]}
+        if (dayString == 'F') {return [5]} else 
+        if (dayString == 'M') {return [1]} else 
+        if (dayString == 'T') {return [2]} else 
+        if (dayString == 'W') {return [3]} 
+        else { return [1]}
     }
         
        
