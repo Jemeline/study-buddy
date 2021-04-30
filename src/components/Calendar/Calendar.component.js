@@ -33,7 +33,6 @@ function Calendar(user) {
         }, [])
 
     function getEvents(data) {
-        console.log(data);
         let events = [];
         for(let i = 0; i < data.length; i++) {
             let timeObject = getStartTime(data[i].courseSchedule[0])
