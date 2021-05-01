@@ -24,7 +24,6 @@ export async function getWeightedSum(student) {
     
     let matches = [];
     const total = student.courseSchedule.length * 50 + student.learningType.length * 5;
-    console.log(total);
 
     for (let i = 0; i < studentProfiles.length; i++) {
         matches[i] = {
