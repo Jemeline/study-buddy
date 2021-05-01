@@ -1,9 +1,7 @@
 import React,{useState} from 'react';
-import {getUser,capitalizeFirst,login,logout} from '../../../utils/common';
-import {validateName} from '../../../utils/regex';
+import {getUser,login,logout} from '../../../utils/common';
 import {apiDeleteUser,apiUpdateUser,apiUpdatePassword} from '../../../utils/api';
 import { useHistory } from "react-router-dom";
-import avatar from './unknown-avatar.jpg';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -16,7 +14,6 @@ import {validatePassword,validatePasswordLiteral} from '../../../utils/regex';
 import {colorPalette} from '../../../utils/design';
 import {Alert} from 'react-bootstrap';
 
- 
 function Settings({user,setUser,hidden}) {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);

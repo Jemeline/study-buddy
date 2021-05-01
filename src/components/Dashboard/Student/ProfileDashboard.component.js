@@ -27,7 +27,7 @@ function ProfileDashboard() {
         <Paper style={{overflow:'auto',width:"100%",height:'225px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer'}} onClick={()=>history.push('/student-profile')}>
             <div style={{width:'100%'}}>
                 <div style={{display:'flex',alignItems: 'center',justifyContent:'space-between',margin:'auto'}}>
-                    {(!avatar)?<img src={avatarUnknown} style={{height: '150px',width:"150px",borderRadius:'50%',margin:'10px'}}/>:
+                    {(!avatar)?<img src={avatarUnknown} style={{height: '125px',borderRadius:'50%',margin:'10px'}}/>:
                     <div style={{overflow:'hidden',flexShrink: 0,flexBasis:'150px',flexGrow: 0}}><img src={avatar} style={{height: '150px',margin:'10px'}}/>
                     </div>}
                     <div style={{display:'flex',flexDirection:'column',alignItems: 'flex-end',justifyContent:'flex-end',margin:'10px'}}>

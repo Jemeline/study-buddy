@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { getUser, capitalizeFirst } from "../../../utils/common";
-import {apiGetStudents,apiGetStudentProfiles,getUsers,getAllAds,apiGetCoursesById, apiGetStudentProfile} from "../../../utils/api";
+import {apiGetStudentProfiles,getUsers,getAllAds,apiGetCoursesById} from "../../../utils/api";
 import {colorPalette} from "../../../utils/design";
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import Paper from '@material-ui/core/Paper';
@@ -19,6 +19,7 @@ function SuggestedTutorsDashboard() {
     const [user, setUser] = useState(JSON.parse(getUser()));
     const [tutors,setTutors] = useState([]);
     const [allAds,setAllAds] = useState([]);
+    const [error,setError] = useState(false);
     
     function getArraysIntersection(a1,a2){
         return  a1.filter(function(n) { return a2.indexOf(n) !== -1;});
@@ -30,6 +31,7 @@ function SuggestedTutorsDashboard() {
     useEffect(async () => {
         try{
           setLoading(true);
+          setError(false);
           const users = await getUsers();
           const ads = await getAllAds();
           const courses = await apiGetStudentProfiles();
@@ -48,6 +50,8 @@ function SuggestedTutorsDashboard() {
           setLoading(false);
         } catch (err){
           console.log(err);
+          setError(true);
+          setLoading(false);
         }  
     }, []);
 
@@ -59,19 +63,21 @@ function SuggestedTutorsDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colspan="5" style={{ "text-align": "center",fontSize:'3vh',fontFamily: 'Garamond, serif' }}><strong>Suggested Tutors</strong></TableCell>
+                            <TableCell colSpan="5" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Suggested Tutors</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left" width='5%'></TableCell>
+                            <TableCell align="left" width='3vw'></TableCell>
                             <TableCell align="left" width='3vw'>Name</TableCell>
-                            <TableCell align="left" width='10%'>Email</TableCell>
+                            <TableCell align="left" width='7vw'>Email</TableCell>
                             <TableCell align="left" width='7vw'>Rating</TableCell>
                             <TableCell align="left" width='7vw'>Courses</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                        <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+                        <TableRow hidden={tutors.length>0 || error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Tutors Currently Fit Your Needs</strong></TableCell></TableRow>
                         {!loading ? 
                         tutors.map((row) => (
                         <TableRow hover key={row.user._id}>

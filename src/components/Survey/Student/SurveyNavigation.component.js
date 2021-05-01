@@ -5,10 +5,9 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {storeCurrPage} from './utils/common';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import {apiCreateStudentProfile,apiGetStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
+import {apiCreateStudentProfile,apiResubmitStudentProfile} from '../../../utils/api';
 import {getIsSurveyed,getUser,login} from '../../../utils/common';
 import { useHistory } from "react-router-dom";
-import {getWeightedSum} from "../MatchingAlgorithm";
 
 function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSchedule,profilePayload,graduatePOS,studentType}){ 
     const history = useHistory();
@@ -35,7 +34,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
         </Button>
         <Button
             variant="contained"
-            style={{width:'12vw',fontSize:'1vw',backgroundColor:getButtonColor(((major.length===0  && studentType === 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 3)),colorPalette),
+            style={{width:'12vw',fontSize:'1vw',backgroundColor:getButtonColor(((major.length===0  && studentType === 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 4)),colorPalette),
                 color:colorPalette.white}}
             endIcon={<ArrowForwardIcon />}
             onClick={()=> {setCurrPage(currPage+1);storeCurrPage(currPage+1);}}
@@ -45,7 +44,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
         </Button>
         <Button
             variant="contained"
-            style={{width:'12vw',fontSize:'1vw',backgroundColor:getButtonColor(((major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 3)),colorPalette),color:colorPalette.white}}
+            style={{width:'12vw',fontSize:'1vw',backgroundColor:getButtonColor(((major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 4)),colorPalette),color:colorPalette.white}}
             endIcon={<CheckCircleOutlineIcon />}
             onClick={async()=> {
                 await handleSurveySubmit(profilePayload(),setCurrPage,storeCurrPage);
@@ -66,7 +65,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
         <Button 
             variant="contained"
             style={{width:'12vw',backgroundColor:colorPalette.secondary,color:colorPalette.white,fontSize:'0.9vw'}}
-            onClick={() => history.push('/dashboard/student')}
+            onClick={() => {history.push('/dashboard/student');storeCurrPage(0);}}
             hidden={currPage !==6}
         > Go To Dashboard
         </Button>
@@ -84,15 +83,6 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
             const newUser = JSON.parse(getUser());
             newUser.isSurveyed = true;
             login(newUser,newUser.role,newUser.isVerified,newUser.isSurveyed);
-
-            // // Retrieve profile of logged in user
-            // const user = JSON.parse(getUser());
-            // const userProfile = (await apiGetStudentProfile(user._id)).data;
-
-            // // Use algorithm to sort other users
-            // const sums = await getWeightedSum(userProfile);
-            // console.log(sums);
-           
             setCurrPage(6);
             storeCurrPage(6);
         }
@@ -104,16 +94,6 @@ async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
 async function handleSurveyResubmit(payload,setCurrPage,storeCurrPage){
     try {
         const data = await apiResubmitStudentProfile(payload);
-
-        // // Retrieve profile of logged in user
-        // const user = JSON.parse(getUser());
-        // const userProfile = (await apiGetStudentProfile(user._id)).data;
-
-        // // Use algorithm to sort other users
-        // const sums = await getWeightedSum(userProfile);
-
-        // console.log(sums);
-
         setCurrPage(6);
         storeCurrPage(6);
     } catch (error){
