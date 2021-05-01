@@ -37,8 +37,8 @@ function CourseScheduleDashboard() {
 
     return (
         <div>
-            {loading ? <div style={{backgroundColor:'white',zIndex:-1,height:'225px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
-            <Paper style={{overflow:'auto',width:"100%",height:'225px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',cursor:'pointer'}} onClick={()=>{storeTabValue(3);history.push('/student-profile')}}>
+            {loading ? <div style={{backgroundColor:'white',zIndex:-1,height:'350px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
+            <Paper style={{overflow:'auto',width:"100%",height:'350px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',cursor:'pointer'}} onClick={()=>{storeTabValue(3);history.push('/student-profile')}}>
                 <TableContainer style={{height:'450px'}}>
                     <Table stickyHeader size="medium">
                     <TableHead>

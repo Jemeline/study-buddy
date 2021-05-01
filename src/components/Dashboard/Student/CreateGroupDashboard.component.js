@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 function CreateGroupDashboard() {
 
     return (
-            <Paper style={{overflow:'auto',height:'450px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <Paper style={{overflow:'auto',height:'225px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div>
                     Email Blast Component -- Randy
                 </div>

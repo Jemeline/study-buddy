@@ -60,7 +60,8 @@ function CalendarDashboard(user) {
     function getDays(dayString) {
         if (dayString == 'MW') { return [1,3]} else
         if (dayString == 'MWF') { return [1,3,5]} else 
-        if (dayString == 'TH') { return [2,4]} else
+        if (dayString == 'TH') { return [4]} else
+        if (dayString == 'TUTH') { return [2,4]} else
         if (dayString == 'F') {return [5]} else 
         if (dayString == 'M') {return [1]} else 
         if (dayString == 'T') {return [2]} else 
@@ -73,8 +74,8 @@ function CalendarDashboard(user) {
         return (
             <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div style={{width:'100%'}}>
-                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                    <h6 style={{height:'25px',margin:'auto',fontSize:'20px',fontFamily: 'Garamond, serif'}}><strong>My Weekly Schedule</strong></h6>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',margin:0}}>
+                    <h6 style={{height:'25px',marginLeft:'5px',marginTop:'5px',marginBottom:0,fontSize:'20px',fontFamily: 'Garamond, serif'}}><strong>My Weekly Schedule</strong></h6>
                 </div>
                 
                 <FullCalendar
@@ -87,7 +88,7 @@ function CalendarDashboard(user) {
                     dayMaxEvents={true}
                     weekends={true}
                     initialEvents={iEvents}
-                    height='300px'
+                    height='320px'
                     eventMouseEnter={(info) =>{
                         tippy(info.el, {
                             content: info.event.title,

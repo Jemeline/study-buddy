@@ -25,21 +25,21 @@ function StudentDashboard() {
           justify="center"
           spacing={3}
       >
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             <HelpCenterDashboard/>
           </Grid>
           <Grid item xs={6}>
-            <CourseScheduleDashboard/>
+            <CreateGroupDashboard/>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <ProfileDashboard/>
           </Grid>
 
-          <Grid item xs={7}>
+          <Grid item xs={6}>
             <SuggestedMatchesDashboard/>
           </Grid>
-          <Grid item xs={5}>
-            <SuggestedTutorsDashboard/>
+          <Grid item xs={6}>
+            <StudentClassListDashboard/>
           </Grid>
           
 
@@ -47,17 +47,18 @@ function StudentDashboard() {
             <CalendarDashboard user={user}/>
           </Grid>
           <Grid item xs={5}>
-            <StudentClassListDashboard/>
+            <CourseScheduleDashboard/>
           </Grid>
           <Grid item xs={3}>
-          <InviteDashboard/>
+            <InviteDashboard/>
           </Grid>
 
+          
           <Grid item xs={6}>
             <FindAStudyBuddyDashboard/>
           </Grid>
           <Grid item xs={6}>
-            <CreateGroupDashboard/>
+            <SuggestedTutorsDashboard/>
           </Grid>
           
       </Grid>

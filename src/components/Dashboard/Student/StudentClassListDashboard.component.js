@@ -43,15 +43,15 @@ function StudentClassListDashboard() {
 
     return (
         <div>
-            {loading ? <div style={{backgroundColor:'white',zIndex:-1,height:'350px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
-            <Paper style={{overflow:'auto',width:"100%",height:'350px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+            {loading ? <div style={{backgroundColor:'white',zIndex:-1,height:'450px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
+            <Paper style={{overflow:'auto',width:"100%",height:'450px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
                 <TableContainer style={{height:'450px'}}>
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
                             <TableCell colspan="3" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse Users By Course</strong></TableCell>
                             <TableCell colspan="2" style={{ "text-align": "right",fontSize:'20px',fontFamily: 'Garamond, serif' }}>
-                                <select 
+                                <select style={{backgroundColor:colorPalette.white,padding:'1px',outlineColor:colorPalette.secondary}}
                                     onChange={(val) => {
                                         if (val.target.value === ''){
                                             setRowsFiltered(rows.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled )).filter(e=>typeof(e.profile)!=='undefined'));

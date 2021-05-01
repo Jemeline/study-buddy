@@ -63,6 +63,7 @@ function InviteDashboard() {
                 <div>
                     <h5 style={{marginTop:'5px',marginBottom:'5px',fontFamily: 'Garamond, serif'}}><strong>Invite A Friend</strong></h5>
                     <h5 style={{marginTop:'5px',marginBottom:'5px',fontFamily: 'Garamond, serif'}}><strong>To Join Study Buddy</strong></h5>
+                    <br/>
                     <p style={{backgroundColor:colorPalette.secondary,color:'white',marginLeft:'2px',marginRight:'2px'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p>      
                     <Form onSubmit={handleSubmit} style={{marginLeft:'10px',marginRight:'10px'}}>
                         <Form.Row style={{marginTop:'5px',marginBottom:'5px'}}>
@@ -81,6 +82,7 @@ function InviteDashboard() {
                                 />
                             </Form.Group>
                         </Form.Row>
+                        <br/>
                         <div style={{display:'flex',justifyContent:'center'}}>
                         <Form.Row style={{marginTop:'5px',marginBottom:'5px'}}> 
                             <Button style={{backgroundColor:colorPalette.secondary}} variant="primary" type="submit">Send</Button>
