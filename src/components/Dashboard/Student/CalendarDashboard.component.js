@@ -73,7 +73,10 @@ function CalendarDashboard(user) {
         return (
             <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div style={{width:'100%'}}>
-                <h6 style={{height:'25px',marginTop:'15px',maginBottom:'25px',fontSize:'20px',fontFamily: 'Garamond, serif'}}><strong>My Weekly Schedule</strong></h6>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <h6 style={{height:'25px',margin:'auto',fontSize:'20px',fontFamily: 'Garamond, serif'}}><strong>My Weekly Schedule</strong></h6>
+                </div>
+                
                 <FullCalendar
                     plugins={[listPlugin]}
                     headerToolbar={false}
@@ -86,7 +89,6 @@ function CalendarDashboard(user) {
                     initialEvents={iEvents}
                     height='300px'
                     eventMouseEnter={(info) =>{
-                        console.log(info.event.title);
                         tippy(info.el, {
                             content: info.event.title,
                             followCursor: true,
@@ -99,7 +101,7 @@ function CalendarDashboard(user) {
         ) 
     } else {
         return (
-        <Paper style={{overflow:'auto',height:'325px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
+        <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
             <div style={{width:'100%'}}>
                 <h6 style={{height:'25px',margin:0}}>My Weekly Schedule</h6>
             </div>

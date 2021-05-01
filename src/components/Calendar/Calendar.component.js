@@ -101,7 +101,6 @@ function Calendar(user) {
                     initialEvents={iEvents}
                     height='70vh'
                     eventMouseEnter={(info) =>{
-                        console.log(info.event.title);
                         tippy(info.el, {
                             content: info.event.title,
                             followCursor: true,

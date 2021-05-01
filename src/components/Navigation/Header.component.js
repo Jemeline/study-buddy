@@ -91,7 +91,7 @@ function Header({isLoggedIn,setIsLoggedIn}){
           </ListItem>
           <ListItem button hidden={getRoleLiteral()!== 'student'} onClick={()=>history.push(`/student-help`)}>
             <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
-            <ListItemText primary={"UNC Help Center"} />
+            <ListItemText primary={"Help Center"} />
           </ListItem>
       </List>
       <Divider/>
