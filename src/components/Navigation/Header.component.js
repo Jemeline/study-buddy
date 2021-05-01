@@ -25,8 +25,9 @@ import Box from '@material-ui/core/Box';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import PostAddIcon from '@material-ui/icons/PostAdd';
-
-
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import EventNoteIcon from '@material-ui/icons/EventNote';
+import {storeCurrPage} from '../Survey/Student/utils/common';
 
 function Header({isLoggedIn,setIsLoggedIn}){ 
     const history = useHistory();
@@ -68,17 +69,13 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><DashboardIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItem>
-          <ListItem button onClick={()=>history.push(`/${getRoleLiteral()}-profile`)}>
-            <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
-            <ListItemText primary={"My Profile"} />
+          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/match`)}>
+            <ListItemIcon><CompareArrowsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Explore My Matches"} />
           </ListItem>
           <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/find-students`)}>
             <ListItemIcon><EmojiPeopleIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Find A Study Buddy"} />
-          </ListItem>
-          <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/match`)}>
-            <ListItemIcon><CompareArrowsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
-            <ListItemText primary={"Explore My Matches"} />
           </ListItem>
           <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/mass-study-invite`)}>
             <ListItemIcon><MailIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
@@ -92,12 +89,24 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><PostAddIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Post An Advertisement"} />
           </ListItem>
+          <ListItem button hidden={getRoleLiteral()!== 'student'} onClick={()=>history.push(`/student-help`)}>
+            <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"UNC Help Center"} />
+          </ListItem>
       </List>
       <Divider/>
       <List>
-        <ListItem button hidden={getRoleLiteral()!== 'student'} onClick={()=>history.push(`/student-help`)}>
-            <ListItemIcon><ImportContactsIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
-            <ListItemText primary={"UNC Help Center"} />
+        <ListItem button onClick={()=>history.push(`/${getRoleLiteral()}-profile`)}>
+            <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"My Profile"} />
+          </ListItem>
+        <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>{storeCurrPage(4);history.push(`/student-survey`);}}>
+            <ListItemIcon><EventNoteIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Update My Course Schedule"} />
+        </ListItem>
+        <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/student-survey`)}>
+            <ListItemIcon><QuestionAnswerIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"Take Our Survey"} />
         </ListItem>
       </List>
       </Box>

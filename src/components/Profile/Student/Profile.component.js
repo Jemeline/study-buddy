@@ -16,14 +16,15 @@ import Favorites from './Favorites.component';
 import Settings from './Settings.component';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import DashboardUnsurveyed from '../../Dashboard/DashboardUnsurveyed.component';
-import Calendar from '../../Calendar/Calendar.component'
+import Calendar from '../../Calendar/Calendar.component';
+import {getTabValue,storeTabValue} from '../../../utils/common';
 
 function Profile({hidden,user,setUser,surveyed,loading,error,profile,setProfile}){
   const theme = useTheme();
   const scrollableTabs = useMediaQuery(theme.breakpoints.down('sm'));
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState((getTabValue() !== null)? parseInt(getTabValue()) : 0);
   const [hideProfileTabs, setHideProfileTabs] = useState(false);
-  const handleChange = (event, newValue) => {setValue(newValue);};
+  const handleChange = (event, newValue) => {setValue(newValue);storeTabValue(newValue);};
 
   return <div>
     <Tabs

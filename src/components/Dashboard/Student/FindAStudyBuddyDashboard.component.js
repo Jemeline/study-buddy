@@ -22,18 +22,15 @@ function FindAStudyBuddyDashboard() {
     
     useEffect(async () => {
         try{
-          setLoading(true);
-          setError(false);
-          const data = await apiGetStudents();
-          const data1 = await apiGetStudentProfiles();
-          if (data.data != null) {
+            setLoading(true);
+            setError(false);
+            const data = await apiGetStudents();
+            const data1 = await apiGetStudentProfiles();
             setRows(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
             setLoading(false);
-          } else {
-            setError(true);
-          }  
         } catch (err){
           setError(true);
+          setLoading(false);
         }  
     }, []);
 
@@ -45,7 +42,7 @@ function FindAStudyBuddyDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colspan="4" style={{ "text-align": "center",fontSize:'3vh',fontFamily: 'Garamond, serif' }}><strong>Browse Users</strong></TableCell>
+                            <TableCell colspan="4" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse Users</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
@@ -57,6 +54,8 @@ function FindAStudyBuddyDashboard() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                        <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+                        <TableRow hidden={rows.length>0 || error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>
                         {!loading ? 
                         rows.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).map((row) => (
                         <TableRow hover key={row.user._id}>

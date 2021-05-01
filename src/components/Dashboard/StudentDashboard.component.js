@@ -7,10 +7,12 @@ import ProfileDashboard from './Student/ProfileDashboard.component';
 import InviteDashboard from './Student/InviteDashboard.component';
 import FindAStudyBuddyDashboard from './Student/FindAStudyBuddyDashboard.component';
 import SuggestedTutorsDashboard from './Student/SuggestedTutorsDashboard.component';
+import CourseScheduleDashboard from './Student/CourseScheduleDashboard.component';
+import CalendarDashboard from './Student/CalendarDashboard.component';
 
  
 function StudentDashboard() {
-    
+    const user = JSON.parse(getUser());
     return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',width:'100vw',overflow:'auto'}}>
       {getIsSurveyed() ?
       <div style={{flexGrow: 1,height:'calc(100vh - 95px)',overflowY:'auto',overflowX:'hidden', margin:'20px'}}>
@@ -21,12 +23,19 @@ function StudentDashboard() {
           spacing={3}
       >
           <Grid item xs={3}>
-              <InviteDashboard/>
+            <InviteDashboard/>
           </Grid>
           <Grid item xs={5}>
+            <CourseScheduleDashboard/>
           </Grid>
           <Grid item xs={4}>
             <ProfileDashboard/>
+          </Grid>
+
+          <Grid item xs={4}> 
+            <CalendarDashboard user={user}/>
+          </Grid>
+          <Grid item xs={8}>
           </Grid>
 
           <Grid item xs={6}>
@@ -36,10 +45,7 @@ function StudentDashboard() {
             <SuggestedTutorsDashboard/>
           </Grid>
 
-          <Grid item xs={6}>
-          </Grid>
-          <Grid item xs={6}>
-          </Grid>
+          
           
           <Grid item xs={6}>
           </Grid>
