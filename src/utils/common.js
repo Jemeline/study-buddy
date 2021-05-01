@@ -38,6 +38,7 @@ export function logout (){
     sessionStorage.removeItem('currPage');
     sessionStorage.removeItem('courseSchedule');
     sessionStorage.removeItem('learningType');
+    sessionStorage.removeItem('tabValue');
 
 };
 export function login (user,role,isVerified,isSurveyed){
@@ -52,6 +53,14 @@ export function capitalizeFirst(s){
 };
 
 export const zeroPad = (num, places) => String(num).padStart(places, '0');
+
+export function storeTabValue(tabValue){
+    sessionStorage.setItem('tabValue',tabValue);
+};
+
+export function getTabValue(){
+    return sessionStorage.getItem('tabValue') || null;
+};
 
 
 

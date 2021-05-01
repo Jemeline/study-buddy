@@ -3,7 +3,7 @@ import Profile from './Profile.component';
 import {getUser} from '../../../utils/common';
 import {getUsers} from '../../../utils/api';
 
-function TutorProfile(){
+function AdminProfile(){
     const [user,setUser] = useState(JSON.parse(getUser()));
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -27,8 +27,8 @@ function TutorProfile(){
       }, [])
     
     return <div>
-        <Profile hidden={false} user={user} setUser={setUser} loading={loading} error={error} profile={profile} setProfile={setProfile}/>
+        <Profile hidden={false} user={user} setUser={setUser} loading={loading} />
     </div>
 }; 
 
-export default TutorProfile;
+export default AdminProfile;

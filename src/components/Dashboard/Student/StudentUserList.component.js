@@ -117,22 +117,19 @@ function StudentUserList(){
     
   useEffect(async () => {
     try{
-      setLoading(true);
-      setError(false);
-      const data = await apiGetStudents();
-      const data1 = await apiGetStudentProfiles();
-      if (data.data != null) {
+        setLoading(true);
+        setError(false);
+        const data = await apiGetStudents();
+        const data1 = await apiGetStudentProfiles();
         setUsers(data.data);
         setFavorites(data.data.filter(ele=>ele._id===JSON.parse(getUser())._id)[0].favorites);
         setOptionsStudentNames([... new Set(await data.data.filter((e)=>!(e.disabled || e._id===JSON.parse(getUser())._id)).map(e => capitalizeFirst(e.first)+" "+capitalizeFirst(e.last)))].map((e)=> {return {label:e,value:e}}));
         setRows(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
         setRowsFiltered(await data.data.map((e)=> createData((capitalizeFirst(e.first) + ' '+ capitalizeFirst(e.last)),e.email,e.phoneNumber,e,data1.data.find(element => element._userId === e._id))));
         setLoading(false);
-      } else {
-        setError(true);
-      }  
     } catch (err){
       setError(true);
+      setLoading(false);
     }  
   }, []);
 
@@ -208,6 +205,8 @@ function StudentUserList(){
             </TableRow>
           </TableHead>
           <TableBody>
+              <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+              <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
             {!loading ? 
             rowsFiltered.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow className={classes.tableRow}

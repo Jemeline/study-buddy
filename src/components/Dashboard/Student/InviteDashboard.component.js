@@ -44,7 +44,7 @@ function InviteDashboard() {
                 setAlertMessage("Fill in all fields");
             } else {
                 emailjs.send("service_uy27b0i", "template_dq21kth", templateParams).then(() => {
-                    setAlertMessage("Successfully sent your invite!");
+                    setAlertMessage("Invite Sent!");
                 });
             }
         } catch(err) {
@@ -59,37 +59,38 @@ function InviteDashboard() {
     }
 
     return (
-        <div style={{width:"100%"}}>
-            <Paper style={{overflow:'auto',maxHeight:'30vh',height:'30vh',margin:'10px',display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div>
-                <h5 style={{marginTop:'5px',marginBottom:'0px'}}>Invite A Friend</h5>
-                <p style={{backgroundColor:colorPalette.secondary,color:'white',marginLeft:'2px',marginRight:'2px'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p>      
-                <Form onSubmit={handleSubmit} style={{marginLeft:'10px',marginRight:'10px'}}>
-                    <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}>
-                        <Form.Group>
-                            <Input
-                                placeholder="Name"
-                                onChange={e => {setName(e.target.value)}}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-                    <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}>
-                        <Form.Group>
-                            <Input
-                                placeholder="Email"
-                                onChange={e => {setEmail(e.target.value)}}
-                            />
-                        </Form.Group>
-                    </Form.Row>
-                    <div style={{display:'flex',justifyContent:'center'}}>
-                    <Form.Row style={{marginTop:'0px',marginBottom:'0px'}}> 
-                        <Button style={{backgroundColor:colorPalette.secondary}} variant="primary" type="submit">Submit</Button>
-                    </Form.Row>
-                    </div>
-                </Form>
-                </div>
-            </Paper>
-        </div>
+                    <h5 style={{marginTop:'5px',marginBottom:'5px',fontFamily: 'Garamond, serif'}}><strong>Invite A Friend</strong></h5>
+                    <h5 style={{marginTop:'5px',marginBottom:'5px',fontFamily: 'Garamond, serif'}}><strong>To Join Study Buddy</strong></h5>
+                    <br/>
+                    <p style={{backgroundColor:colorPalette.secondary,color:'white',marginLeft:'2px',marginRight:'2px'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p>      
+                    <Form onSubmit={handleSubmit} style={{marginLeft:'10px',marginRight:'10px'}}>
+                        <Form.Row style={{marginTop:'5px',marginBottom:'5px'}}>
+                            <Form.Group>
+                                <Input
+                                    placeholder="Name"
+                                    onChange={e => {setName(e.target.value)}}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row style={{marginTop:'5px',marginBottom:'5px'}}>
+                            <Form.Group>
+                                <Input
+                                    placeholder="Email"
+                                    onChange={e => {setEmail(e.target.value)}}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <br/>
+                        <div style={{display:'flex',justifyContent:'center'}}>
+                        <Form.Row style={{marginTop:'5px',marginBottom:'5px'}}> 
+                            <Button style={{backgroundColor:colorPalette.secondary}} variant="primary" type="submit">Send</Button>
+                        </Form.Row>
+                        </div>
+                    </Form>
+            </div>
+        </Paper>
     );
 }
 

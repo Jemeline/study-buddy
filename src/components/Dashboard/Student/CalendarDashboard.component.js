@@ -1,17 +1,13 @@
 import React, {useEffect, useState}from 'react';
 import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import {apiGetStudentProfile, apiGetCoursesById, apiGetCourseById} from '../../utils/api';
+import listPlugin from '@fullcalendar/list';
+import {apiGetStudentProfile, apiGetCoursesById} from '../../../utils/api';
 import tippy, {followCursor} from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import { useHistory } from "react-router-dom";
-import {storeCurrPage} from '../Survey/Student/utils/common';
+import Paper from '@material-ui/core/Paper';
 
-
-
-function Calendar(user) {
+function CalendarDashboard(user) {
     function createEventId() {return String(eventGuid++)}
     const history = useHistory();
     const [ iEvents, setEvents ] = useState(null);
@@ -76,31 +72,23 @@ function Calendar(user) {
        
     if (!loading) {
         return (
-            <div className='demo-app-main' style={{width:'80vw'}}>
+            <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
+                <div style={{width:'100%'}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',margin:0}}>
+                    <h6 style={{height:'25px',marginLeft:'5px',marginTop:'5px',marginBottom:0,fontSize:'20px',fontFamily: 'Garamond, serif'}}><strong>My Weekly Schedule</strong></h6>
+                </div>
+                
                 <FullCalendar
-                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    headerToolbar={{
-                        left: 'prev next updateScheduleButton',
-                        center: 'title',
-                        right: 'today dayGridMonth timeGridWeek timeGridDay'
-                    }}
-                    customButtons={{
-                        updateScheduleButton: {
-                            text: 'Update Schedule',
-                            click: function() {
-                                storeCurrPage(4);
-                                history.push(`/student-survey`);
-                            },
-                        },
-                    }}
-                    initialView='dayGridMonth'
+                    plugins={[listPlugin]}
+                    headerToolbar={false}
+                    initialView='listWeek'
                     editable={false}
                     selectable={true}
                     selectMirror={true}
                     dayMaxEvents={true}
                     weekends={true}
                     initialEvents={iEvents}
-                    height='70vh'
+                    height='320px'
                     eventMouseEnter={(info) =>{
                         tippy(info.el, {
                             content: info.event.title,
@@ -110,10 +98,17 @@ function Calendar(user) {
                     }}
                     />
             </div>
+        </Paper>
         ) 
     } else {
-        return null
+        return (
+        <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <div style={{width:'100%'}}>
+                <h6 style={{height:'25px',margin:0}}>My Weekly Schedule</h6>
+            </div>
+        </Paper>
+        )
     }  
 }
 
-export default Calendar;
+export default CalendarDashboard;

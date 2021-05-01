@@ -6,7 +6,6 @@ import CreateAdmin from "./CreateAdmin";
  
 function AdminDashboard(props) {
     return <Container style={{"marginBottom": "5vh", "marginTop": "3vh"}}>
-      <h4>Admin Dashboard</h4>
       <CreateAdmin />
       <AdminViewAds />
       <AdminGetUsers />
