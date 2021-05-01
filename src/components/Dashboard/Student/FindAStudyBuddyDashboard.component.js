@@ -42,7 +42,7 @@ function FindAStudyBuddyDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colspan="4" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse Users</strong></TableCell>
+                            <TableCell colspan="4" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse All Users</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
