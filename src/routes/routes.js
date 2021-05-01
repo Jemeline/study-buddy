@@ -10,7 +10,7 @@ import StudentProfile from '../components/Profile/Student/StudentProfile.compone
 import StudentRoute from './RouteClasses/Student.route';
 import TutorRoute from './RouteClasses/Tutor.route';
 import AdminRoute from './RouteClasses/Admin.route';
-import AdminSettings from '../components/Profile/AdminSettings';
+import AdminProfile from '../components/Profile/Admin/AdminProfile.component';
 import HelpCenter from '../components/Help/HelpCenter.component';
 import StudentFindTutors from "../components/Advertisements/StudentFindTutors";
 import StudentUserList from '../components/Dashboard/Student/StudentUserList.component';
@@ -36,7 +36,7 @@ const Routes = ({setIsLoggedIn}) => (
       <TutorRoute exact path="/tutor-profile" component={TutorProfile}/>
       <TutorRoute exact path="/create-ad" component={CreateAd}/>
       <AdminRoute exact path="/dashboard/admin" component={AdminDashboard}/>
-      <AdminRoute exact path="/admin-profile" component={AdminSettings}/>  
+      <AdminRoute exact path="/admin-profile" component={AdminProfile}/>  
       <Route exact path="/invitelink" render={() => (<InviteLink/>)}/>
     </Switch>
   );
