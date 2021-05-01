@@ -54,7 +54,7 @@ function SuggestedTutorsDashboard() {
     return (
         <div>
             {loading ? <div style={{backgroundColor:'white',zIndex:-1,height:'450px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
-            <Paper style={{overflow:'auto',width:"100%",height:'450px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',cursor:'pointer'}} onClick={()=>history.push('/find-students')}>
+            <Paper style={{overflow:'auto',width:"100%",height:'450px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',cursor:'pointer'}} onClick={()=>history.push('/find-tutors')}>
                 <TableContainer style={{height:'450px'}}>
                     <Table stickyHeader size="medium">
                     <TableHead>
@@ -78,7 +78,7 @@ function SuggestedTutorsDashboard() {
                             <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                             <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="left">{row.user.email}</TableCell>
-                            <TableCell align="left">{(allAds.filter(e=>e.tutorEmail===row.email).map(v=> v.ratings).flat().length===0)?'Unrated':allAds.filter(e=>e.tutorEmail===row.email).map(v=> v.ratings).flat().reduce((a, b) => a + b) / allAds.length}</TableCell>
+                            <TableCell align="left">{(allAds.filter(e=>e.tutorEmail===row.email).map(v=> v.ratings).flat().length===0)?'Unrated':(Math.round(allAds.filter(e=>e.tutorEmail===row.email).map(v=> v.ratings).flat().reduce((a, b) => a + b) / (allAds.filter(e=>e.tutorEmail===row.email).map(v=> v.ratings).flat()).length * 100)/100)}</TableCell>
                             <TableCell align="left">{[...new Set(allAds.filter(e=>e.tutorEmail===row.email).map(v=> v.courses).flat())].map(v=><p style={{margin:0}}>{v}</p>)}</TableCell>
                         </TableRow>
                         )): <TableRow/>}
@@ -88,6 +88,7 @@ function SuggestedTutorsDashboard() {
             </Paper>} 
         </div>
     );
+    
 }
 
 function createData(name, email, phone, user,profile) {
