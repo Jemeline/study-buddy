@@ -52,7 +52,7 @@ function SuggestedMatchesDashboard() {
                 studentProfiles.find(element => element._userId === student._id),
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"],
-                awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sum"]
+                awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"]
                 )));
                 setLoading(false);
             } else {
@@ -85,9 +85,9 @@ function SuggestedMatchesDashboard() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.filter(row=>row.sum>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                        {rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                         <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
-                            <TableCell align="left">{row.sum+'%'}</TableCell>
+                            <TableCell align="left">{row.percentMatch+'%'}</TableCell>
                             <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                             <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="left">{row.email}</TableCell>
@@ -101,8 +101,8 @@ function SuggestedMatchesDashboard() {
     );
 }
 
-function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, sum) {
-    return { name, email, phone, user, profile, sharedClasses, sharedLearningType, sum };
+function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch) {
+    return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch };
 };
 
 export default SuggestedMatchesDashboard;
