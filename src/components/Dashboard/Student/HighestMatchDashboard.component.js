@@ -6,6 +6,7 @@ import 'react-datetime-picker/dist/DateTimePicker.css';
 import ReactLoading from "react-loading";
 import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles} from '../../../utils/api';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
+import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 
 function HighestMatchDashboard() {
     const [user, setUser] = useState(JSON.parse(getUser()));
@@ -55,10 +56,10 @@ function HighestMatchDashboard() {
             <Paper style={{overflow:'auto',height:'225px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
                 <div style={{height:'225px',display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
                     <h5 style={{fontSize:'20px',fontFamily: 'Garamond, serif',margin:'3px'}}><strong>My Closest Match</strong></h5>
-                    <div style={{borderRadius:'50%',height: '40px',width:"40px",backgroundImage:`url(${highestMatch.avatar})`,backgroundSize:'cover',backgroundPosition:'center',margin:'3px'}}/>
+                    {(!highestMatch.avatar)?<img src={avatarUnknown} style={{height: '40px',width:"40px",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '40px',width:"40px",backgroundImage:`url(${highestMatch.avatar})`,backgroundSize:'cover',backgroundPosition:'center',margin:'3px'}}/>}
                     <p style={{margin:'2px'}}>{highestMatch.name}</p>
                     <p style={{margin:'2px',fontSize:'12px'}}><em>{highestMatch.email}</em></p>
-                    <p style={{marginTop:'2px',marginBottom:'0px',fontSize:'12px'}}><strong>You are both taking: {highestMatch.sharedClasses}</strong></p>
+                    <p hidden={!highestMatch.sharedClasses} style={{marginTop:'2px',marginBottom:'0px',fontSize:'12px'}}><strong>You are both taking: {highestMatch.sharedClasses}</strong></p>
                     <h5 style={{fontSize:'20px',margin:'3px'}}><span style={{color:getMatchColor(highestMatch.percent)}}>{highestMatch.percent}%</span> Match</h5>
                 </div>
             </Paper>}
