@@ -13,6 +13,7 @@ import StudentClassListDashboard from './Student/StudentClassListDashboard.compo
 import CreateGroupDashboard from './Student/CreateGroupDashboard.component';
 import SuggestedMatchesDashboard from './Student/SuggestedMatchesDashboard.component';
 import HelpCenterDashboard from './Student/HelpCenterDashboard.component';
+import HighestMatchDashboard from './Student/HighestMatchDashboard.component';
 
 function StudentDashboard() {
     const user = JSON.parse(getUser());
@@ -32,7 +33,7 @@ function StudentDashboard() {
             <InviteDashboard/>
           </Grid>
           <Grid item xs={3}>
-            
+            <HighestMatchDashboard/>
           </Grid>
           <Grid item xs={4}>
             <ProfileDashboard/>

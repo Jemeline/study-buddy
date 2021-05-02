@@ -125,21 +125,14 @@ function CreateGroupDashboard() {
                     <p style={{margin:0}} onClick={()=> setErrorMessage('')}>{errorMessage}</p>
                     <form onSubmit={handleSubmit}>
                         <div style={{display: "flex", flexDirection: "column", alignContent: "center",justifyContent:'space-between',marginTop:'10px'}}>
-                            <div>
-                                <label style={{height:'30px',margin:'10px'}} for="when">When:</label>
-                                <DateTimePicker style={{height:'30px'}} id="when" required minDetail="year" value={datetime} disableClock={true} onChange={handleDateTimeChange} />
+                            <div style={{height:'30px',margin:'10px'}} >
+                                <DateTimePicker id="when" required minDetail="year" value={datetime} disableClock={true} onChange={handleDateTimeChange} />
                             </div>
-                            <div> 
-                                <label style={{height:'30px'}} for="class">Class:</label>
-                                <select style={{height:'30px',margin:'10px'}} id="class" required onChange={handleClassChange} name="chosenClass" >
+                            <select style={{height:'30px',margin:'10px'}} id="class" required onChange={handleClassChange} name="chosenClass" >
                                     <option value="" defaultValue key="placeholder">Choose a class...</option>
                                     {myClasses.map(c => <option key={c[0]} value={[c[0], c[1]]}>{c[1]}</option>)}
                                 </select>
-                            </div> 
-                            <div>
-                            <label style={{height:'30px',margin:'10px'}} for="location">Where:</label>
-                            <input style={{height:'30px'}} onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location..." />
-                            </div>  
+                            <input style={{height:'30px',margin:'10px'}} onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location..." /> 
                         </div>
                         <button type="submit" style={{width: "25%", backgroundColor: colorPalette.secondary,color:'white',marginTop:'20px', marginBottom:'20px'}}><SendRoundedIcon /></button>
                     </form>

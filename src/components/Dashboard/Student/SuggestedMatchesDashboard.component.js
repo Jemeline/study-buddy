@@ -19,7 +19,6 @@ function SuggestedMatchesDashboard() {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [users, setUsers] = useState({});
     const [rows, setRows] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -42,9 +41,7 @@ function SuggestedMatchesDashboard() {
             const studentProfiles = (await apiGetStudentProfiles()).data;
             const awaitedUserMatches = await userMatches;
             const orderedStudents = awaitedUserMatches.map(match => students.find(student => student._id === studentProfiles.find(profile => profile._id === match["id"])._userId));
-            if (students != null) {
-                setUsers(students);
-                setRows(await orderedStudents.filter((e)=>!(e.disabled || e._id===JSON.parse(getUser())._id)).map(student=> createData(
+            setRows(await orderedStudents.filter((e)=>!(e.disabled || e._id===JSON.parse(getUser())._id)).map(student=> createData(
                 (capitalizeFirst(student.first) + ' '+ capitalizeFirst(student.last)),
                 student.email,
                 student.phoneNumber,
@@ -53,12 +50,8 @@ function SuggestedMatchesDashboard() {
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"],
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"]
-                )));
-                setLoading(false);
-            } else {
-                setError(true);
-                setLoading(false);
-            }  
+            )));
+            setLoading(false);
         } catch (err){
             setError(true);
             setLoading(false);
