@@ -8,6 +8,12 @@ function SurveyStudentType({studentType,setStudentType,hidden}){
     const [graduateClassName, setGraduateClassName] = useState((studentType==='graduate') ? 'selected': '');
     const [undergraduateClassName, setUndergraduateClassName] = useState((studentType==='undergraduate') ? 'selected': '');
 
+    useEffect(async () => {
+        setGraduateClassName((studentType==='graduate') ? 'selected': '');
+        setUndergraduateClassName((studentType==='undergraduate') ? 'selected': '');    
+    }, [studentType]);
+
+    
     return <div hidden={hidden}> 
             <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>WHICH TYPE OF STUDENT ARE YOU?</h4>
             <div style={{display: 'flex',justifyContent: "space-between"}}>

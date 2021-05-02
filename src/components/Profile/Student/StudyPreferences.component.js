@@ -65,7 +65,6 @@ function StudyPreferences({user,error,loading,hidden}) {
       try{
         const data = await apiGetStudentProfile(user._id);
         setProfile(data.data);
-        console.log(data.data);
         setStudentType(data.data.studentType);
         setGraduationYear(data.data.graduationYear);
         setMajor((data.data.studentType==='undergraduate')?data.data.programOfStudy.major.map((e)=> {return {label:e,value:e}}):[]);

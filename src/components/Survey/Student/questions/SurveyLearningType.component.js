@@ -21,6 +21,13 @@ function SurveyLearningType({learningType,setLearningType,hidden}){
 
     useEffect(() => {
         storeLearningType(learningType);
+        setVisual((learningType.includes('visual')) ? 'selected': '');
+        setVerbal((learningType.includes('verbal')) ? 'selected': '');
+        setSocial((learningType.includes('social')) ? 'selected': '');
+        setSolitary((learningType.includes('solitary')) ? 'selected': '');
+        setAuditory((learningType.includes('auditory/musical')) ? 'selected': '');
+        setPhysical((learningType.includes('physical/kinaesthetic')) ? 'selected': '');
+        setLogical((learningType.includes('logical/mathematical')) ? 'selected': '');
     }, [learningType]);
     
     return <div hidden={hidden} style={{paddingBottom:'1.5vw'}}> 
