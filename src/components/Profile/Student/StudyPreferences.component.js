@@ -1,6 +1,6 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {colorPalette} from '../../../utils/design';
-import {apiResubmitStudentProfile} from '../../../utils/api';
+import {apiResubmitStudentProfile,apiGetStudentProfile} from '../../../utils/api';
 import { useHistory } from "react-router-dom";
 import { InputGroup,InputGroupAddon,InputGroupText,Input} from 'reactstrap';
 import Menu from '@material-ui/core/Menu';
@@ -14,7 +14,7 @@ import {LearningTypes} from '../../Survey/Student/utils/common';
 import {Link} from 'react-router-dom';
 
  
-function StudyPreferences({user,profile,error,loading,setProfile,hidden}) {
+function StudyPreferences({user,error,loading,hidden}) {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [update, setUpdate] = useState(false);
@@ -26,14 +26,18 @@ function StudyPreferences({user,profile,error,loading,setProfile,hidden}) {
     const selectLearningTypes = (LearningTypes.map((e)=> {return {label:e,value:e}}));
     const maxOptions = 3;
     const maxOptionsGraduate = 1;
-    const [major, setMajor] = useState(profile.programOfStudy.major.map((e)=> {return {label:e,value:e}}));
-    const [minor, setMinor] = useState(profile.programOfStudy.minor.map((e)=> {return {label:e,value:e}}));
-    const [learningType, setLearningType] = useState((profile.learningType.includes('prefer not to answer')) ?  []: profile.learningType.map((e)=> {return {label:e,value:e}}));
-    const [graduatePOS, setGraduatePOS] = useState(profile.programOfStudy.graduateProgram.map((e)=> {return {label:e,value:e}}));
-    const [graduationYear, setGraduationYear] = useState(profile.graduationYear);
-    const [studentType, setStudentType] = useState(profile.studentType);
+
+    const [major, setMajor] = useState([]);
+    const [minor, setMinor] = useState([]);
+    const [learningType, setLearningType] = useState([]);
+    const [graduatePOS, setGraduatePOS] = useState([]);
     const now = new Date().getFullYear();
+    const [graduationYear, setGraduationYear] = useState(now);
+    const [studentType, setStudentType] = useState('undergraduate');
+    
+    
     const years = [...Array(8).keys()].map(i => i + now);
+    const [profile, setProfile] = useState({});
 
     const handleChangeMajor = (e) => {
         setMajor(e);
@@ -56,6 +60,22 @@ function StudyPreferences({user,profile,error,loading,setProfile,hidden}) {
         setGraduatePOS(profile.programOfStudy.graduateProgram.map((e)=> {return {label:e,value:e}}));
         setLearningType((profile.learningType.includes('prefer not to answer')) ?  []: profile.learningType.map((e)=> {return {label:e,value:e}}));
     };
+
+    useEffect(async () => {
+      try{
+        const data = await apiGetStudentProfile(user._id);
+        setProfile(data.data);
+        console.log(data.data);
+        setStudentType(data.data.studentType);
+        setGraduationYear(data.data.graduationYear);
+        setMajor((data.data.studentType==='undergraduate')?data.data.programOfStudy.major.map((e)=> {return {label:e,value:e}}):[]);
+        setMinor((data.data.studentType==='undergraduate')?data.data.programOfStudy.minor.map((e)=> {return {label:e,value:e}}):[]);
+        setGraduatePOS((data.data.studentType==='undergraduate')?[]:data.data.programOfStudy.graduateProgram.map((e)=> {return {label:e,value:e}}));
+        setLearningType((data.data.learningType.includes('prefer not to answer')) ? []: data.data.learningType.map((e)=> {return {label:e,value:e}}));
+      } catch (err){
+        console.log(err);
+      }  
+    }, [])
     
     return <div style={{width:'65vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white'}}>
       <h5 style={{marginTop:'1vw',float:'left',paddingLeft:'1vw',fontSize:'1.5vw'}}>Study Preferences</h5>
