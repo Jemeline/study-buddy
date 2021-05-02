@@ -250,15 +250,12 @@ export async function apiRemoveFavorite(id,data) {
     }    
 };
 
-export async function sendMassStudyInvite(classmates, message) {
+export async function sendMassStudyInvite(info) {
     try {
         const res = await axios({
             method: "post",
             url: `${baseAPI}/massstudyinvite`,
-            data: {
-                classmates: classmates, 
-                message: message
-            }
+            data: info,
         });
         return res;
     } catch (err) {

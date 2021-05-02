@@ -21,11 +21,12 @@ app.post("/massstudyinvite", (req, res) => {
       from: functions.config().studybuddy.gmail_account,
       to: req.body.classmates,
       subject: "Study Invitation from Study Buddy",
-      text: req.body.message,
+      text: req.body.formattedMessage,
     };
     transporter.sendMail(mailOptions, function(err) {
       if (err) {
-        return res.status(500).send("Error");
+        return res.status(500)
+            .send("There was a problem sending your email. Try again");
       } else {
         return res.status(200).send("Your email was sent!");
       }
