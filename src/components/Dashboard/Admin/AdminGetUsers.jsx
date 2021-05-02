@@ -20,7 +20,7 @@ const AdminGetUsers = () => {
     };
 
     return (
-        <Container style={{marginTop: "3vh"}}>
+        <Container data-testid='AdminGetUsers'style={{marginTop: "3vh"}}>
             <h4>Users</h4>
             <ListGroup className="shadow">
                 <ListGroup.Item style={style}>

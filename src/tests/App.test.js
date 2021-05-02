@@ -9,8 +9,8 @@ test('renders App component', () => {
 
 afterEach(cleanup)
  
-it('should take a snapshot', () => {
-    const { asFragment } = render(<App />)
+// it('should take a snapshot', () => {
+//     const { asFragment } = render(<App />)
     
-    expect(asFragment(<App />)).toMatchSnapshot()
-});
+//     expect(asFragment(<App />)).toMatchSnapshot()
+// });

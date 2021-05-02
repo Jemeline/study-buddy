@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import {colorPalette} from '../../utils/design';
 
 function HelpCenter() {
-    return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'flex-start'}}>
+    return <div data-testid='Help-Center' style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'flex-start'}}>
                   
                 <Grid
                     container

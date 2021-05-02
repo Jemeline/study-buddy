@@ -111,7 +111,7 @@ function CreateGroupDashboard() {
 
 
     return (
-        <div>
+        <div data-testid='Group-Dashboard'>
             <Paper style={{overflow:'auto',height:'225px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div style={{alignSelf: "flex-start"}}>
                     <h5 style={{marginTop: '20px', marginRight: "50px",fontFamily: 'Garamond, serif',fontSize:'25px'}}><strong>Send A Study Invite</strong></h5>

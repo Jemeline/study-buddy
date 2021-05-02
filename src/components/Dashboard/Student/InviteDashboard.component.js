@@ -59,7 +59,7 @@ function InviteDashboard() {
     }
 
     return (
-            <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <Paper data-testid='Invite-Dashboard' style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div>
                     <h5 style={{marginTop:'5px',marginBottom:'5px',fontFamily: 'Garamond, serif'}}><strong>Invite A Friend</strong></h5>
                     <h5 style={{marginTop:'5px',marginBottom:'5px',fontFamily: 'Garamond, serif'}}><strong>To Join Study Buddy</strong></h5>

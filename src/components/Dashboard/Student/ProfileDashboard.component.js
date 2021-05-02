@@ -24,7 +24,7 @@ function ProfileDashboard() {
     []);
 
     return (
-        <Paper style={{overflow:'auto',width:"100%",height:'225px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer'}} onClick={()=>history.push('/student-profile')}>
+        <Paper data-testid="Profile-Dashboard" style={{overflow:'auto',width:"100%",height:'225px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',cursor:'pointer'}} onClick={()=>history.push('/student-profile')}>
             <div style={{width:'100%'}}>
                 <div style={{display:'flex',alignItems: 'center',justifyContent:'space-between',margin:'auto'}}>
                     {(!avatar)?<img src={avatarUnknown} style={{height: '125px',borderRadius:'50%',margin:'10px'}}/>:
