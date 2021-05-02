@@ -6,10 +6,9 @@ import { getUser } from '../../../utils/common';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
-import GroupIcon from '@material-ui/icons/Group';
+import ReactLoading from "react-loading";
 
 function CreateGroupDashboard() {
-
     const [user, setUser] = useState(JSON.parse(getUser()));
     const [myClasses, setMyClasses] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
@@ -20,10 +19,13 @@ function CreateGroupDashboard() {
     const [sent, setSent] = useState(false);
     const [message, setMessage] = useState("");
     const [location, setLocation] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
 
     useEffect(async () => {
         try {
+            setLoading(true);
             const profileRes = await apiGetStudentProfile(user._id);
             const profile = profileRes.data;
             const classes = [];
@@ -34,7 +36,10 @@ function CreateGroupDashboard() {
                 classes[i] = [profile.courseSchedule[i], courseClean];
             }
             setMyClasses(classes);
+            setLoading(false);
         } catch (err) {
+            setLoading(false);
+            setError(true);
             console.log(err);
         }
     }, []);
@@ -111,35 +116,35 @@ function CreateGroupDashboard() {
 
 
     return (
-        <div>
-            <Paper style={{overflow:'auto',height:'225px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
-                <div style={{alignSelf: "flex-start"}}>
-                    <h5 style={{marginTop: '20px', marginRight: "50px",fontFamily: 'Garamond, serif',fontSize:'25px'}}><strong>Send A Study Invite</strong></h5>
-                    <GroupIcon style={{fontSize: "100px", marginTop: "20px"}}/>
-                </div>
-
-                <div>
-                    <form onSubmit={handleSubmit} style={{ margin: "5%"}}>
-                        <div style={{display: "flex", flexDirection: "column", alignContent: "flex-start"}}>
-                            <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="class">Class:</label>
-                            <select id="class" required onChange={handleClassChange} name="chosenClass" style={{padding: "5px"}}>
-                                <option value="" defaultValue key="placeholder">Choose a class...</option>
-                                {myClasses.map(c => <option key={c[0]} value={[c[0], c[1]]}>{c[1]}</option>)}
-                            </select>
-                            <hr style={{margin: "4px auto"}}></hr>
-                            <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="when">When:</label>
-                            <DateTimePicker id="when" required minDetail="year" value={datetime} disableClock={true} onChange={handleDateTimeChange} />
-                            <hr style={{margin: "4px auto"}}></hr>
-                            <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="location">Where:</label>
-                            <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location..." />
-                            <hr style={{margin: "4px auto"}}></hr>
+        <div>{(loading) ? <div style={{backgroundColor:'white',zIndex:-1,height:'350px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
+        (error) ? <div style={{backgroundColor:'white',zIndex:-1,height:'350px',display:'flex',justifyContent:'center',alignItems: 'center',flexDirection:'column',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={'red'}/><p>Oops... Something Went Wrong</p></div>:
+            <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
+                <div style={{height:'350px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+                    <h5 style={{fontFamily: 'Garamond, serif',fontSize:'20px',marginTop:'20px', marginBottom:'10px',cursor:'pointer'}}><strong>Send A Study Invite</strong></h5>
+                    <strong><p style={{color: colorPalette.secondaryA,margin:0,cursor:'pointer'}} onClick={()=> setSuccessMessage('')}>{successMessage}</p></strong>
+                    <p style={{margin:0}} onClick={()=> setErrorMessage('')}>{errorMessage}</p>
+                    <form onSubmit={handleSubmit}>
+                        <div style={{display: "flex", flexDirection: "column", alignContent: "center",justifyContent:'space-between',marginTop:'10px'}}>
+                            <div>
+                                <label style={{height:'30px',margin:'10px'}} for="when">When:</label>
+                                <DateTimePicker style={{height:'30px'}} id="when" required minDetail="year" value={datetime} disableClock={true} onChange={handleDateTimeChange} />
+                            </div>
+                            <div> 
+                                <label style={{height:'30px'}} for="class">Class:</label>
+                                <select style={{height:'30px',margin:'10px'}} id="class" required onChange={handleClassChange} name="chosenClass" >
+                                    <option value="" defaultValue key="placeholder">Choose a class...</option>
+                                    {myClasses.map(c => <option key={c[0]} value={[c[0], c[1]]}>{c[1]}</option>)}
+                                </select>
+                            </div> 
+                            <div>
+                            <label style={{height:'30px',margin:'10px'}} for="location">Where:</label>
+                            <input style={{height:'30px'}} onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location..." />
+                            </div>  
                         </div>
-                        <button type="submit" style={{width: "25%", backgroundColor: colorPalette.primary}}><SendRoundedIcon /></button>
-                        <strong><p style={{color: colorPalette.secondaryA}}>{successMessage}</p></strong>
-                        <p>{errorMessage}</p>
+                        <button type="submit" style={{width: "25%", backgroundColor: colorPalette.secondary,color:'white',marginTop:'20px', marginBottom:'20px'}}><SendRoundedIcon /></button>
                     </form>
                 </div>
-            </Paper>
+            </Paper>}
         </div>
     );
 }

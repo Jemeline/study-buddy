@@ -60,8 +60,8 @@ function SuggestedMatchesDashboard() {
                 setLoading(false);
             }  
         } catch (err){
-        setError(true);
-        setLoading(false);
+            setError(true);
+            setLoading(false);
         }  
     }, []);
 
@@ -85,14 +85,17 @@ function SuggestedMatchesDashboard() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                    <TableRow hidden={!error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+                    <TableRow hidden={rows.length>0 || error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Matches Found</strong></TableCell></TableRow>
+                    {(!loading && !error)? 
+                        rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                         <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
                             <TableCell align="left">{row.percentMatch+'%'}</TableCell>
                             <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                             <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="left">{row.email}</TableCell>
                         </TableRow>
-                        ))}
+                    )): <TableRow/>}
                     </TableBody>
                     </Table>
                 </TableContainer>

@@ -56,7 +56,7 @@ function CourseScheduleDashboard() {
                     <TableBody>
                         <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
                         <TableRow hidden={courses.length>0 || error}><TableCell colSpan="3" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Add A Course To Your Schedule</strong></TableCell></TableRow>
-                        {!loading ? 
+                        {(!loading && !error) ? 
                         courses.map((row) => (
                         <TableRow hover key={row._id}>
                             <TableCell align="left">{row.courseSubject} {row.courseNumber}-{String(row.courseSection).padStart(3, '0')}</TableCell>

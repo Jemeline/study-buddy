@@ -78,7 +78,7 @@ function SuggestedTutorsDashboard() {
                     <TableBody>
                         <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
                         <TableRow hidden={tutors.length>0 || error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Tutors Currently Fit Your Needs</strong></TableCell></TableRow>
-                        {!loading ? 
+                        {(!loading && !error) ? 
                         tutors.map((row) => (
                         <TableRow hover key={row.user._id}>
                             <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>

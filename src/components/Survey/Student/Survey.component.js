@@ -19,13 +19,13 @@ function Survey(){
     const [currPage, setCurrPage] = useState((getCurrPage() !== null)? parseInt(getCurrPage()) : 0);
     const pageStart = 0;
     const pageEnd = 5;
-    const [graduationYear, setGraduationYear] = useState((getGraduationYear() !== null) ? parseInt(getGraduationYear()) : new Date().getFullYear()+2);
-    const [minor, setMinor] = useState((getMinor() !== null) ? JSON.parse(getMinor()) : []);
-    const [major, setMajor] = useState((getMajor() !== null) ? JSON.parse(getMajor()) : []);
-    const [graduatePOS, setGraduatePOS] = useState((getGraduatePOS() !== null) ? JSON.parse(getGraduatePOS()) : []);
-    const [studentType, setStudentType] = useState((getStudentType() !== null) ? getStudentType() : 'undergraduate');
+    const [graduationYear, setGraduationYear] = useState(new Date().getFullYear());
+    const [minor, setMinor] = useState([]);
+    const [major, setMajor] = useState([]);
+    const [graduatePOS, setGraduatePOS] = useState([]);
+    const [studentType, setStudentType] = useState('');
     const [courseSchedule, setCourseSchedule] = useState([]);
-    const [learningType, setLearningType] = useState((getLearningType() !== null) ? JSON.parse(getLearningType()) : []);
+    const [learningType, setLearningType] = useState([]);
     const profilePayload = () => createStudentProfilePayload(graduationYear,major,minor,graduatePOS,studentType,courseSchedule,learningType,user);
     const history = useHistory();
     
@@ -34,9 +34,25 @@ function Survey(){
             if(user.isSurveyed){
                 const profiles = await apiGetStudentProfiles();
                 const courseSchedule = await profiles.data.filter(e=>e._userId === user._id)[0].courseSchedule;
+                const studentType = await profiles.data.filter(e=>e._userId === user._id)[0].studentType;
+                const graduationYear = await profiles.data.filter(e=>e._userId === user._id)[0].graduationYear;
+                const graduatePOS = await profiles.data.filter(e=>e._userId === user._id)[0].programOfStudy.graduateProgram.map(e=>{return {label:e,value:e}});
+                const major = await profiles.data.filter(e=>e._userId === user._id)[0].programOfStudy.major.map(e=>{return {label:e,value:e}});
+                const minor = await profiles.data.filter(e=>e._userId === user._id)[0].programOfStudy.minor.map(e=>{return {label:e,value:e}});
+                const learningType = await profiles.data.filter(e=>e._userId === user._id)[0].learningType;
                 const userCourseSchedule = await apiGetCoursesById(courseSchedule);
-                console.log(userCourseSchedule.data);
                 setCourseSchedule(userCourseSchedule.data);
+                setStudentType(studentType);
+                setGraduationYear(graduationYear);
+                setLearningType(learningType);
+                console.log(learningType);
+                if (studentType==='graduate'){
+                    setGraduatePOS(graduatePOS);
+                }
+                if (studentType==='undergraduate'){
+                    setMinor(minor);
+                    setMajor(major);
+                }
             }
         } catch (err){
           console.log(err);

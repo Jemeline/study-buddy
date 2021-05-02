@@ -28,8 +28,11 @@ function StudentDashboard() {
           <Grid item xs={2}>
             <HelpCenterDashboard/>
           </Grid>
-          <Grid item xs={6}>
-            <CreateGroupDashboard/>
+          <Grid item xs={3}>
+            <InviteDashboard/>
+          </Grid>
+          <Grid item xs={3}>
+            
           </Grid>
           <Grid item xs={4}>
             <ProfileDashboard/>
@@ -50,7 +53,7 @@ function StudentDashboard() {
             <CourseScheduleDashboard/>
           </Grid>
           <Grid item xs={3}>
-            <InviteDashboard/>
+            <CreateGroupDashboard/>
           </Grid>
 
           

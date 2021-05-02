@@ -7,14 +7,14 @@ import { init } from 'emailjs-com';
 import Paper from '@material-ui/core/Paper';
 import { colorPalette } from "../../../utils/design";
 import {getUsers} from '../../../utils/api';
-
-
+import ReactLoading from "react-loading";
 function InviteDashboard() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [emails, setEmails] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     init('user_CiCtPrm14cI8KybGSOClZ');
     const { first, last } = JSON.parse(getUser());
 
@@ -26,7 +26,9 @@ function InviteDashboard() {
             setEmails(emailArr);
             setLoading(false);
         } catch (err){
-          console.log(err);
+            setLoading(false);
+            setError(true);
+            console.log(err);
         }  
       }, []);
     
@@ -59,38 +61,41 @@ function InviteDashboard() {
     }
 
     return (
-            <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
-                <div>
-                    <h5 style={{marginTop:'5px',marginBottom:'5px',fontFamily: 'Garamond, serif'}}><strong>Invite A Friend</strong></h5>
-                    <h5 style={{marginTop:'5px',marginBottom:'5px',fontFamily: 'Garamond, serif'}}><strong>To Join Study Buddy</strong></h5>
-                    <br/>
-                    <p style={{backgroundColor:colorPalette.secondary,color:'white',marginLeft:'2px',marginRight:'2px'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p>      
-                    <Form onSubmit={handleSubmit} style={{marginLeft:'10px',marginRight:'10px'}}>
-                        <Form.Row style={{marginTop:'5px',marginBottom:'5px'}}>
-                            <Form.Group>
-                                <Input
-                                    placeholder="Name"
-                                    onChange={e => {setName(e.target.value)}}
-                                />
-                            </Form.Group>
-                        </Form.Row>
-                        <Form.Row style={{marginTop:'5px',marginBottom:'5px'}}>
-                            <Form.Group>
-                                <Input
-                                    placeholder="Email"
-                                    onChange={e => {setEmail(e.target.value)}}
-                                />
-                            </Form.Group>
-                        </Form.Row>
-                        <br/>
-                        <div style={{display:'flex',justifyContent:'center'}}>
-                        <Form.Row style={{marginTop:'5px',marginBottom:'5px'}}> 
-                            <Button style={{backgroundColor:colorPalette.secondary}} variant="primary" type="submit">Send</Button>
-                        </Form.Row>
-                        </div>
-                    </Form>
-            </div>
-        </Paper>
+        <div>{(loading) ? <div style={{backgroundColor:'white',zIndex:-1,height:'225px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
+        (error) ? <div style={{backgroundColor:'white',zIndex:-1,height:'225px',display:'flex',justifyContent:'center',alignItems: 'center',flexDirection:'column',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={'red'}/><p>Oops... Something Went Wrong</p></div>:
+                <Paper style={{overflow:'auto',height:'225px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
+                    <div style={{height:'225px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+                        <h5 style={{marginTop:'1px',fontFamily: 'Garamond, serif'}}><strong>Invite A Friend To Join Study Buddy</strong></h5>
+                        <h5 style={{marginTop:'1px',fontFamily: 'Garamond, serif'}}><strong></strong></h5>
+                        <strong><p hidden={alertMessage==''} style={{color:colorPalette.secondary,marginTop:'0px',marginBottom:'2px',cursor:'pointer'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p></strong>      
+                        <Form onSubmit={handleSubmit} style={{marginLeft:'10px',marginRight:'10px',marginTop:'2px'}}>
+                            <Form.Row style={{marginTop:'2px',marginBottom:'0px',margin:0}}>
+                                <Form.Group>
+                                    <Input
+                                        placeholder="Name"
+                                        onChange={e => {setName(e.target.value)}}
+                                        style={{height:'30px'}}
+                                    />
+                                </Form.Group>
+                            </Form.Row>
+                            <Form.Row style={{marginTop:'2px',marginBottom:'0px',margin:0}}>
+                                <Form.Group>
+                                    <Input
+                                        placeholder="Email"
+                                        onChange={e => {setEmail(e.target.value)}}
+                                        style={{height:'30px'}}
+                                    />
+                                </Form.Group>
+                            </Form.Row>
+                                <div style={{display:'flex',justifyContent:'center',margin:0}}>
+                                    <Form.Row style={{height:'30px',marginTop:'2px',marginBottom:'0px'}}> 
+                                        <Button style={{backgroundColor:colorPalette.secondary}} variant="primary" type="submit">Send</Button>
+                                    </Form.Row>
+                                </div>
+                        </Form>
+                </div>
+            </Paper>}
+        </div>
     );
 }
 
