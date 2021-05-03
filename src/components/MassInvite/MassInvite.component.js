@@ -114,15 +114,6 @@ function MassStudyInvite() {
     return (
         <div style={{boxSizing: "border-box", display: "flex", alignContent: "stretch", backgroundColor: colorPalette.gray, height: "92vh"}}>
             <Grid container justify="center">
-                {/* <Grid item xs={12} md={4}  style={{display: "flex"}}>
-                    <Paper elevation={8} style={{marginRight: "2vw", overflow: "scroll", display: "flex", flexDirection: "column", backgroundColor: colorPalette.white, height: "75vh", justifyContent: "center", alignSelf: "center"}}>
-                        <p style={{}}>What better way to start a study group than by inviting your whole class! </p>
-                        <hr style={{width: "80%", border: `2px solid ${colorPalette.secondary}`}}></hr>
-                        <p style={{}}>Select a class, set the details, write a message, and an email will be sent to everyone in the selected class!</p>
-                        <hr style={{width: "80%", border: `2px solid ${colorPalette.secondary}`}}></hr>
-                        <p style={{}}>Happy Studying!</p>
-                    </Paper>                    
-                </Grid> */}
                 <Grid item xs={12} md={4}  style={{display: "flex"}}>
                     <Paper elevation={5} style={{overflow: "scroll", marginLeft: "2vw", display: "flex", flexDirection: "column", backgroundColor: colorPalette.white, height: "75vh", width: "100%", justifyContent: "flex-start", alignItems: "center", alignSelf: "center"}}>
                         <form onSubmit={handleSubmit} style={{height: "75vh", width: "100%", margin: "10% auto",display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
@@ -133,17 +124,17 @@ function MassStudyInvite() {
                                     <option value="" defaultValue key="placeholder">Choose a class...</option>
                                     {myClasses.map(c => <option key={c[0]} value={[c[0], c[1]]}>{c[1]}</option>)}
                                 </select>
-                                <hr style={{margin: "8px auto"}}></hr>
+                                <hr style={{margin: "10px auto"}}></hr>
                                 <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="when">When:</label>
                                 <DateTimePicker id="when" required minDetail="year" value={datetime} disableClock={true} onChange={handleDateTimeChange} />
                                 <hr style={{margin: "8px auto"}}></hr>
                                 <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="location">Where:</label>
                                 <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location (or zoom link)..." style={{padding: "5px"}}/>
-                                <hr style={{margin: "30px auto"}}></hr>
+                                <hr style={{margin: "10px auto"}}></hr>
                             
                             <textarea onChange={handleMessageChange} name="message" placeholder={"Add an additional message here..."} style={{width: "100%", height: "30%", margin: "auto", resize: "none"}}></textarea>
                             </div>
-                            <hr style={{margin: "30px auto"}}></hr>
+                            <hr style={{margin: "10px auto"}}></hr>
                             <button data-tip data-for="mass-invite-3" type="submit" style={{width: "25%", backgroundColor: colorPalette.primary}}><SendRoundedIcon /></button>
                             <strong><p style={{color: colorPalette.secondaryA}}>{successMessage}</p></strong>
                             <p>{errorMessage}</p>
