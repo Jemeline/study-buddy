@@ -125,7 +125,7 @@ function MassStudyInvite() {
                 <Grid item xs={12} md={4}  style={{display: "flex"}}>
                     <Paper elevation={5} style={{overflow: "scroll", marginLeft: "2vw", display: "flex", flexDirection: "column", backgroundColor: colorPalette.white, height: "75vh", width: "50vw", justifyContent: "flex-start", alignItems: "center", alignSelf: "center"}}>
                         <form onSubmit={handleSubmit} style={{height: "60%", width: "80%", margin: "10% auto"}}>
-                            <div style={{display: "flex", flexDirection: "column", alignContent: "flex-start", width: "50%"}}>
+                            <div style={{display: "flex", flexDirection: "column", alignContent: "flex-start", width: "80%"}}>
                                 <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="class">Class:</label>
                                 <select id="class" required onChange={handleClassChange} name="chosenClass" style={{padding: "5px"}}>
                                     <option value="" defaultValue key="placeholder">Choose a class...</option>
@@ -136,7 +136,7 @@ function MassStudyInvite() {
                                 <DateTimePicker id="when" required minDetail="year" value={datetime} disableClock={true} onChange={handleDateTimeChange} />
                                 <hr style={{margin: "8px auto"}}></hr>
                                 <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="location">Where:</label>
-                                <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location..." />
+                                <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location (or zoom link)..." style={{padding: "5px"}}/>
                                 <hr style={{margin: "30px auto"}}></hr>
                             </div>
                             <textarea onChange={handleMessageChange} name="message" placeholder={"Add additional info here..."} style={{width: "100%", height: "30%", margin: "auto", resize: "none"}}></textarea>
