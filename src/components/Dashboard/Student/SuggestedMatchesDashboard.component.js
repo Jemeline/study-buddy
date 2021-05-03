@@ -51,7 +51,8 @@ function SuggestedMatchesDashboard() {
                 studentProfiles.find(element => element._userId === student._id),
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"],
-                awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"]
+                awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"],
+                studentProfiles.find(element => element._userId === student._id).graduationYear
             )));
             setLoading(false);
         } catch (err){
@@ -77,6 +78,7 @@ function SuggestedMatchesDashboard() {
                         <TableCell align="left" ></TableCell>
                         <TableCell align="left">Name</TableCell>
                         <TableCell align="left">Email</TableCell>
+                        <TableCell align="left">Class</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -89,6 +91,7 @@ function SuggestedMatchesDashboard() {
                             <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                             <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="left">{row.email}</TableCell>
+                            <TableCell align="left">{row.gradYear}</TableCell>
                         </TableRow>
                     )): <TableRow/>}
                     </TableBody>
@@ -102,8 +105,8 @@ function SuggestedMatchesDashboard() {
     );
 }
 
-function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch) {
-    return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch };
+function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch, gradYear) {
+    return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch, gradYear };
 };
 
 export default SuggestedMatchesDashboard;
