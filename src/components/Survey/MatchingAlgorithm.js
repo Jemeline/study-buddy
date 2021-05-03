@@ -23,7 +23,7 @@ export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
     
     let matches = [];
-    const total = student.courseSchedule.length * 50 + student.programOfStudy.major.length * 20 + 15 + student.identifiers.length * 10 + student.learningType.length * 5;
+    const total = ((student.courseSchedule.length<2)?student.courseSchedule.length * 50:100) + student.programOfStudy.major.length * 20 + 15 + student.identifiers.length * 10 + student.learningType.length * 5;
 
     for (let i = 0; i < studentProfiles.length; i++) {
         matches[i] = {
@@ -85,7 +85,8 @@ export async function getWeightedSum(student) {
     }
 
     for (let i = 0; i < matches.length; i++) {
-        matches[i]["percentMatch"] = Math.floor(matches[i]["sum"] * 100 / total)
+        const percent = Math.floor(matches[i]["sum"] * 100 / total);
+        matches[i]["percentMatch"] = (percent>100)?100:percent;
     }
 
     matches.sort((a, b) => b["sum"] - a["sum"]);
