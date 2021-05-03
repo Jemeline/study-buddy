@@ -21,7 +21,7 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
             onClick={()=> {
                 if (currPage === pageStart){
                     history.push(`/dashboard/${user.role}`);
-                } else if (currPage === 6){
+                } else if (currPage === pageEnd){
                     setCurrPage(currPage-2);
                     storeCurrPage(currPage-2);
                 } else {
@@ -29,73 +29,73 @@ function SurveyNavigation({major,setCurrPage,currPage,pageStart,pageEnd,courseSc
                     storeCurrPage(currPage-1);
                 }
             }}
-            hidden={currPage > pageEnd+1}
+            hidden={currPage > pageEnd+2}
         >Back
         </Button>
         <Button
             variant="contained"
-            style={{width:'12vw',fontSize:'1vw',backgroundColor:getButtonColor(((major.length===0  && studentType === 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 4)),colorPalette),
+            style={{width:'12vw',fontSize:'1vw',backgroundColor:getButtonColor(((major.length===0  && studentType === 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd+1) || (courseSchedule.length === 0 && currPage === (pageEnd-2))),colorPalette),
                 color:colorPalette.white}}
             endIcon={<ArrowForwardIcon />}
             onClick={()=> {setCurrPage(currPage+1);storeCurrPage(currPage+1);}}
-            disabled={(major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 4)}
-            hidden={(currPage >= pageEnd-1)}
+            disabled={(major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd+1) || (courseSchedule.length === 0 && currPage === (pageEnd-2))}
+            hidden={(currPage >= pageEnd-2)}
         >Next
         </Button>
         <Button
             variant="contained"
-            style={{width:'12vw',fontSize:'1vw',backgroundColor:getButtonColor(((major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 4)),colorPalette),color:colorPalette.white}}
+            style={{width:'12vw',fontSize:'1vw',backgroundColor:getButtonColor(((major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd+1) || (courseSchedule.length === 0 && currPage === (pageEnd-2))),colorPalette),color:colorPalette.white}}
             endIcon={<CheckCircleOutlineIcon />}
             onClick={async()=> {
-                await handleSurveySubmit(profilePayload(),setCurrPage,storeCurrPage);
+                await handleSurveySubmit(profilePayload(),setCurrPage,storeCurrPage,pageEnd);
             }}
-            disabled={(major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd) || (courseSchedule.length === 0 && currPage === 4)}
-            hidden={!(currPage === pageEnd-1)}
+            disabled={(major.length===0  && studentType=== 'undergraduate' && currPage === 2) || (graduatePOS.length===0  && studentType=== 'graduate' && currPage === 2)|| (currPage === pageEnd+1) || (courseSchedule.length === 0 && currPage === (pageEnd-2))}
+            hidden={!(currPage === pageEnd-2)}
         >Finish
         </Button>
         <Button
             variant="contained"
             style={{width:'12vw',backgroundColor:colorPalette.secondary,color:colorPalette.white,fontSize:'1vw'}}
             onClick={async()=> {
-                await handleSurveyResubmit(profilePayload(),setCurrPage,storeCurrPage);
+                await handleSurveyResubmit(profilePayload(),setCurrPage,storeCurrPage,pageEnd);
             }}
-            hidden={currPage !==5}
+            hidden={currPage !==(pageEnd-1)}
         >Yes, Resubmit
         </Button>
         <Button 
             variant="contained"
             style={{width:'12vw',backgroundColor:colorPalette.secondary,color:colorPalette.white,fontSize:'0.9vw'}}
             onClick={() => {history.push('/dashboard/student');storeCurrPage(0);}}
-            hidden={currPage !==6}
+            hidden={currPage !==pageEnd}
         > Go To Dashboard
         </Button>
     </div>
 };
 
-async function handleSurveySubmit(payload,setCurrPage,storeCurrPage){
+async function handleSurveySubmit(payload,setCurrPage,storeCurrPage,pageEnd){
     try {
         if (getIsSurveyed()){
-            setCurrPage(5);
-            storeCurrPage(5);
+            setCurrPage(pageEnd-1);
+            storeCurrPage(pageEnd-1);
         } else {
             const data = await apiCreateStudentProfile(payload);
             sessionStorage.setItem('isSurveyed',true);
             const newUser = JSON.parse(getUser());
             newUser.isSurveyed = true;
             login(newUser,newUser.role,newUser.isVerified,newUser.isSurveyed);
-            setCurrPage(6);
-            storeCurrPage(6);
+            setCurrPage(pageEnd);
+            storeCurrPage(pageEnd);
         }
     } catch (error){
         console.log(error);
     };
 };
 
-async function handleSurveyResubmit(payload,setCurrPage,storeCurrPage){
+async function handleSurveyResubmit(payload,setCurrPage,storeCurrPage,pageEnd){
     try {
         const data = await apiResubmitStudentProfile(payload);
-        setCurrPage(6);
-        storeCurrPage(6);
+        setCurrPage(pageEnd);
+        storeCurrPage(pageEnd);
     } catch (error){
         console.log(error);
     };

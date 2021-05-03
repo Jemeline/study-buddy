@@ -17,8 +17,8 @@ import Grid from '@material-ui/core/Grid';
 import ReactLoading from 'react-loading';
 
 
-function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch) {
-  return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch };
+function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch, sharedIdentifiers) {
+  return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch, sharedIdentifiers };
 };
 
 function TopMatches(){
@@ -74,6 +74,7 @@ function TopMatches(){
           awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
           awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"],
           awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"],
+          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedIdentifiers"],
           )));
         setLoading(false);
       } else {
@@ -105,9 +106,10 @@ function TopMatches(){
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Learning Type</TableCell>
-              <TableCell align="left">Shared Courses</TableCell>
-              <TableCell align="left">Shared Majors</TableCell>
+              <TableCell align="left">Course Schedule</TableCell>
+              <TableCell align="left">Majors</TableCell>
               <TableCell align="left">Graduation Year</TableCell>
+              <TableCell align="left">Identifiers</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -123,6 +125,7 @@ function TopMatches(){
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getMajor(row.profile,userProfile)}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getGraduationYear(row.profile,userProfile)}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedIdentifiers.length > 0 ? "You're both " + row.sharedIdentifiers.join(", ") + " students": ""}</TableCell>
               </TableRow>
             )): <TableRow/>}
           </TableBody>

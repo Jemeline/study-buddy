@@ -45,7 +45,7 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
                 isMulti
                 options={(major.length + minor.length) === maxOptions ? [] : selectMajors}
                 onChange={(e)=> handleChangeMajor(e)}
-                noOptionsMessage={()=>'Max 3 Selections'}
+                noOptionsMessage={()=>'Max 3 Selections Total'}
                 styles={colourStyles}
                 value={major}
                 menuPlacement="auto"

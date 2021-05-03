@@ -64,3 +64,6 @@ export function getLearningType(){
 
 export const LearningTypes = ["verbal", "visual", "auditory/musical", "physical/kinaesthetic",
 "logical/mathematical", "social", "solitary"];
+
+export const Identifiers = ["first generation", "out-of-state", "international", "first year",
+"greek life", "athlete", "transfer"];
