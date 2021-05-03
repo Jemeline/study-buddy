@@ -88,7 +88,7 @@ function Calendar(user) {
                         updateScheduleButton: {
                             text: 'Update Schedule',
                             click: function() {
-                                storeCurrPage(4);
+                                storeCurrPage(5);
                                 history.push(`/student-survey`);
                             },
                         },

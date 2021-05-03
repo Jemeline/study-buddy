@@ -100,7 +100,7 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><PersonIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"My Profile"} />
           </ListItem>
-        <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>{storeCurrPage(4);history.push(`/student-survey`);}}>
+        <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>{storeCurrPage(5);history.push(`/student-survey`);}}>
             <ListItemIcon><EventNoteIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Update My Course Schedule"} />
         </ListItem>
