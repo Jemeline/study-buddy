@@ -41,13 +41,14 @@ export async function getWeightedSum(student) {
     for (let i = 0; i < studentProfiles.length; i++) {
         if (studentProfiles[i]._id !== student._id) {
             for (let j = 0; j < student.courseSchedule.length; j++) {
-                if (studentProfiles[i].courseSchedule.includes(student.courseSchedule[j])) {
-                    // Add a large value if the students have a class in common, so that they show up at the top of the results
-                    // After the first class, the value added decreases because each additional class is less significant
+                const cleanCourseArr = studentProfiles[i].courseScheduleImproved.map(course=>course.courseSubject + " " + course.courseNumber);
+                const cleanCourse = student.courseScheduleImproved[j].courseSubject+ " " +student.courseScheduleImproved[j].courseNumber;
+                if (cleanCourseArr.includes(cleanCourse)) {
                     matches[i]["sum"] += 50;
                     const course = (await apiGetCourseById(student.courseSchedule[j])).data;
                     const courseClean = course.courseSubject + " " + course.courseNumber;
                     matches[i]["sharedClasses"].push(courseClean);
+                    console.log(matches[i]["sharedClasses"]);
                 }
             }
             for (let n = 0; n < student.programOfStudy.major.length; n++) {
