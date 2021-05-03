@@ -113,8 +113,8 @@ function TopMatches(){
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hidden={!error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
-            <TableRow hidden={rows.length>0 || error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>            
+            <TableRow hidden={!error}><TableCell colSpan="8" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+            <TableRow hidden={rows.length>0 || error}><TableCell colSpan="8" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>            
             {(!loading && !error) ? rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left"><span style={{color:getMatchColor(row.percentMatch),fontSize:'20px'}}><strong>{row.percentMatch+'%'}</strong></span></TableCell>

@@ -17,6 +17,7 @@ import {Majors,Minors,GraduatePrograms} from '../../Survey/Student/utils/StudyPr
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import {Identifiers} from '../../Survey/Student/utils/common';
 
 function StudentUserList(){
     const [loading, setLoading] = useState(false);
@@ -32,6 +33,7 @@ function StudentUserList(){
     const [hiddenProfile,setHiddenProfile] = useState(true);
     const [studentType, setStudentType] = useState([]);
     const [graduationYear, setGraduationYear] = useState([]);
+    const [identifiers, setIdentifiers] = useState([]);
     const [programOfStudy, setProgramOfStudy] = useState([]);
     const classes = useStyles();
     const [optionsStudentNames, setOptionsStudentNames] = useState([]);
@@ -52,7 +54,7 @@ function StudentUserList(){
     const handleChangeStudentType = (e) => {
       setStudentType(e);
       setStudentName([]);
-      if (graduationYear.length===0 && programOfStudy.length===0 && e.length ===0){
+      if (graduationYear.length===0 && programOfStudy.length===0 && identifiers.length===0 && e.length ===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
@@ -60,7 +62,8 @@ function StudentUserList(){
           (typeof(row.profile)!=='undefined') &&
           ((graduationYear.length>0)?graduationYear.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
           ((e.length>0)?row.profile.studentType===e[0].value:true) &&
-          ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+          ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)&&
+          ((identifiers.length>0)?identifiers.map((ele)=>ele.value).some(val => row.profile.identifiers.indexOf(val) !== -1):true)
         )
         ));
       }
@@ -69,7 +72,7 @@ function StudentUserList(){
     const handleChangeGraduationYear = (e) => {
       setGraduationYear(e);
       setStudentName([]);
-      if (studentType.length===0 && programOfStudy.length===0 && e.length ===0){
+      if (studentType.length===0 && programOfStudy.length===0 && identifiers.length===0 && e.length ===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
@@ -77,7 +80,8 @@ function StudentUserList(){
           (typeof(row.profile)!=='undefined') &&
           ((e.length>0)?e.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
           ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&
-          ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+          ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)&&
+          ((identifiers.length>0)?identifiers.map((ele)=>ele.value).some(val => row.profile.identifiers.indexOf(val) !== -1):true)
         )
         ));
       }
@@ -86,16 +90,35 @@ function StudentUserList(){
     const handleChangePOS = (e) => {
       setProgramOfStudy(e);
       setStudentName([]);
-      if (studentType.length===0 && graduationYear.length===0 && e.length===0){
+      if (studentType.length===0 && graduationYear.length===0 && identifiers.length===0 && e.length===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
         (
           (typeof(row.profile)!=='undefined') &&
           ((graduationYear.length>0)?graduationYear.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
-          ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&
-          ((e.length>0)?e.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1 || row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+          ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)&&
+          ((identifiers.length>0)?identifiers.map((ele)=>ele.value).some(val => row.profile.identifiers.indexOf(val) !== -1):true)&&
+          ((e.length>0)?e.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1):true)
         ) 
+        ));
+      }
+    };
+    const handleChangeIdentifiers = (e) => {
+      setIdentifiers(e);
+      setStudentName([]);
+      if (studentType.length===0 && graduationYear.length===0 && programOfStudy.length===0 && e.length===0){
+        setRowsFiltered(rows);
+      } else {
+        setRowsFiltered(rows.filter((row)=>{
+          return (
+            (typeof(row.profile)!=='undefined') &&
+            ((graduationYear.length>0)?graduationYear.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
+            ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&
+            ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)&&
+            ((e.length>0)?e.map((ele)=>ele.value).some(val => row.profile.identifiers.indexOf(val) !== -1):true)
+            ) 
+        }
         ));
       }
     };
@@ -105,6 +128,7 @@ function StudentUserList(){
       setStudentType([]);
       setGraduationYear([]);
       setProgramOfStudy([]);
+      setIdentifiers([]);
       if (e.length===0){
         setRowsFiltered(rows);
       } else {
@@ -177,6 +201,16 @@ function StudentUserList(){
         styles={colourStyles}
       />
       <br/>
+      <Select
+        isMulti
+        options={optionsIdentifiers}
+        placeholder={"Identifiers"}
+        onChange={(e)=> handleChangeIdentifiers(e)}
+        value={identifiers}
+        menuPlacement="auto"
+        styles={colourStyles}
+      />
+      <br/>
       <p style={{margin:0,color:colorPalette.secondary}}>Search By Name</p>
       <hr style={{borderTop: `3px solid ${colorPalette.secondary}`,marginTop:0}}/>
       <Select
@@ -197,26 +231,28 @@ function StudentUserList(){
             <TableRow>
               <TableCell align="left"></TableCell>
               <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Email</TableCell>
               <TableCell align="left">Student Type</TableCell>
               <TableCell align="left">Graduation Year</TableCell>
               <TableCell align="left">Program of Study</TableCell>
+              <TableCell align="left">Minors</TableCell>
+              <TableCell align="left">Identifiers</TableCell>
               <TableCell align="left">Add To Favorites</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hidden={!error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
-            <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
+            <TableRow hidden={!error}><TableCell colSpan="10" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+            <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="10" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
             {(!loading && !error)? 
             rowsFiltered.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow className={classes.tableRow}
               hover key={row.user._id}>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.minor:''}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.identifiers.join(', ')}</TableCell>
                 <TableCell align="left"><IconButton onClick={async () => {await handleFavorite(row.user,favorites,setFavorites);}}><FavoriteIcon style={{color:getFavorites(row.user)}}/></IconButton></TableCell>
               </TableRow>
             )): <TableRow/>}
@@ -281,7 +317,7 @@ const optionsStudentType = [
 
 const optionsMajors = Majors.map((e)=> {return {label:e,value:e}});
 const optionsGraduatePOS = GraduatePrograms.map((e)=> {return {label:e,value:e}});
-
+const optionsIdentifiers = Identifiers.map((e)=> {return {label:e,value:e}});
 const years = [...Array(9).keys()].map(i => i + new Date().getFullYear());
 const optionsGraduationYear = years.map((e)=> {return {label:e,value:e}});
 
