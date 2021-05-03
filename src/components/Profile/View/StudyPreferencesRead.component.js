@@ -23,7 +23,18 @@ function StudyPreferencesRead({profile}) {
                     <option value="undergraduate">Undergraduate</option>
                     <option value="graduate">Graduate</option>
                 </Input>
-            </InputGroup>
+          </InputGroup>
+          <div style={{paddingBottom:'1vw'}}>
+                <p style={{float:'left',fontSize:'1vw',marginBottom:0}}>Learning Type</p>
+                <Select
+                    placeholder={"Identifier(s)"}
+                    isMulti
+                    styles={colourStylesNarrow}
+                    value={profile.identifiers.map((e)=> {return {label:e,value:e}})}
+                    menuPlacement="auto"
+                    isDisabled={true}
+                />
+          </div>
         </div>
         <div style={{margin:'1vw',width:'50vw'}}>
             <div hidden={profile.studentType === 'graduate'}>
@@ -124,5 +135,51 @@ export const colourStyles = {
         color: colorPalette.white,
       },
     }),
+};
+
+export const colourStylesNarrow = {
+  control: styles => ({ ...styles, backgroundColor: 'white',width:'25vw'}),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+      backgroundColor: isDisabled
+      ? null
+      : isSelected
+      ? colorPalette.secondary
+      : isFocused
+      ? colorPalette.secondary
+      : null,
+      color: isDisabled
+      ? null
+      : isSelected
+      ? colorPalette.white
+      : isFocused
+      ? colorPalette.white
+      : null,
+    };
+  },
+  multiValue: (styles, { data }) => {
+    return {
+      ...styles,
+      backgroundColor: colorPalette.secondary,
+    };
+  },
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: colorPalette.white,
+    fontSize:'1.2vw'
+  }),
+  placeholder: (styles, { data }) => ({
+      ...styles,
+      fontSize:'1.2vw'
+  }),
+  multiValueRemove: (styles, { data }) => ({
+    ...styles,
+    color: colorPalette.white,
+    ':hover': {
+      backgroundColor: colorPalette.secondaryA,
+      color: colorPalette.white,
+    },
+  }),
 };
 export default StudyPreferencesRead;

@@ -23,7 +23,7 @@ export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
     
     let matches = [];
-    const total = student.courseSchedule.length * 50 + student.learningType.length * 5;
+    const total = student.courseSchedule.length * 50 + student.learningType.length * 5 + student.identifiers.length*5;
 
     for (let i = 0; i < studentProfiles.length; i++) {
         matches[i] = {
@@ -63,7 +63,7 @@ export async function getWeightedSum(student) {
             }
             for (let m = 0; m < student.identifiers.length; m++) {
                 if (studentProfiles[i].identifiers.includes(student.identifiers[m])) {
-                    matches[i]["sum"] += 1;
+                    matches[i]["sum"] += 5;
                     matches[i]["sharedIdentifiers"].push(student.identifiers[m])
                 }
             }

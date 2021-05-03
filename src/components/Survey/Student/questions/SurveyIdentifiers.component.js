@@ -4,8 +4,8 @@ import RepeatOneOutlinedIcon from '@material-ui/icons/RepeatOneOutlined';
 import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
 import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
 import FunctionsIcon from '@material-ui/icons/Functions';
-import GroupIcon from '@material-ui/icons/Group';
-import PersonIcon from '@material-ui/icons/Person';
+import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
+import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
 import '../../survey.css';
 import PoolOutlinedIcon from '@material-ui/icons/PoolOutlined';
 
@@ -13,28 +13,29 @@ function SurveyIdentifiers({identifiers,setIdentifiers,hidden}){
     const [firstGeneration, setFirstGeneration] = useState((identifiers.includes('first generation')) ? 'selected': '');
     const [outOfState, setOutOfState] = useState((identifiers.includes('out-of-state')) ? 'selected': '');
     const [international, setInternational] = useState((identifiers.includes('international')) ? 'selected': '');
-    const [solitary, setSolitary] = useState((identifiers.includes('solitary')) ? 'selected': '');
+    const [firstYear, setFirstYear] = useState((identifiers.includes('first year')) ? 'selected': '');
     const [athlete, setAthlete] = useState((identifiers.includes('athlete')) ? 'selected': '');
     const [greekLife, setGreekLife] = useState((identifiers.includes('greek life')) ? 'selected': '');
-    const [logical, setLogical] = useState((identifiers.includes('logical/mathematical')) ? 'selected': '');
+    const [transfer, setTransfer] = useState((identifiers.includes('transfer')) ? 'selected': '');
 
 
     useEffect(() => {
         setFirstGeneration((identifiers.includes('first generation')) ? 'selected': '');
         setOutOfState((identifiers.includes('out-of-state')) ? 'selected': '');
         setInternational((identifiers.includes('international')) ? 'selected': '');
-        setSolitary((identifiers.includes('solitary')) ? 'selected': '');
+        setFirstYear((identifiers.includes('first year')) ? 'selected': '');
         setAthlete((identifiers.includes('athlete')) ? 'selected': '');
         setGreekLife((identifiers.includes('greek life')) ? 'selected': '');
-        setLogical((identifiers.includes('logical/mathematical')) ? 'selected': '');
+        setTransfer((identifiers.includes('transfer')) ? 'selected': '');
     }, [identifiers]);
     
     return <div hidden={hidden} style={{paddingBottom:'1.5vw'}}> 
             <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>WHICH IDENTIFIERS DESCRIBE YOU?</h4>
             <div style={{display: 'flex',justifyContent: "space-between"}}>
-                <div className={solitary} onClick={(e)=>{selected(e);updateIdentifiers(e,'verbal',setIdentifiers,identifiers)}} style={{marginLeft:"4%",marginRight:"2%",width: '25%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
-                    <RecordVoiceOverIcon fontSize="large" style={{paddingTop:'1vh',paddingBottom:0}}/>
-                    <h5 style={{paddingTop:'0.5vh',paddingBottom:'1vh',fontSize:'2vw'}}>Verbal</h5>
+                <div className={firstYear} onClick={(e)=>{selected(e);updateIdentifiers(e,'first year',setIdentifiers,identifiers)}} style={{marginLeft:"4%",marginRight:"2%",width: '25%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
+                    <SchoolOutlinedIcon fontSize="large" style={{paddingTop:'1vh',paddingBottom:0}}/>
+                    <h5 style={{marginBottom:0,marginTop:0,paddingLeft:3,paddingRight:3,fontSize:'1.3vw'}}>First</h5>
+                    <h5 style={{marginBottom:0,marginTop:0,paddingLeft:3,paddingRight:3,fontSize:'1.3vw'}}>Year</h5>
                 </div>
                 <div className={international} onClick={(e)=>{selected(e);updateIdentifiers(e,'international',setIdentifiers,identifiers)}} style={{marginRight:"2%",marginLeft:"2%",width: '25%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
                     <LanguageOutlinedIcon fontSize="large" style={{paddingTop:'1vh',paddingBottom:0}}/>
@@ -45,9 +46,9 @@ function SurveyIdentifiers({identifiers,setIdentifiers,hidden}){
                     <PoolOutlinedIcon fontSize="large" style={{paddingTop:'1vh',paddingBottom:0}}/>
                     <h5 style={{marginBottom:'1vh',marginTop:'1vh',paddingLeft:3,paddingRight:3,fontSize:'1.5vw'}}>Athlete</h5>
                 </div>
-                <div className={international} onClick={(e)=>{selected(e);updateIdentifiers(e,'social',setIdentifiers,identifiers)}} style={{marginRight:"4%",marginLeft:"2%",width: '25%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
-                    <GroupIcon fontSize="large" style={{paddingTop:'1vh',paddingBottom:0}}/>
-                    <h5 style={{paddingTop:'0.5vh',paddingBottom:'1vh',fontSize:'2vw'}}>Social</h5>
+                <div className={transfer} onClick={(e)=>{selected(e);updateIdentifiers(e,'transfer',setIdentifiers,identifiers)}} style={{marginRight:"4%",marginLeft:"2%",width: '25%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
+                    <TransformOutlinedIcon fontSize="large" style={{paddingTop:'1vh',paddingBottom:0}}/>
+                    <h5 style={{marginBottom:'1vh',marginTop:'1vh',paddingLeft:3,paddingRight:3,fontSize:'1.5vw'}}>Transfer</h5>
                 </div>   
             </div>
             <br></br>
