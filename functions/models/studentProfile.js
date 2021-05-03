@@ -17,6 +17,82 @@ const ProgramOfStudy = new mongoose.Schema({
   },
 });
 
+const subCourseSemester = new mongoose.Schema({
+  year: {
+    type: Number,
+    required: [true, "Year required"],
+    min: [2021, "Minimum year is 2021"],
+  },
+  season: {
+    type: String,
+    uppercase: true,
+    trim: true,
+    enum: ["SPRING", "FALL"],
+    required: [true, "Season required"],
+  },
+});
+
+const subCourseSchedule = new mongoose.Schema({
+  day: {
+    type: String,
+    required: [true, "Day required"],
+    uppercase: true,
+    trim: true,
+  },
+  time: {
+    type: String,
+    required: [true, "Time required"],
+  },
+});
+
+const CourseSchema = new mongoose.Schema({
+  courseSemester: {
+    type: subCourseSemester,
+    required: [true, "Course semester required"],
+  },
+  courseSubject: {
+    type: String,
+    required: [true, "Course subject required"],
+    trim: true,
+    uppercase: true,
+  },
+  courseTitle: {
+    type: String,
+    required: [true, "Course title required"],
+    uppercase: true,
+  },
+  courseType: {
+    type: String,
+    required: [true, "Course type required"],
+    uppercase: true,
+  },
+  courseNumber: {
+    type: Number,
+    required: [true, "Course number required"],
+  },
+  courseSection: {
+    type: Number,
+    required: [true, "Course section required"],
+  },
+  courseSchedule: {
+    type: [subCourseSchedule],
+    required: [true, "Course schedule required"],
+  },
+  courseInstructor: {
+    type: [String],
+    required: [true, "Course instructor required"],
+    uppercase: true,
+  },
+  courseIsHonors: {
+    type: Boolean,
+    required: [true, "Course isHonors required"],
+  },
+  courseIsLab: {
+    type: Boolean,
+    required: [true, "Course isLab required"],
+  },
+});
+
 const StudentProfileSchema = new mongoose.Schema({
   _userId: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"},
   graduationYear: {
@@ -63,8 +139,10 @@ const StudentProfileSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
   },
+  courseScheduleImproved: {
+    type: [CourseSchema],
+  },
 });
-
 
 const StudentProfile = mongoose.model("StudentProfile", StudentProfileSchema);
 module.exports = StudentProfile;
