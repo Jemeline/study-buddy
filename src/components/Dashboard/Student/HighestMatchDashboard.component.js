@@ -55,7 +55,8 @@ function HighestMatchDashboard() {
     return (
         <div>{(loading) ? <div style={{backgroundColor:'white',zIndex:-1,height:'225px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
         (error) ? <div style={{backgroundColor:'white',zIndex:-1,height:'225px',display:'flex',justifyContent:'center',alignItems: 'center',flexDirection:'column',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={'red'}/><p>Oops... Something Went Wrong</p></div>:
-            <Paper style={{overflow:'auto',height:'225px',width:"100%"}}>
+        (highestMatch.email===user.email)? <Paper style={{overflow:'auto',height:'225px',width:"100%"}}><div style={{height:'225px',display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>You Do Not Have A Closest Match</div></Paper>
+            :<Paper style={{overflow:'auto',height:'225px',width:"100%"}}>
                 <div style={{height:'225px',display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
                     <h5 style={{fontSize:'20px',fontFamily: 'Garamond, serif',margin:'3px'}}><strong>My Closest Match</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="highest-match"/></h5>
                     {(!highestMatch.avatar)?<img src={avatarUnknown} style={{height: '40px',width:"40px",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '40px',width:"40px",backgroundImage:`url(${highestMatch.avatar})`,backgroundSize:'cover',backgroundPosition:'center',margin:'3px'}}/>}

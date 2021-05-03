@@ -17,6 +17,13 @@ import Grid from '@material-ui/core/Grid';
 import ReactLoading from 'react-loading';
 import ReactTooltip from 'react-tooltip';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import HearingIcon from '@material-ui/icons/Hearing';
+import PanToolIcon from '@material-ui/icons/PanTool';
+import FunctionsIcon from '@material-ui/icons/Functions';
+import GroupIcon from '@material-ui/icons/Group';
+import PersonIcon from '@material-ui/icons/Person';
 
 
 function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch, sharedIdentifiers) {
@@ -116,7 +123,7 @@ function TopMatches(){
               <TableCell align="left">Majors</TableCell>
               <TableCell align="left">Graduation Year</TableCell>
               <TableCell align="left">Identifiers</TableCell>
-              <TableCell align="left">Learning Type</TableCell>
+              <TableCell align="left">Learning Type<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="learning-type"/></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -132,7 +139,16 @@ function TopMatches(){
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getMajor(row.profile,userProfile)}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getGraduationYear(row.profile,userProfile)}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedIdentifiers.length > 0 ? "You're both " + row.sharedIdentifiers.join(", ") + " students": ""}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedLearningType.length > 0 ? "You're both "  + row.sharedLearningType.join(", ") + " learners" : ""}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{row.sharedLearningType.length > 0 ? row.sharedLearningType.map(e=>getIcon(e,row.percentMatch)): ""}</TableCell>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="learning-type" place="top" effect="float">
+                  <p style={{margin:'0px'}}><VisibilityIcon/> Visual</p>
+                  <p style={{margin:'0px'}}><PersonIcon/> Solitary</p>
+                  <p style={{margin:'0px'}}><GroupIcon/> Social</p>
+                  <p style={{margin:'0px'}}><RecordVoiceOverIcon/> Verbal</p>
+                  <p style={{margin:'0px'}}><HearingIcon/> Auditory/Musical</p>
+                  <p style={{margin:'0px'}}><PanToolIcon/> Physical/Kinaesthetic</p>
+                  <p style={{margin:'0px'}}><FunctionsIcon/> Logical/Mathematical</p>
+                </ReactTooltip>
               </TableRow>
             )): <TableRow/>}
           </TableBody>
@@ -153,9 +169,6 @@ function TopMatches(){
       <div hidden={hiddenProfile}>
         <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile}/>
       </div>
-      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-list" place="top" effect="float">
-        <p style={{margin:0,width:'250px'}}>Click on any row to view more information about the user</p>
-      </ReactTooltip>
       </Grid>
     </Grid>
   }
@@ -182,6 +195,16 @@ function getMajor(profile,userProfile){
       return '';
     }
   }
+};
+
+function getIcon(learningType,percentMatch){
+  return (learningType === 'visual') ? <VisibilityIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (learningType === 'solitary') ? <PersonIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (learningType === 'social') ? <GroupIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (learningType === 'verbal') ? <RecordVoiceOverIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (learningType === "auditory/musical") ? <HearingIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (learningType === "physical/kinaesthetic") ? <PanToolIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (learningType === "logical/mathematical") ? <FunctionsIcon style={{color:getMatchColor(percentMatch)}}/> :'';  
 };
 
 function getGraduationYear(profile,userProfile){
