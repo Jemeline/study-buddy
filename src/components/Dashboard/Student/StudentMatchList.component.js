@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles, apiGetCourseById} from '../../../utils/api';
+import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles} from '../../../utils/api';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
-import {getUser,capitalizeFirst} from '../../../utils/common';
+import {getUser,capitalizeFirst,getMatchColor} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
@@ -33,6 +33,7 @@ function TopMatches(){
     const [hiddenTable,setHiddenTable] = useState(false);
     const [hiddenProfile,setHiddenProfile] = useState(true);
     const [userMatches, setUserMatches] = useState(getMatches());
+    const [userProfile,setUserProfile] = useState({});
 
     
     const handleChangePage = (event, newPage) => {
@@ -59,6 +60,8 @@ function TopMatches(){
       const students = (await apiGetStudents()).data;
       const studentProfiles = (await apiGetStudentProfiles()).data;
       const awaitedUserMatches = await userMatches;
+      const userProfile = await studentProfiles.find(e=> user._id===e._userId);
+      setUserProfile(userProfile);
       const orderedStudents = awaitedUserMatches.map(match => students.find(student => student._id === studentProfiles.find(profile => profile._id === match["id"])._userId));
       if (students != null) {
         setUsers(students);
@@ -70,7 +73,7 @@ function TopMatches(){
           studentProfiles.find(element => element._userId === student._id),
           awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
           awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"],
-          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"]
+          awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"],
           )));
         setLoading(false);
       } else {
@@ -103,19 +106,23 @@ function TopMatches(){
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Learning Type</TableCell>
               <TableCell align="left">Shared Courses</TableCell>
+              <TableCell align="left">Shared Majors</TableCell>
+              <TableCell align="left">Graduation Year</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hidden={!error}><TableCell colSpan="6" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
-            <TableRow hidden={rows.length>0 || error}><TableCell colSpan="6" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>            
+            <TableRow hidden={!error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+            <TableRow hidden={rows.length>0 || error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>            
             {(!loading && !error) ? rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.percentMatch+'%'}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left"><span style={{color:getMatchColor(row.percentMatch),fontSize:'20px'}}><strong>{row.percentMatch+'%'}</strong></span></TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedLearningType.length > 0 ? "You're both "  + row.sharedLearningType.join(", ") + " learners" : ""}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getMajor(row.profile,userProfile)}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getGraduationYear(row.profile,userProfile)}</TableCell>
               </TableRow>
             )): <TableRow/>}
           </TableBody>
@@ -141,5 +148,38 @@ function TopMatches(){
   }
   </div>
 }; 
+
+function getArraysIntersection(a1,a2){
+  return  a1.filter(function(n) { return a2.indexOf(n) !== -1;});
+}
+
+function getMajor(profile,userProfile){
+  if (typeof(profile)==='undefined'){
+    return ''
+  } else if (profile.studentType === 'undergraduate'){
+    if (getArraysIntersection(profile.programOfStudy.major,userProfile.programOfStudy.major).length>0){
+      return "You are both in the "+getArraysIntersection(profile.programOfStudy.major,userProfile.programOfStudy.major)+' program';
+    } else {
+      return '';
+    }
+  } else {
+    if (getArraysIntersection(profile.programOfStudy.graduateProgram,userProfile.programOfStudy.graduateProgram).length>0){
+      return "You are both in the "+getArraysIntersection(profile.programOfStudy.graduateProgram,userProfile.programOfStudy.graduateProgram)+' program';
+    } else {
+      return '';
+    }
+  }
+};
+
+function getGraduationYear(profile,userProfile){
+  if (typeof(profile)==='undefined'){
+    return ''
+  } else if (profile.graduationYear === userProfile.graduationYear){
+    return 'You are both graduating in '+profile.graduationYear;
+  } else {
+    return '';
+  }
+};
+
 
 export default TopMatches;

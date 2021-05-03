@@ -9,10 +9,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {getUser,capitalizeFirst} from '../../../utils/common';
+import {getUser,capitalizeFirst, getMatchColor} from '../../../utils/common';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import { useHistory } from "react-router-dom";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 
 function SuggestedMatchesDashboard() {
@@ -66,7 +68,7 @@ function SuggestedMatchesDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colspan="7" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>My Matches</strong></TableCell>
+                            <TableCell colspan="7" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>My Matches</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="match-dash"/></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
@@ -83,7 +85,7 @@ function SuggestedMatchesDashboard() {
                     {(!loading && !error)? 
                         rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                         <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
-                            <TableCell align="left">{row.percentMatch+'%'}</TableCell>
+                            <TableCell align="left"><span style={{color:getMatchColor(row.percentMatch),fontSize:'20px'}}><strong>{row.percentMatch+'%'}</strong></span></TableCell>
                             <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                             <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="left">{row.email}</TableCell>
@@ -92,6 +94,9 @@ function SuggestedMatchesDashboard() {
                     </TableBody>
                     </Table>
                 </TableContainer>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-dash" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>The Study Buddies we have matched you with, ranked highest to lowest in terms of compatibility.</p>
+                </ReactTooltip>  
             </Paper>} 
         </div>
     );

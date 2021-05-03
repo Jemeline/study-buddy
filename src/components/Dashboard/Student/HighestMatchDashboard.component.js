@@ -1,12 +1,14 @@
 import React, { useState,useEffect } from "react";
 import Paper from '@material-ui/core/Paper';
 import { colorPalette } from '../../../utils/design';
-import { getUser,capitalizeFirst } from '../../../utils/common';
+import { getUser,capitalizeFirst, getMatchColor } from '../../../utils/common';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import ReactLoading from "react-loading";
 import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles} from '../../../utils/api';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function HighestMatchDashboard() {
     const [user, setUser] = useState(JSON.parse(getUser()));
@@ -53,28 +55,28 @@ function HighestMatchDashboard() {
     return (
         <div>{(loading) ? <div style={{backgroundColor:'white',zIndex:-1,height:'225px',display:'flex',justifyContent:'center',alignItems: 'center',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={colorPalette.secondary}/></div>:
         (error) ? <div style={{backgroundColor:'white',zIndex:-1,height:'225px',display:'flex',justifyContent:'center',alignItems: 'center',flexDirection:'column',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={'red'}/><p>Oops... Something Went Wrong</p></div>:
-            <Paper style={{overflow:'auto',height:'225px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+            <Paper style={{overflow:'auto',height:'225px',width:"100%"}}>
                 <div style={{height:'225px',display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'center'}}>
-                    <h5 style={{fontSize:'20px',fontFamily: 'Garamond, serif',margin:'3px'}}><strong>My Closest Match</strong></h5>
+                    <h5 style={{fontSize:'20px',fontFamily: 'Garamond, serif',margin:'3px'}}><strong>My Closest Match</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="highest-match"/></h5>
                     {(!highestMatch.avatar)?<img src={avatarUnknown} style={{height: '40px',width:"40px",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '40px',width:"40px",backgroundImage:`url(${highestMatch.avatar})`,backgroundSize:'cover',backgroundPosition:'center',margin:'3px'}}/>}
                     <p style={{margin:'2px'}}>{highestMatch.name}</p>
                     <p style={{margin:'2px',fontSize:'12px'}}><em>{highestMatch.email}</em></p>
                     <p hidden={!highestMatch.sharedClasses} style={{marginTop:'2px',marginBottom:'0px',fontSize:'12px'}}><strong>You are both taking: {highestMatch.sharedClasses}</strong></p>
-                    <h5 style={{fontSize:'20px',margin:'3px'}}><span style={{color:getMatchColor(highestMatch.percent)}}>{highestMatch.percent}%</span> Match</h5>
+                    <h5 style={{fontSize:'20px',margin:'3px'}}><span style={{color:getMatchColor(highestMatch.percent)}}><strong>{highestMatch.percent}%</strong></span> Match<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="percent-match"/></h5>  
                 </div>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="highest-match" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>This is your most compatible Study Buddy! Their course schedule and study habits most closely match yours.</p>
+                </ReactTooltip>  
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="percent-match" place="top" effect="float">
+                    <p hidden={highestMatch.percent<50} style={{margin:0,width:'250px'}}>Based on our matching algorithm, {highestMatch.name} is {highestMatch.percent}% compatible with your course schedule and study habits.</p>
+                    <p hidden={highestMatch.percent>=50} style={{margin:0,width:'250px'}}>Why is my percent match so low?</p>
+                    <p hidden={highestMatch.percent>=50} style={{margin:0,width:'250px'}}>There is no other Study Buddy taking your courses, so your highest match is based on other, less-prioritized study preferences.</p>
+                </ReactTooltip>  
             </Paper>}
+           
         </div>
     );
 }
 
-function getMatchColor(percent){
-    if (percent > 75) {
-        return 'green'
-    } else if (percent > 50){
-        return '#FFCC00'
-    } else {
-        return "red"
-    }
-};
 
 export default HighestMatchDashboard;

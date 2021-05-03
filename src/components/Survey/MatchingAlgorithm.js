@@ -50,16 +50,12 @@ export async function getWeightedSum(student) {
             }
             for (let k = 0; k < student.learningType.length; k++) {
                 if (studentProfiles[i].learningType.includes(student.learningType[k])) {
-
-                    // matches[i] += student.weights[0];
                     matches[i]["sum"] += 5;
                     matches[i]["sharedLearningType"].push(student.learningType[k])
                 }
             }
             for (let l = 0; l < student.studyLocation.length; l++) {
                 if (studentProfiles[i].studyLocation.includes(student.studyLocation[l])) {
-
-                    // matches[i] += student.weights[1];
                     matches[i]["sum"] += 2;
                     matches[i]["sharedStudyLocation"].push(student.studyLocation[l])
 
@@ -67,8 +63,6 @@ export async function getWeightedSum(student) {
             }
             for (let m = 0; m < student.identifiers.length; m++) {
                 if (studentProfiles[i].identifiers.includes(student.identifiers[m])) {
-
-                    // matches[i] += student.weights[2];
                     matches[i]["sum"] += 1;
                     matches[i]["sharedIdentifiers"].push(student.identifiers[m])
                 }

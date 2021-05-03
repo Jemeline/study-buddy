@@ -62,6 +62,15 @@ export function getTabValue(){
     return sessionStorage.getItem('tabValue') || null;
 };
 
+export function getMatchColor(percent){
+    if (percent > 75) {
+        return 'green'
+    } else if (percent > 50){
+        return '#FFCC00'
+    } else {
+        return "red"
+    }
+};
 
 
 

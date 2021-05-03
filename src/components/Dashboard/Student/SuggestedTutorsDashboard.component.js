@@ -12,6 +12,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ReactLoading from "react-loading";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function SuggestedTutorsDashboard() {
     const history = useHistory();
@@ -63,7 +65,7 @@ function SuggestedTutorsDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colSpan="5" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Suggested Tutors</strong></TableCell>
+                            <TableCell colSpan="5" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Suggested Tutors</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="suggested-tutors"/></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
@@ -91,6 +93,9 @@ function SuggestedTutorsDashboard() {
                     </TableBody>
                     </Table>
                 </TableContainer> 
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="suggested-tutors" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>Tutors we recommend for you based on your course schedule. View the courses they tutor and thier ratings.</p>
+                </ReactTooltip>
             </Paper>} 
         </div>
     );

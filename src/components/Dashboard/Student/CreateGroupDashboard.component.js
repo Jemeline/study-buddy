@@ -7,6 +7,8 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import ReactLoading from "react-loading";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function CreateGroupDashboard() {
     const [user, setUser] = useState(JSON.parse(getUser()));
@@ -26,6 +28,7 @@ function CreateGroupDashboard() {
     useEffect(async () => {
         try {
             setLoading(true);
+            setError(false);
             const profileRes = await apiGetStudentProfile(user._id);
             const profile = profileRes.data;
             const classes = [];
@@ -92,6 +95,7 @@ function CreateGroupDashboard() {
             setErrorMessage("");
         } catch (err) {
             console.log(err);
+            setError(true);
             setSuccessMessage("");
             setErrorMessage("There was a problem sending your email. Try again");
         }
@@ -120,7 +124,7 @@ function CreateGroupDashboard() {
         (error) ? <div style={{backgroundColor:'white',zIndex:-1,height:'350px',display:'flex',justifyContent:'center',alignItems: 'center',flexDirection:'column',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={'red'}/><p>Oops... Something Went Wrong</p></div>:
             <Paper style={{overflow:'auto',height:'350px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <div style={{height:'350px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-                    <h5 style={{fontFamily: 'Garamond, serif',fontSize:'20px',marginTop:'20px', marginBottom:'10px',cursor:'pointer'}}><strong>Send A Study Invite</strong></h5>
+                    <h5 style={{fontFamily: 'Garamond, serif',fontSize:'20px',marginTop:'20px', marginBottom:'10px',cursor:'pointer'}}><strong>Send A Study Invite</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="create-group"/></h5>
                     <strong><p style={{color: colorPalette.secondaryA,margin:0,cursor:'pointer'}} onClick={()=> setSuccessMessage('')}>{successMessage}</p></strong>
                     <p style={{margin:0}} onClick={()=> setErrorMessage('')}>{errorMessage}</p>
                     <form onSubmit={handleSubmit}>
@@ -137,6 +141,9 @@ function CreateGroupDashboard() {
                         <button type="submit" style={{width: "25%", backgroundColor: colorPalette.secondary,color:'white',marginTop:'20px', marginBottom:'20px'}}><SendRoundedIcon /></button>
                     </form>
                 </div>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="create-group" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>Want to study realtime with other Study Buddies in your class? Select one of your courses, pick a time, send a location (or Zoom link), and start studying! </p>
+                </ReactTooltip>
             </Paper>}
         </div>
     );

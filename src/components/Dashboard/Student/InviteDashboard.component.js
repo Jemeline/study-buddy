@@ -8,6 +8,9 @@ import Paper from '@material-ui/core/Paper';
 import { colorPalette } from "../../../utils/design";
 import {getUsers} from '../../../utils/api';
 import ReactLoading from "react-loading";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+
 function InviteDashboard() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -21,6 +24,7 @@ function InviteDashboard() {
     useEffect(async () => {
         try{
             setLoading(true);
+            setError(false);
             const data = await getUsers();
             const emailArr = await data.data.map(e=>e.email);
             setEmails(emailArr);
@@ -51,6 +55,7 @@ function InviteDashboard() {
             }
         } catch(err) {
             console.error(err);
+            setError(true);
             setAlertMessage("Something went wrong. Your invite was not sent.");
         }
     };
@@ -65,7 +70,7 @@ function InviteDashboard() {
         (error) ? <div style={{backgroundColor:'white',zIndex:-1,height:'225px',display:'flex',justifyContent:'center',alignItems: 'center',flexDirection:'column',width:'100%',overflow:'auto'}}><ReactLoading height={'20%'} width={'20%'} type={"cylon"} color={'red'}/><p>Oops... Something Went Wrong</p></div>:
                 <Paper style={{overflow:'auto',height:'225px',width:"100%",display:'flex',justifyContent:'center',alignItems:'center'}}>
                     <div style={{height:'225px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-                        <h5 style={{marginTop:'1px',fontFamily: 'Garamond, serif'}}><strong>Invite A Friend To Join Study Buddy</strong></h5>
+                        <h5 style={{marginTop:'1px',fontFamily: 'Garamond, serif'}}><strong>Invite A Friend To Join</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="invite-dashboard"/></h5>
                         <h5 style={{marginTop:'1px',fontFamily: 'Garamond, serif'}}><strong></strong></h5>
                         <strong><p hidden={alertMessage==''} style={{color:colorPalette.secondary,marginTop:'0px',marginBottom:'2px',cursor:'pointer'}} onClick={()=> setAlertMessage('')}>{alertMessage}</p></strong>      
                         <Form onSubmit={handleSubmit} style={{marginLeft:'10px',marginRight:'10px',marginTop:'2px'}}>
@@ -94,6 +99,9 @@ function InviteDashboard() {
                                 </div>
                         </Form>
                 </div>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="invite-dashboard" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>Can't find your friend? Send them an invite link so they can join. Just enter their name and email and we'll do the rest!</p>
+                </ReactTooltip>  
             </Paper>}
         </div>
     );

@@ -104,7 +104,7 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><EventNoteIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Update My Course Schedule"} />
         </ListItem>
-        <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>history.push(`/student-survey`)}>
+        <ListItem button hidden={getRoleLiteral()!=='student'} onClick={()=>{storeCurrPage(0);history.push(`/student-survey`);}}>
             <ListItemIcon><QuestionAnswerIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Take Our Survey"} />
         </ListItem>

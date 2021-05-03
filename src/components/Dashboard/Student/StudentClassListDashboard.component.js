@@ -12,6 +12,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ReactLoading from "react-loading";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function StudentClassListDashboard() {
     const history = useHistory();
@@ -49,7 +51,7 @@ function StudentClassListDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colspan="3" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse Users By Course</strong></TableCell>
+                            <TableCell colspan="3" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse Users By Course</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="class-list"/></TableCell>
                             <TableCell colspan="2" style={{ "text-align": "right",fontSize:'20px',fontFamily: 'Garamond, serif' }}>
                                 <select style={{backgroundColor:colorPalette.white,padding:'1px',outlineColor:colorPalette.secondary}}
                                     onChange={(val) => {
@@ -88,6 +90,9 @@ function StudentClassListDashboard() {
                     </TableBody>
                     </Table>
                 </TableContainer> 
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="class-list" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>Filter Study Buddies by your course schedule to find out who is in your classes. Select a course to get started.</p>
+                </ReactTooltip>
             </Paper>} 
         </div>
     );
