@@ -8,7 +8,7 @@ import SurveyNavigation from '../SurveyNavigation.component';
 
 function SurveyGraduationYear({graduationYear,setGraduationYear,hidden}){
     return <div hidden={hidden}> 
-            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>WHAT IS YOUR GRADUATION YEAR?</h4>
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw',fontFamily: 'Garamond, serif'}}>WHAT IS YOUR GRADUATION YEAR?</h4>
             <h5 style={{paddingBottom:'1.5vw',backgroundColor:colorPalette.secondary,borderRadius: 10,color:colorPalette.white,paddingTop:'5px',paddingBottom:'5px',width:'6vw',margin:'auto',fontSize:'2vw'}}>{graduationYear}</h5>
             <YearSlider
                 defaultValue={new Date().getFullYear()+2}

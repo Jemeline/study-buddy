@@ -30,7 +30,7 @@ function SurveyIdentifiers({identifiers,setIdentifiers,hidden}){
     }, [identifiers]);
     
     return <div hidden={hidden} style={{paddingBottom:'1.5vw'}}> 
-            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>WHICH IDENTIFIERS DESCRIBE YOU?</h4>
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw',fontFamily: 'Garamond, serif'}}>WHICH IDENTIFIERS DESCRIBE YOU?</h4>
             <div style={{display: 'flex',justifyContent: "space-between"}}>
                 <div className={firstYear} onClick={(e)=>{selected(e);updateIdentifiers(e,'first year',setIdentifiers,identifiers)}} style={{marginLeft:"4%",marginRight:"2%",width: '25%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
                     <SchoolOutlinedIcon fontSize="large" style={{paddingTop:'1vh',paddingBottom:0}}/>

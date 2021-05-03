@@ -6,7 +6,7 @@ function SurveyComplete({hidden}){
     const history = useHistory();
 
     return <div hidden={hidden}> 
-            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw',fontFamily: 'Garamond, serif'}}>Good News... We found some great study partners for you!</h4>  
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw',fontFamily: 'Garamond, serif'}}>We've found you some great study partners!</h4> 
     </div>
 };
 

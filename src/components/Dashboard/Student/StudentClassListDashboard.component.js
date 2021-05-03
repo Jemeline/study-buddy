@@ -91,7 +91,7 @@ function StudentClassListDashboard() {
                     </Table>
                 </TableContainer> 
                 <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="class-list" place="top" effect="float">
-                    <p style={{margin:0,width:'250px'}}>Filter Study Buddies by your course schedule to find out who is in your classes. Select a course to get started.</p>
+                    <p style={{margin:0,width:'250px'}}>Filter by your course schedule to find out who is in your classes. Select a course to get started.</p>
                 </ReactTooltip>
             </Paper>} 
         </div>

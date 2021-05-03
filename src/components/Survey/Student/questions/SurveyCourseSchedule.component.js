@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 
 function SurveyCourseSchedule({courseSchedule,setCourseSchedule,hidden}){
     return <div hidden={hidden} style={{marginBottom:'1vh'}}> 
-            <h4 style={{margin:'auto',fontSize:'2vw',height:'6vh'}}>WHAT IS YOUR COURSE SCHEDULE?</h4>
+            <h4 style={{margin:'auto',fontSize:'2vw',height:'6vh',fontFamily: 'Garamond, serif'}}>WHAT IS YOUR COURSE SCHEDULE?</h4>
             <div style={{flexGrow: 1,height:'54vh',overflowY:'auto'}}>
             <Grid
                 container

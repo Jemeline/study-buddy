@@ -18,6 +18,8 @@ import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import {Identifiers} from '../../Survey/Student/utils/common';
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function StudentUserList(){
     const [loading, setLoading] = useState(false);
@@ -35,7 +37,6 @@ function StudentUserList(){
     const [graduationYear, setGraduationYear] = useState([]);
     const [identifiers, setIdentifiers] = useState([]);
     const [programOfStudy, setProgramOfStudy] = useState([]);
-    const classes = useStyles();
     const [optionsStudentNames, setOptionsStudentNames] = useState([]);
     const [studentName, setStudentName] = useState([]);
     const [favorites,setFavorites]=useState([]);
@@ -168,7 +169,7 @@ function StudentUserList(){
   
   return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'space-evenly',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
     <div hidden={hiddenTable} style={{width:'20vw',height:'calc(70vh + 55px)'}}>
-      <p style={{margin:0,color:colorPalette.secondary}}>Search By Attribute</p>
+      <p style={{margin:0,color:colorPalette.secondary}}>Search By Attribute<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="user-list"/></p>
       <hr style={{borderTop: `3px solid ${colorPalette.secondary}`,marginTop:0}}/>
       <Select
         isMulti
@@ -229,6 +230,11 @@ function StudentUserList(){
         <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
+                <TableCell colspan="8" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Find A Study Buddy</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="click-row"/></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableHead>
+            <TableRow>
               <TableCell align="left"></TableCell>
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Student Type</TableCell>
@@ -236,17 +242,16 @@ function StudentUserList(){
               <TableCell align="left">Program of Study</TableCell>
               <TableCell align="left">Minors</TableCell>
               <TableCell align="left">Identifiers</TableCell>
-              <TableCell align="left">Add To Favorites</TableCell>
+              <TableCell align="left">Add To Favorites<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="favorite"/></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hidden={!error}><TableCell colSpan="10" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
-            <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="10" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
+            <TableRow hidden={!error}><TableCell colSpan="8" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+            <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="8" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
             {(!loading && !error)? 
             rowsFiltered.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow className={classes.tableRow}
-              hover key={row.user._id}>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
+              <TableRow hover key={row.user._id} style={{cursor:'pointer'}}>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '3vw',width:"3vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '3vw',width:"3vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
@@ -274,6 +279,15 @@ function StudentUserList(){
       <div hidden={hiddenProfile}>
         <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile} setHideProfileTabs={setHideProfileTabs} hideProfileTabs={false}/>
       </div>
+      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="user-list" place="bottom" effect="float">
+          <p style={{margin:0,width:'250px'}}>Whether you want to find your friends or find your perfect studying companion, this tool gives you the power to filter our users based on your own specifications.</p>
+      </ReactTooltip> 
+      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="favorite" place="bottom" effect="float">
+          <p style={{margin:0,width:'250px'}}>Found the perfect Study Buddy? Check the heart to add them to your favorites. They wil be stored in the profile tab for safe keeping!</p>
+      </ReactTooltip> 
+      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="click-row" place="top" effect="float">
+        <p style={{margin:0,width:'250px'}}>Click on any row to view more information about the user</p>
+      </ReactTooltip>
     </div>
     </div>
 }; 
@@ -302,13 +316,6 @@ async function handleFavorite(rowUser,favorites,setFavorites){
   };
 };
 
-const useStyles = makeStyles((theme) => ({
-  tableRow: {
-   '&&:hover': {
-      // backgroundColor: colorPalette.primary,
-    },
-  },
-}));
 
 const optionsStudentType = [
   { value: 'undergraduate', label: 'Undergraduate' },

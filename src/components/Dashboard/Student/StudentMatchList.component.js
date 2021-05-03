@@ -15,6 +15,8 @@ import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import { colorPalette } from '../../../utils/design';
 import Grid from '@material-ui/core/Grid';
 import ReactLoading from 'react-loading';
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 
 function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch, sharedIdentifiers) {
@@ -99,7 +101,12 @@ function TopMatches(){
     <Paper hidden={hiddenTable} style={{overflow:'auto',width:'80vw',maxHeight:'70vh'}}>
     <TableContainer >
         <Table stickyHeader size="medium">
-          <TableHead>
+        <TableHead>
+          <TableRow>
+              <TableCell colspan="9" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Explore My Matches</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="match-list"/></TableCell>
+          </TableRow>
+          </TableHead>
+        <TableHead>
             <TableRow>
               <TableCell align="left">Percent Match</TableCell>
               <TableCell align="left"></TableCell>
@@ -113,12 +120,12 @@ function TopMatches(){
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hidden={!error}><TableCell colSpan="8" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
-            <TableRow hidden={rows.length>0 || error}><TableCell colSpan="8" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>            
+            <TableRow hidden={!error}><TableCell colSpan="9" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+            <TableRow hidden={rows.length>0 || error}><TableCell colSpan="9" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>            
             {(!loading && !error) ? rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
+              <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled} style={{cursor:'pointer'}}>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left"><span style={{color:getMatchColor(row.percentMatch),fontSize:'20px'}}><strong>{row.percentMatch+'%'}</strong></span></TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '3vw',width:"3vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '3vw',width:"3vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedLearningType.length > 0 ? "You're both "  + row.sharedLearningType.join(", ") + " learners" : ""}</TableCell>
@@ -146,6 +153,9 @@ function TopMatches(){
       <div hidden={hiddenProfile}>
         <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile}/>
       </div>
+      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-list" place="top" effect="float">
+        <p style={{margin:0,width:'250px'}}>Click on any row to view more information about the user</p>
+      </ReactTooltip>
       </Grid>
     </Grid>
   }

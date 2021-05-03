@@ -8,6 +8,11 @@ import GroupIcon from '@material-ui/icons/Group';
 import PersonIcon from '@material-ui/icons/Person';
 import '../../survey.css';
 import {storeLearningType} from '../utils/common';
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { colorPalette } from '../../../../utils/design';
+import { useHistory } from "react-router-dom";
+
 
 function SurveyLearningType({learningType,setLearningType,hidden}){
     const [visual, setVisual] = useState((learningType.includes('visual')) ? 'selected': '');
@@ -17,7 +22,7 @@ function SurveyLearningType({learningType,setLearningType,hidden}){
     const [auditory, setAuditory] = useState((learningType.includes('auditory/musical')) ? 'selected': '');
     const [physical, setPhysical] = useState((learningType.includes('physical/kinaesthetic')) ? 'selected': '');
     const [logical, setLogical] = useState((learningType.includes('logical/mathematical')) ? 'selected': '');
-
+    const history = useHistory();
 
     useEffect(() => {
         storeLearningType(learningType);
@@ -31,7 +36,7 @@ function SurveyLearningType({learningType,setLearningType,hidden}){
     }, [learningType]);
     
     return <div hidden={hidden} style={{paddingBottom:'1.5vw'}}> 
-            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>WHICH LEARNING STYLES ARE BEST FOR YOU?</h4>
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw',fontFamily: 'Garamond, serif'}}>WHICH LEARNING STYLES ARE BEST FOR YOU?<a href="https://www.inspireeducation.net.au/blog/the-seven-learning-styles/"><InfoOutlinedIcon style={{height:'30px'}} data-tip data-for="survey-1"/></a></h4>
             <div style={{display: 'flex',justifyContent: "space-between"}}>
                 <div className={verbal} onClick={(e)=>{selected(e);updateLearningType(e,'verbal',setLearningType,learningType)}} style={{marginLeft:"4%",marginRight:"2%",width: '25%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
                     <RecordVoiceOverIcon fontSize="large" style={{paddingTop:'1vh',paddingBottom:0}}/>
@@ -68,6 +73,9 @@ function SurveyLearningType({learningType,setLearningType,hidden}){
                     <h5 style={{paddingBottom:0,paddingTop:0,paddingLeft:3,paddingRight:3,fontSize:'2vw'}}>Logical</h5>
                     <h5 style={{paddingBottom:0,paddingTop:0,paddingLeft:3,paddingRight:3,fontSize:'1.25vw'}}>(Mathematical)</h5>
                 </div>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="survey-1" place="bottom" effect="float">
+                        <p style={{margin:0,width:'150px'}}>Click for more information on learning styles</p>
+                </ReactTooltip>
             </div>
     </div>
 };
