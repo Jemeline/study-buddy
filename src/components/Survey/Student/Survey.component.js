@@ -97,6 +97,7 @@ function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,stud
             studentType:studentType,
             programOfStudy:{graduateProgram:graduatePOS.map((ele)=>ele.value)},
             courseSchedule:courseSchedule.map((ele)=>ele._id),
+            courseScheduleImproved:courseSchedule,
             learningType:(learningType.length !== 0)?learningType:['prefer not to answer'],
             identifiers:(identifiers.length !== 0)?identifiers:['prefer not to answer'],
         }
@@ -108,6 +109,7 @@ function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,stud
             studentType:studentType,
             programOfStudy:{major:major.map((ele)=>ele.value),minor:minor.map((ele)=>ele.value)},
             courseSchedule:courseSchedule.map((ele)=>ele._id),
+            courseScheduleImproved:courseSchedule,
             learningType:(learningType.length !== 0)?learningType:['prefer not to answer'],
             identifiers:(identifiers.length !== 0)?identifiers:['prefer not to answer'],
         }
