@@ -1,3 +1,18 @@
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import HearingIcon from '@material-ui/icons/Hearing';
+import PanToolIcon from '@material-ui/icons/PanTool';
+import FunctionsIcon from '@material-ui/icons/Functions';
+import GroupIcon from '@material-ui/icons/Group';
+import PersonIcon from '@material-ui/icons/Person';
+import RepeatOneOutlinedIcon from '@material-ui/icons/RepeatOneOutlined';
+import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
+import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
+import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
+import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
+import PoolOutlinedIcon from '@material-ui/icons/PoolOutlined';
+import {colorPalette} from './design';
+
 export function getRole(r) {
     const role = sessionStorage.getItem('role');
     if (role) role.toLowerCase();
@@ -72,6 +87,24 @@ export function getMatchColor(percent){
     }
 };
 
+export function getIconLearningType(learningType){
+    return (learningType === 'visual') ? <VisibilityIcon style={{color:colorPalette.secondary}}/> :
+      (learningType === 'solitary') ? <PersonIcon style={{color:colorPalette.secondary}}/> :
+      (learningType === 'social') ? <GroupIcon style={{color:colorPalette.secondary}}/> :
+      (learningType === 'verbal') ? <RecordVoiceOverIcon style={{color:colorPalette.secondary}}/> :
+      (learningType === "auditory/musical") ? <HearingIcon style={{color:colorPalette.secondary}}/> :
+      (learningType === "physical/kinaesthetic") ? <PanToolIcon style={{color:colorPalette.secondary}}/> :
+      (learningType === "logical/mathematical") ? <FunctionsIcon style={{color:colorPalette.secondary}}/> :'';  
+};
 
+export function getIconIdentifiers(identifier){
+    return (identifier === 'first generation') ? <RepeatOneOutlinedIcon style={{color:colorPalette.secondary}}/> :
+      (identifier === 'out-of-state') ? <MapOutlinedIcon style={{color:colorPalette.secondary}}/> :
+      (identifier === 'international') ? <LanguageOutlinedIcon style={{color:colorPalette.secondary}}/> :
+      (identifier === 'first year') ? <SchoolOutlinedIcon style={{color:colorPalette.secondary}}/> :
+      (identifier === "greek life") ? <FunctionsIcon style={{color:colorPalette.secondary}}/> :
+      (identifier === "athlete") ? <PoolOutlinedIcon style={{color:colorPalette.secondary}}/> :
+      (identifier === "transfer") ? <TransformOutlinedIcon style={{color:colorPalette.secondary}}/> :'';  
+};
 
 

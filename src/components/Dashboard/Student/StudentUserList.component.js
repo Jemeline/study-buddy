@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
-import {getUser,capitalizeFirst} from '../../../utils/common';
+import {getUser,capitalizeFirst,getIconIdentifiers,getIconLearningType} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
 import {colorPalette} from '../../../utils/design';
 import Select from 'react-select';
@@ -349,24 +349,7 @@ async function handleFavorite(rowUser,favorites,setFavorites){
   };
 };
 
-function getIconLearningType(learningType){
-  return (learningType === 'visual') ? <VisibilityIcon style={{color:colorPalette.secondary}}/> :
-    (learningType === 'solitary') ? <PersonIcon style={{color:colorPalette.secondary}}/> :
-    (learningType === 'social') ? <GroupIcon style={{color:colorPalette.secondary}}/> :
-    (learningType === 'verbal') ? <RecordVoiceOverIcon style={{color:colorPalette.secondary}}/> :
-    (learningType === "auditory/musical") ? <HearingIcon style={{color:colorPalette.secondary}}/> :
-    (learningType === "physical/kinaesthetic") ? <PanToolIcon style={{color:colorPalette.secondary}}/> :
-    (learningType === "logical/mathematical") ? <FunctionsIcon style={{color:colorPalette.secondary}}/> :'';  
-};
-function getIconIdentifiers(identifier){
-  return (identifier === 'first generation') ? <RepeatOneOutlinedIcon style={{color:colorPalette.secondary}}/> :
-    (identifier === 'out-of-state') ? <MapOutlinedIcon style={{color:colorPalette.secondary}}/> :
-    (identifier === 'international') ? <LanguageOutlinedIcon style={{color:colorPalette.secondary}}/> :
-    (identifier === 'first year') ? <SchoolOutlinedIcon style={{color:colorPalette.secondary}}/> :
-    (identifier === "greek life") ? <FunctionsIcon style={{color:colorPalette.secondary}}/> :
-    (identifier === "athlete") ? <PoolOutlinedIcon style={{color:colorPalette.secondary}}/> :
-    (identifier === "transfer") ? <TransformOutlinedIcon style={{color:colorPalette.secondary}}/> :'';  
-};
+
 
 const optionsStudentType = [
   { value: 'undergraduate', label: 'Undergraduate' },

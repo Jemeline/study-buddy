@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
-import {getUser,capitalizeFirst,getMatchColor} from '../../../utils/common';
+import {getUser,capitalizeFirst,getMatchColor,getIconLearningType,getIconIdentifiers} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
@@ -30,6 +30,8 @@ import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
 import PoolOutlinedIcon from '@material-ui/icons/PoolOutlined';
+
+
 
 function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch, sharedIdentifiers) {
   return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch, sharedIdentifiers };
@@ -142,9 +144,9 @@ function TopMatches(){
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getMajor(row.profile,userProfile)}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left"><strong><span style={{color:getMatchColor(row.percentMatch)}}>{getGraduationYear(row.profile,userProfile)}</span></strong></TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedIdentifiers.length > 0 ? row.sharedIdentifiers.map(e=>getIconIdentifiers(e,row.percentMatch)): ""}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedLearningType.length > 0 ? row.sharedLearningType.map(e=>getIconLearningType(e,row.percentMatch)): ""}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left"><strong><span style={{color:colorPalette.secondary}}>{getGraduationYear(row.profile,userProfile)}</span></strong></TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{row.sharedIdentifiers.length > 0 ? row.sharedIdentifiers.map(e=>getIconIdentifiers(e)): ""}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{row.sharedLearningType.length > 0 ? row.sharedLearningType.map(e=>getIconLearningType(e)): ""}</TableCell>
                 <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="learning-type" place="left" effect="float">
                   <p style={{margin:'0px'}}><VisibilityIcon/> Visual</p>
                   <p style={{margin:'0px'}}><PersonIcon/> Solitary</p>
@@ -217,25 +219,6 @@ function getMajor(profile,userProfile){
   }
 };
 
-function getIconLearningType(learningType,percentMatch){
-  return (learningType === 'visual') ? <VisibilityIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (learningType === 'solitary') ? <PersonIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (learningType === 'social') ? <GroupIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (learningType === 'verbal') ? <RecordVoiceOverIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (learningType === "auditory/musical") ? <HearingIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (learningType === "physical/kinaesthetic") ? <PanToolIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (learningType === "logical/mathematical") ? <FunctionsIcon style={{color:getMatchColor(percentMatch)}}/> :'';  
-};
-
-function getIconIdentifiers(identifier,percentMatch){
-  return (identifier === 'first generation') ? <RepeatOneOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (identifier === 'out-of-state') ? <MapOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (identifier === 'international') ? <LanguageOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (identifier === 'first year') ? <SchoolOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (identifier === "greek life") ? <FunctionsIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (identifier === "athlete") ? <PoolOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
-    (identifier === "transfer") ? <TransformOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :'';  
-};
 
 function getGraduationYear(profile,userProfile){
   if (typeof(profile)==='undefined'){
