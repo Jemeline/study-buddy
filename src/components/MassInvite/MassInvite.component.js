@@ -138,7 +138,7 @@ function MassStudyInvite() {
                                 <DateTimePicker id="when" required minDetail="year" value={datetime} disableClock={true} onChange={handleDateTimeChange} />
                                 <hr style={{margin: "8px auto"}}></hr>
                                 <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="location">Where:</label>
-                                <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location..." />
+                                <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location (or zoom link)..." style={{padding: "5px"}}/>
                                 <hr style={{margin: "30px auto"}}></hr>
                             
                             <textarea onChange={handleMessageChange} name="message" placeholder={"Add an additional message here..."} style={{width: "100%", height: "30%", margin: "auto", resize: "none"}}></textarea>
