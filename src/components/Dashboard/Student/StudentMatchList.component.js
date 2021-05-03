@@ -24,7 +24,12 @@ import PanToolIcon from '@material-ui/icons/PanTool';
 import FunctionsIcon from '@material-ui/icons/Functions';
 import GroupIcon from '@material-ui/icons/Group';
 import PersonIcon from '@material-ui/icons/Person';
-
+import RepeatOneOutlinedIcon from '@material-ui/icons/RepeatOneOutlined';
+import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
+import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
+import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
+import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
+import PoolOutlinedIcon from '@material-ui/icons/PoolOutlined';
 
 function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch, sharedIdentifiers) {
   return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch, sharedIdentifiers };
@@ -105,7 +110,7 @@ function TopMatches(){
           spacing={1}
     >
     <Grid item  xs="auto" sm="auto" md="auto">
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'80vw',maxHeight:'70vh'}}>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'90vw',maxHeight:'70vh'}}>
     <TableContainer >
         <Table stickyHeader size="medium">
         <TableHead>
@@ -121,9 +126,9 @@ function TopMatches(){
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Course Schedule</TableCell>
               <TableCell align="left">Majors</TableCell>
-              <TableCell align="left">Graduation Year</TableCell>
-              <TableCell align="left">Identifiers</TableCell>
-              <TableCell align="left">Learning Type<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="learning-type"/></TableCell>
+              <TableCell align="left">Graduation Year<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="year"/></TableCell>
+              <TableCell align="left">Shared Identifiers<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="identifier"/></TableCell>
+              <TableCell align="left">Shared Learning Type<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="learning-type"/></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -137,10 +142,10 @@ function TopMatches(){
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getMajor(row.profile,userProfile)}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getGraduationYear(row.profile,userProfile)}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedIdentifiers.length > 0 ? "You're both " + row.sharedIdentifiers.join(", ") + " students": ""}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{row.sharedLearningType.length > 0 ? row.sharedLearningType.map(e=>getIcon(e,row.percentMatch)): ""}</TableCell>
-                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="learning-type" place="top" effect="float">
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left"><strong><span style={{color:getMatchColor(row.percentMatch)}}>{getGraduationYear(row.profile,userProfile)}</span></strong></TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedIdentifiers.length > 0 ? row.sharedIdentifiers.map(e=>getIconIdentifiers(e,row.percentMatch)): ""}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedLearningType.length > 0 ? row.sharedLearningType.map(e=>getIconLearningType(e,row.percentMatch)): ""}</TableCell>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="learning-type" place="left" effect="float">
                   <p style={{margin:'0px'}}><VisibilityIcon/> Visual</p>
                   <p style={{margin:'0px'}}><PersonIcon/> Solitary</p>
                   <p style={{margin:'0px'}}><GroupIcon/> Social</p>
@@ -149,13 +154,28 @@ function TopMatches(){
                   <p style={{margin:'0px'}}><PanToolIcon/> Physical/Kinaesthetic</p>
                   <p style={{margin:'0px'}}><FunctionsIcon/> Logical/Mathematical</p>
                 </ReactTooltip>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="identifier" place="left" effect="float">
+                  <p style={{margin:'0px'}}><RepeatOneOutlinedIcon/> First Generation</p>
+                  <p style={{margin:'0px'}}><MapOutlinedIcon/> Out-of-State</p>
+                  <p style={{margin:'0px'}}><LanguageOutlinedIcon/> International</p>
+                  <p style={{margin:'0px'}}><SchoolOutlinedIcon/> First Year</p>
+                  <p style={{margin:'0px'}}><FunctionsIcon/> Greek Life</p>
+                  <p style={{margin:'0px'}}><PoolOutlinedIcon/> Athlete</p>
+                  <p style={{margin:'0px'}}><TransformOutlinedIcon/> Transfer</p>
+                </ReactTooltip>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="year" place="left" effect="float">
+                  <p style={{margin:'0px'}}>If a year is displayed in the row, you are both planning on graduating at the same time.</p>
+                </ReactTooltip>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-list" place="bottom" effect="float">
+                  <p style={{margin:'0px'}}>Click on any row to view more information about the user</p>
+                </ReactTooltip>
               </TableRow>
             )): <TableRow/>}
           </TableBody>
         </Table>
         </TableContainer>
       </Paper>
-      <Paper hidden={hiddenTable} style={{overflow:'auto',width:'80vw',height:'55px'}}>
+      <Paper hidden={hiddenTable} style={{overflow:'auto',width:'90vw',height:'55px'}}>
         <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
@@ -197,7 +217,7 @@ function getMajor(profile,userProfile){
   }
 };
 
-function getIcon(learningType,percentMatch){
+function getIconLearningType(learningType,percentMatch){
   return (learningType === 'visual') ? <VisibilityIcon style={{color:getMatchColor(percentMatch)}}/> :
     (learningType === 'solitary') ? <PersonIcon style={{color:getMatchColor(percentMatch)}}/> :
     (learningType === 'social') ? <GroupIcon style={{color:getMatchColor(percentMatch)}}/> :
@@ -207,11 +227,21 @@ function getIcon(learningType,percentMatch){
     (learningType === "logical/mathematical") ? <FunctionsIcon style={{color:getMatchColor(percentMatch)}}/> :'';  
 };
 
+function getIconIdentifiers(identifier,percentMatch){
+  return (identifier === 'first generation') ? <RepeatOneOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (identifier === 'out-of-state') ? <MapOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (identifier === 'international') ? <LanguageOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (identifier === 'first year') ? <SchoolOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (identifier === "greek life") ? <FunctionsIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (identifier === "athlete") ? <PoolOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :
+    (identifier === "transfer") ? <TransformOutlinedIcon style={{color:getMatchColor(percentMatch)}}/> :'';  
+};
+
 function getGraduationYear(profile,userProfile){
   if (typeof(profile)==='undefined'){
     return ''
   } else if (profile.graduationYear === userProfile.graduationYear){
-    return 'You are both graduating in '+profile.graduationYear;
+    return profile.graduationYear;
   } else {
     return '';
   }

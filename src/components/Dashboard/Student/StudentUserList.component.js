@@ -11,7 +11,6 @@ import Paper from '@material-ui/core/Paper';
 import {getUser,capitalizeFirst} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
 import {colorPalette} from '../../../utils/design';
-import { makeStyles } from "@material-ui/core/styles";
 import Select from 'react-select';
 import {Majors,Minors,GraduatePrograms} from '../../Survey/Student/utils/StudyPrograms';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
@@ -20,6 +19,20 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import {Identifiers} from '../../Survey/Student/utils/common';
 import ReactTooltip from 'react-tooltip';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import HearingIcon from '@material-ui/icons/Hearing';
+import PanToolIcon from '@material-ui/icons/PanTool';
+import FunctionsIcon from '@material-ui/icons/Functions';
+import GroupIcon from '@material-ui/icons/Group';
+import PersonIcon from '@material-ui/icons/Person';
+import RepeatOneOutlinedIcon from '@material-ui/icons/RepeatOneOutlined';
+import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
+import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
+import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
+import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
+import PoolOutlinedIcon from '@material-ui/icons/PoolOutlined';
+
 
 function StudentUserList(){
     const [loading, setLoading] = useState(false);
@@ -162,7 +175,7 @@ function StudentUserList(){
     if (favorites.includes(user._id)){
       return colorPalette.secondary;
     } else {
-      return colorPalette.gray;
+      return 'lightgray';
     }
   };
 
@@ -230,7 +243,7 @@ function StudentUserList(){
         <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
-                <TableCell colspan="8" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Find A Study Buddy</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="click-row"/></TableCell>
+                <TableCell colspan="9" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Find A Study Buddy</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="click-row"/></TableCell>
             </TableRow>
           </TableHead>
           <TableHead>
@@ -241,13 +254,14 @@ function StudentUserList(){
               <TableCell align="left">Graduation Year</TableCell>
               <TableCell align="left">Program of Study</TableCell>
               <TableCell align="left">Minors</TableCell>
-              <TableCell align="left">Identifiers</TableCell>
+              <TableCell align="left">Identifiers<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="learning-type"/></TableCell>
+              <TableCell align="left">Learning Style<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="learning-type"/></TableCell>
               <TableCell align="left">Add To Favorites<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="favorite"/></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hidden={!error}><TableCell colSpan="8" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
-            <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="8" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
+            <TableRow hidden={!error}><TableCell colSpan="9" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+            <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="9" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
             {(!loading && !error)? 
             rowsFiltered.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow hover key={row.user._id} style={{cursor:'pointer'}}>
@@ -257,13 +271,32 @@ function StudentUserList(){
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.minor:''}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.identifiers.join(', ')}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{(typeof(row.profile)==='undefined')?'':row.profile.identifiers.map(e=>getIconIdentifiers(e))}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{(typeof(row.profile)==='undefined')?'':row.profile.learningType.map(e=>getIconLearningType(e))}</TableCell>
                 <TableCell align="left"><IconButton onClick={async () => {await handleFavorite(row.user,favorites,setFavorites);}}><FavoriteIcon style={{color:getFavorites(row.user)}}/></IconButton></TableCell>
               </TableRow>
             )): <TableRow/>}
           </TableBody>
         </Table>
-        </TableContainer>   
+        </TableContainer>  
+        <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="learning-type" place="left" effect="float">
+          <p style={{margin:'0px'}}><VisibilityIcon/> Visual</p>
+          <p style={{margin:'0px'}}><PersonIcon/> Solitary</p>
+          <p style={{margin:'0px'}}><GroupIcon/> Social</p>
+          <p style={{margin:'0px'}}><RecordVoiceOverIcon/> Verbal</p>
+          <p style={{margin:'0px'}}><HearingIcon/> Auditory/Musical</p>
+          <p style={{margin:'0px'}}><PanToolIcon/> Physical/Kinaesthetic</p>
+          <p style={{margin:'0px'}}><FunctionsIcon/> Logical/Mathematical</p>
+        </ReactTooltip> 
+        <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="identifier" place="left" effect="float">
+          <p style={{margin:'0px'}}><RepeatOneOutlinedIcon/> First Generation</p>
+          <p style={{margin:'0px'}}><MapOutlinedIcon/> Out-of-State</p>
+          <p style={{margin:'0px'}}><LanguageOutlinedIcon/> International</p>
+          <p style={{margin:'0px'}}><SchoolOutlinedIcon/> First Year</p>
+          <p style={{margin:'0px'}}><FunctionsIcon/> Greek Life</p>
+          <p style={{margin:'0px'}}><PoolOutlinedIcon/> Athlete</p>
+          <p style={{margin:'0px'}}><TransformOutlinedIcon/> Transfer</p>
+        </ReactTooltip>
     </Paper>
     <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',height:'55px'}}>
     <TablePagination
@@ -316,6 +349,24 @@ async function handleFavorite(rowUser,favorites,setFavorites){
   };
 };
 
+function getIconLearningType(learningType){
+  return (learningType === 'visual') ? <VisibilityIcon style={{color:colorPalette.secondary}}/> :
+    (learningType === 'solitary') ? <PersonIcon style={{color:colorPalette.secondary}}/> :
+    (learningType === 'social') ? <GroupIcon style={{color:colorPalette.secondary}}/> :
+    (learningType === 'verbal') ? <RecordVoiceOverIcon style={{color:colorPalette.secondary}}/> :
+    (learningType === "auditory/musical") ? <HearingIcon style={{color:colorPalette.secondary}}/> :
+    (learningType === "physical/kinaesthetic") ? <PanToolIcon style={{color:colorPalette.secondary}}/> :
+    (learningType === "logical/mathematical") ? <FunctionsIcon style={{color:colorPalette.secondary}}/> :'';  
+};
+function getIconIdentifiers(identifier){
+  return (identifier === 'first generation') ? <RepeatOneOutlinedIcon style={{color:colorPalette.secondary}}/> :
+    (identifier === 'out-of-state') ? <MapOutlinedIcon style={{color:colorPalette.secondary}}/> :
+    (identifier === 'international') ? <LanguageOutlinedIcon style={{color:colorPalette.secondary}}/> :
+    (identifier === 'first year') ? <SchoolOutlinedIcon style={{color:colorPalette.secondary}}/> :
+    (identifier === "greek life") ? <FunctionsIcon style={{color:colorPalette.secondary}}/> :
+    (identifier === "athlete") ? <PoolOutlinedIcon style={{color:colorPalette.secondary}}/> :
+    (identifier === "transfer") ? <TransformOutlinedIcon style={{color:colorPalette.secondary}}/> :'';  
+};
 
 const optionsStudentType = [
   { value: 'undergraduate', label: 'Undergraduate' },

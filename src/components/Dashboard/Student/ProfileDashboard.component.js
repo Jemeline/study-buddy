@@ -42,7 +42,7 @@ function ProfileDashboard() {
                         </div>}
                         <div style={{display:'flex',flexDirection:'column',alignItems: 'flex-end',justifyContent:'flex-end',margin:'10px'}}>
                             <h5 style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'25px'}}><strong>{capitalizeFirst(user.first)} {capitalizeFirst(user.last)}</strong></h5>
-                            <p style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'20px'}}>{user.email}</p>
+                            <p style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'15px'}}>{user.email}</p>
                             <p style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'20px'}}>Class of {profile.graduationYear}</p>
                         </div>
                     </div>
