@@ -31,7 +31,6 @@ const CreateAd = () => {
                 });
                 console.log(res);
                 setLoading(false);
-                alert("Successfully posted advertisement.");
                 window.location.reload();
                 return res;
             } catch (err) {

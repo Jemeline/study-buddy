@@ -25,7 +25,7 @@ function StudyPreferencesRead({profile}) {
                 </Input>
           </InputGroup>
           <div style={{paddingBottom:'1vw'}}>
-                <p style={{float:'left',fontSize:'1vw',marginBottom:0}}>Learning Type</p>
+                <p style={{float:'left',fontSize:'1vw',marginBottom:0}}>Identifiers</p>
                 <Select
                     placeholder={"Identifier(s)"}
                     isMulti
