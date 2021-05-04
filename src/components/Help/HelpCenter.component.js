@@ -26,7 +26,7 @@ function HelpCenter() {
                             <h5 style={{fontFamily: "garamond, serif"}}><strong>Writing Center</strong></h5>
                         </div>
                         <div>
-                            <p>Writing is tough! Need help? Check out the <a target="_blank" rel="noreferrer" href="https://writingcenter.unc.edu/">UNC writing center</a>. Learn how to write more effective and concise papers.</p>
+                            <p>Writing is tough! Need help? Check out the <a target="_blank" rel="noreferrer" href="https://writingcenter.unc.edu/">UNC writing center</a>, and learn how to write more effective and concise papers.</p>
                         </div>
                         <div style={{display: "flex", justifyContent: "center", alignItems: "center", alignSelf: "center", height: "20%", width: "20%"}}>
                             <a target="_blank" rel="noreferrer" style={{color: colorPalette.secondaryA}} href='https://writingcenter.unc.edu/'><ArrowForwardIcon></ArrowForwardIcon></a>
