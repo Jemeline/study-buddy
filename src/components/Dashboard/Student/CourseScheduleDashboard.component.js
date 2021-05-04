@@ -43,7 +43,7 @@ function CourseScheduleDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colSpan="3" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>My Courses</strong></TableCell>
+                            <TableCell colSpan="5" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>My Courses</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
@@ -51,6 +51,7 @@ function CourseScheduleDashboard() {
                             <TableCell align="left">Course</TableCell>
                             <TableCell align="left">Title</TableCell>
                             <TableCell align="left">Time</TableCell>
+                            <TableCell align="left">Instructor</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -62,6 +63,7 @@ function CourseScheduleDashboard() {
                             <TableCell align="left">{row.courseSubject} {row.courseNumber}-{String(row.courseSection).padStart(3, '0')}</TableCell>
                             <TableCell align="left">{row.courseTitle}</TableCell>
                             <TableCell align="left">{row.courseSchedule[0].day} {(row.courseSchedule[0].time === 'TBA') ? "TBA": processTime(row.courseSchedule[0].time)}</TableCell>
+                            <TableCell align="left">{row.courseInstructor}</TableCell>
                         </TableRow>
                         )): <TableRow/>}
                     </TableBody>
