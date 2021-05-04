@@ -237,8 +237,8 @@ function StudentUserList(){
         styles={colourStyles}
       />
     </div>
-    <div style={{width:"70vw"}}>
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',maxHeight:'70vh',height:'70vh'}}>
+    <div style={{width:"75vw"}}>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'75vw',maxHeight:'70vh',height:'70vh'}}>
     <TableContainer>
         <Table stickyHeader size="medium">
           <TableHead>
@@ -254,7 +254,7 @@ function StudentUserList(){
               <TableCell align="left">Graduation Year</TableCell>
               <TableCell align="left">Program of Study</TableCell>
               <TableCell align="left">Minors</TableCell>
-              <TableCell align="left">Identifiers<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="learning-type"/></TableCell>
+              <TableCell align="left">Identifiers<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="identifier"/></TableCell>
               <TableCell align="left">Learning Style<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="learning-type"/></TableCell>
               <TableCell align="left">Add To Favorites<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="favorite"/></TableCell>
             </TableRow>
@@ -298,7 +298,7 @@ function StudentUserList(){
           <p style={{margin:'0px'}}><TransformOutlinedIcon/> Transfer</p>
         </ReactTooltip>
     </Paper>
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',height:'55px'}}>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'75vw',height:'55px'}}>
     <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
