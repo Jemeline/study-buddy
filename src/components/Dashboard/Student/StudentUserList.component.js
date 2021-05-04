@@ -245,6 +245,7 @@ function StudentUserList(){
         setGraduationYear([]);
         setProgramOfStudy([]);
         setIdentifiers([]);
+        setRowsFiltered(rows);
       }}>Clear Fields</Button>
     </div>
     <div style={{width:"75vw"}}>
