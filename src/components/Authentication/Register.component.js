@@ -36,8 +36,8 @@ function Register({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
     <div >
       <Container style={{width:'35vw', margin: "auto"}}> 
         <Col>
-        <img src={logo} style={{height: '35vh'}}/>
-        <br/>
+        <img src={logo} style={{height: '30vh'}}/>
+        <br/><br/>
         <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertRegister} onClose={() => setAlertRegister(false)} dismissible transition={false}>
           {alertMessageRegister}
         </Alert>
@@ -138,13 +138,13 @@ function Register({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                     style={{borderRadius:14}}
                   >
                   </Input>
-                  <FormText>Ex. 8475664332 (Only Numbers)</FormText>          
+                  <FormText style={{fontSize:'10px'}}>Ex. 8475664332</FormText>          
                 </FormGroup>
               </Col>
             </Row>
             <Button 
               size="lg" 
-              style={{backgroundColor:colorPalette.secondary,color:colorPalette.white}}
+              style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,fontSize:'1.5vw'}}
               type="submit"
               hidden={loadingRegister}
               disabled={
