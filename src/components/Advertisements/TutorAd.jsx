@@ -120,7 +120,7 @@ const TutorAd = ({ isTutor, ad }) => {
         </div>
         <div>
             {isTutor ? null : <Container>
-                <p>Studied with {capitalizeFirst(ad.first)}? Leave a rating! <InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="tutor-ad"/></p>
+                <p>Studied with {capitalizeFirst(ad.first)}? Leave a rating!</p>
                 <Row><Col>
                     <Slider
                         value={rating}
@@ -140,9 +140,6 @@ const TutorAd = ({ isTutor, ad }) => {
         {isTutor ? <Container>
             <Button variant="primary" style={{backgroundColor:colorPalette.secondary,"marginBottom": "2vh"}} data-testid="editBtn" onClick={e => setEditMode(true)}>Edit</Button>
         </Container> : null}
-        <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="tutor-ad" place="bottom" effect="float">
-            <p style={{margin:0,width:'250px'}}>Slide the slider to rate {capitalizeFirst(ad.first)}. (Please only submit ratings for tutors you have used).</p>
-        </ReactTooltip>
     </div>;
 };
 
