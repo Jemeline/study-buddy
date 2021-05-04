@@ -75,13 +75,6 @@ export async function getWeightedSum(student) {
                     matches[i]["sharedLearningType"].push(student.learningType[k])
                 }
             }
-            // for (let l = 0; l < student.studyLocation.length; l++) {
-            //     if (studentProfiles[i].studyLocation.includes(student.studyLocation[l])) {
-            //         matches[i]["sum"] += 3;
-            //         matches[i]["sharedStudyLocation"].push(student.studyLocation[l])
-
-            //     }
-            // }
         }
     }
 
