@@ -13,10 +13,10 @@ const TutorAdList = ({ isTutor, list }) => {
             container
             direction="row"
             justify="flex-start"
-            spacing={1}
+            spacing={3}
         >
             {list.map(ad => 
-                <Grid key={ad._id} item xs={12} sm={6} md={3} >
+                <Grid key={ad._id} item xs={4} sm={4} md={4} >
                     <TutorAd isTutor={isTutor} ad={ad}></TutorAd>
                 </Grid>
             )}

@@ -28,7 +28,7 @@ const AdminViewAds = () => {
                 
                 <Grid container direction="row" justify="flex-start" spacing={1}>
                     {ads.map(ad => (
-                        <Grid key={ad._id} item xs={12} sm={6} md={3}>
+                        <Grid key={ad._id} item xs={4} sm={4} md={4}>
                             <AdminAd ad={ad} />
                         </Grid>
                     ))}

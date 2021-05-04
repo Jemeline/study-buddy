@@ -19,7 +19,7 @@ const StudentFindTutors = () => {
             <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="tutor" place="bottom" effect="float">
                 <p style={{margin:0,width:'250px'}}>Browse our list of tutors to find one that suits your needs. You can view content posted by tutors below including courses they tutor, contact info, and ratings.</p>
             </ReactTooltip>  
-            <h3 style={{margin:'5px',fontFamily: 'Garamond, serif'}}>Find A Tutor<InfoOutlinedIcon style={{height:'30px'}} data-tip data-for="tutor"/></h3>
+            <h3 style={{margin:'10px',fontFamily: 'Garamond, serif'}}>Find A Tutor<InfoOutlinedIcon style={{height:'30px'}} data-tip data-for="tutor"/></h3>
             {ads ? 
                 ads.length !== 0 ? 
                     <TutorAdList isTutor={false} list={ads} /> 

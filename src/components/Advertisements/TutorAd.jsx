@@ -76,37 +76,37 @@ const TutorAd = ({ isTutor, ad }) => {
             </ModalBody>
         </Modal>
         <div style={{marginTop:'3%'}}> 
+            <p><strong>Name:</strong> {capitalizeFirst(ad.first)} {capitalizeFirst(ad.last)}</p>
+            <p><strong>Email: </strong>{ad.tutorEmail}</p>
             <Form.Control
                 as="textarea"
-                rows={4}
+                rows={6}
                 value={text}
                 onChange={e => setText(e.target.value)}
             />
         </div> 
         <div>
         <Input
-            style={{ width: "100%",backgroundColor:'white' }}
+            style={{ width: "100%",backgroundColor:'white',marginTop: "3%" }}
             type='text'
             placeholder="Courses You Add Show Up Here"
             value={courseSchedule.map(e=>e.courseSubject+' '+ e.courseNumber )}
             onClick={()=>setModal(true)}
         />
         </div>
-        <div style={{display:'flex',justifyContent:'center'}}>
-        <Button
-            size="small"
-            style={{backgroundColor:colorPalette.secondary,color:colorPalette.white}}
-            onClick={() => setCourseSchedule([])}
-        > Clear Courses</Button>
-        </div>
-        <div style={{display:'flex',justifyContent:'space-between',marginBottom: "3%"}}>
-            <Button style={{backgroundColor:colorPalette.secondary}} onClick={handleSubmitEdit}>Submit</Button>
-            <Button style={{backgroundColor:colorPalette.secondary}} data-testid="deleteBtn" onClick={handleDelete}>Delete Ad</Button>
-            <Button style={{backgroundColor:colorPalette.secondary}} onClick={e => {
+        <div style={{display:'flex',justifyContent:'space-between',marginBottom: "3%",marginTop: "3%"}}>
+            <Button style={{backgroundColor:colorPalette.secondary,fontSize:'1vw'}} onClick={handleSubmitEdit}>Submit</Button>
+            <Button style={{backgroundColor:colorPalette.secondary,fontSize:'1vw'}} data-testid="deleteBtn" onClick={handleDelete}>Delete Ad</Button>
+            <Button style={{backgroundColor:colorPalette.secondary,fontSize:'1vw'}} onClick={e => {
                 setText(ad.text);
                 setCourseSchedule([]);
                 setEditMode(false);
             }}>Cancel</Button>
+            <Button
+                size="small"
+                style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,fontSize:'1vw'}}
+                onClick={() => setCourseSchedule([])}
+            > Clear Courses</Button>
         </div>
     </div> 
     : <div style={{height:"100%",backgroundColor:colorPalette.white,textAlign:"left",paddingLeft:"2%",paddingRight:"2%", display:'flex',justifyContent:'space-between',flexDirection:'column',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',}}>
@@ -114,7 +114,7 @@ const TutorAd = ({ isTutor, ad }) => {
             <p><strong>Name:</strong> {capitalizeFirst(ad.first)} {capitalizeFirst(ad.last)}</p>
             <p><strong>Email: </strong>{ad.tutorEmail}</p>
             <p>{ad.text}</p>
-            <p style={{marginBottom:0,marginTop:0}}><strong>Courses:</strong></p>{ad.courses.map(e=> <p style={{marginBottom:0,marginTop:0}}>{e}, </p>)}
+            <p style={{marginBottom:0,marginTop:0}}><strong>Courses:</strong> {ad.courses.join(', ')}</p>
             {ad.ratings.length === 0 ? <p><strong>Average Rating:</strong> Unrated </p>: <p><strong>Average Rating:</strong> {Math.round((ad.ratings.reduce((acc, cur) => acc + cur) * 100 / ad.ratings.length)) / 100}</p>}
             <br/>
         </div>
