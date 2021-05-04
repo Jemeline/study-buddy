@@ -281,8 +281,8 @@ function StudentUserList(){
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.minor:''}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{(typeof(row.profile)==='undefined')?'':row.profile.identifiers.map(e=>getIconIdentifiers(e))}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{(typeof(row.profile)==='undefined')?'':row.profile.learningType.map(e=>getIconLearningType(e))}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.identifiers.map(e=>getIconIdentifiers(e))}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.learningType.map(e=>getIconLearningType(e))}</TableCell>
                 <TableCell align="left"><IconButton onClick={async () => {await handleFavorite(row.user,favorites,setFavorites);}}><FavoriteIcon style={{color:getFavorites(row.user)}}/></IconButton></TableCell>
               </TableRow>
             )): <TableRow/>}
@@ -328,7 +328,7 @@ function StudentUserList(){
       <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="favorite" place="bottom" effect="float">
           <p style={{margin:0,width:'250px'}}>Found the perfect Study Buddy? Check the heart to add them to your favorites. They wil be stored in the profile tab for safe keeping!</p>
       </ReactTooltip> 
-      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="click-row" place="top" effect="float">
+      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="click-row" place="bottom" effect="float">
         <p style={{margin:0,width:'250px'}}>Click on any row to view more information about the user</p>
       </ReactTooltip>
     </div>

@@ -144,9 +144,9 @@ function TopMatches(){
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedClasses.length > 0 ? "You're both taking " + row.sharedClasses.join(", ") : ""}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{getMajor(row.profile,userProfile)}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left"><strong><span style={{color:colorPalette.secondary}}>{getGraduationYear(row.profile,userProfile)}</span></strong></TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{row.sharedIdentifiers.length > 0 ? row.sharedIdentifiers.map(e=>getIconIdentifiers(e)): ""}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="center">{row.sharedLearningType.length > 0 ? row.sharedLearningType.map(e=>getIconLearningType(e)): ""}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left"><strong><span style={{color:colorPalette.secondary}} data-for='match-3' data-tip={row.profile.graduationYear}>{getGraduationYear(row.profile,userProfile)}</span></strong></TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedIdentifiers.length > 0 ? <span data-for='match-1' data-tip={row.sharedIdentifiers}>{row.sharedIdentifiers.map(e=>getIconIdentifiers(e))}</span>: ""}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.sharedLearningType.length > 0 ? <span data-for='match-2' data-tip={row.sharedLearningType}>{row.sharedLearningType.map(e=>getIconLearningType(e))}</span>: ""}</TableCell>
                 <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="learning-type" place="left" effect="float">
                   <p style={{margin:'0px'}}><VisibilityIcon/> Visual</p>
                   <p style={{margin:'0px'}}><PersonIcon/> Solitary</p>
@@ -171,6 +171,9 @@ function TopMatches(){
                 <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-list" place="bottom" effect="float">
                   <p style={{margin:'0px'}}>Click on any row to view more information about the user</p>
                 </ReactTooltip>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-1" place="left" effect="float" getContent={(dataTip) => `You are both ${dataTip} students`}/>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-2" place="left" effect="float" getContent={(dataTip) => `You are both ${dataTip} learners`}/>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-3" place="left" effect="float" getContent={(dataTip) => `You are both graduating in ${dataTip}`}/>
               </TableRow>
             )): <TableRow/>}
           </TableBody>
