@@ -32,6 +32,7 @@ import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
 import PoolOutlinedIcon from '@material-ui/icons/PoolOutlined';
+import {Button} from 'reactstrap';
 
 
 function StudentUserList(){
@@ -236,6 +237,15 @@ function StudentUserList(){
         menuPlacement="auto"
         styles={colourStyles}
       />
+      <br/>
+      <hr style={{borderTop: `3px solid ${colorPalette.secondary}`,marginTop:0}}/>
+      <Button style={{backgroundColor:colorPalette.secondary}} onClick={()=>{
+        setStudentName([]);
+        setStudentType([]);
+        setGraduationYear([]);
+        setProgramOfStudy([]);
+        setIdentifiers([]);
+      }}>Clear Fields</Button>
     </div>
     <div style={{width:"75vw"}}>
     <Paper hidden={hiddenTable} style={{overflow:'auto',width:'75vw',maxHeight:'70vh',height:'70vh'}}>
