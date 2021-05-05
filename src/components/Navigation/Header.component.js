@@ -34,8 +34,8 @@ function Header({isLoggedIn,setIsLoggedIn}){
     const location = useLocation().pathname;
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
-    return <div hidden={!isLoggedIn || (location==='/auth') || (location==='/')} style={{flexGrow: 1}}>
-      <AppBar position="static" style={{ background: colorPalette.secondaryA,height:'65px'}}>
+    return <div data-testid='Nav-Bar' hidden={!isLoggedIn || (location==='/auth') || (location==='/')} style={{flexGrow: 1}}>
+      <AppBar data-testid='App-Bar' position="static" style={{ background: colorPalette.secondaryA,height:'65px'}}>
         <Toolbar>
           <IconButton edge="start" style={{ background: colorPalette.secondaryA }}
             onClick={() => {

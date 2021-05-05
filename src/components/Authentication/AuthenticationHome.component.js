@@ -11,10 +11,10 @@ function AuthenticationHome({setIsLoggedIn}){
   const [first,setFirst] = useState('');
   const [id,setId] = useState('');
 
-  return <div>
+  return <div data-testid="Authentication">
     <div style={{float:'right',backgroundImage: `url(${background})`,height:'100vh',width:'60vw',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed'}}/>
     <div style={{float:'right',width:'40vw',height:'100vh'}}>
-        <div style={{marginTop:'5%',marginBottom:'5%',alignItems: 'center',display:'flex',justifyContent:'center',overflow:'auto'}}>
+        <div data-testid="Tabs" style={{marginTop:'5%',marginBottom:'5%',alignItems: 'center',display:'flex',justifyContent:'center',overflow:'auto'}}>
         {(tab==='login') ? <Login setIsLoggedIn={setIsLoggedIn} setTab={setTab} setFirst={setFirst} setEmail={setEmail} setId={setId}/> 
         : (tab==='register') ? <Register setIsLoggedIn={setIsLoggedIn} setTab={setTab} setFirst={setFirst} setEmail={setEmail} setId={setId}/>
         : (tab==='verify') ? <VerifyAccount setIsLoggedIn={setIsLoggedIn} setTab={setTab} first={first} email={email} id={id}/>

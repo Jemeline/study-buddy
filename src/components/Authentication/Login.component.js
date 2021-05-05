@@ -95,7 +95,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                 </div>
               <br/>
               Don't Have an Account?
-              <Button color="link" onClick={()=>{setTab('register')}}> Sign Up Now</Button>
+              <Button data-testid='Register' color="link" onClick={()=>{setTab('register')}}> Sign Up Now</Button>
               <br/>
               <Button color="link" onClick={()=>{setTab('recover')}}>Forgot Password?</Button>
           </Col>  
