@@ -35,6 +35,26 @@ export async function apiVerify(userData) {
     }    
 };
 
+export async function apiResetPassword(email) {
+    try {
+        const res = await axios.post(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/forgot-password/${email}`);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
+export async function apiVerifyResetPassword(token,userData) {
+    try {
+        const res = await axios.post(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/forgot-password-verify/${token}`,userData);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
 export async function apiToken(userData) {
     try { // app4
         const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/token', userData);

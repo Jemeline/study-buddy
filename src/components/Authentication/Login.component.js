@@ -97,7 +97,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
               Don't Have an Account?
               <Link style={{marginLeft:'5px'}} to="/auth" onClick={()=>{setTab('register')}}>Sign Up Now</Link>
               <br/>
-              <Link to="/" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
+              <Link to="/auth" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
           </Col>  
       </Container>  
   </div>
