@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button,Col,Container,Form,FormGroup,Input} from 'reactstrap';
+import {Button,Col,Container,Form,FormGroup,Input,FormFeedback} from 'reactstrap';
 import {Alert} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
@@ -8,7 +8,7 @@ import {getUser,logout} from '../../utils/common';
 import ReactLoading from 'react-loading';
 import {colorPalette} from '../../utils/design';
 import logo from '../study-buddy-tagline.png';
-import {validateEmail,validateResetToken,validatePassword} from '../../utils/regex';
+import {validateEmail,validateResetToken,validatePassword,validatePasswordLiteral} from '../../utils/regex';
 
 function RecoverPassword({setIsLoggedIn,setTab}){
     const history = useHistory();
@@ -106,8 +106,11 @@ function RecoverPassword({setIsLoggedIn,setTab}){
                             }}
                             invalid={password.length > 0 && !validatePassword(password)} 
                             valid={validatePassword(password)}
-                            style={{borderRadius:14,marginBottom:'10px'}}    
+                            style={{borderRadius:14,marginBottom:'0px'}}    
                         />
+                        <FormFeedback>
+                            {validatePasswordLiteral(password)}
+                        </FormFeedback>
                         <Input
                             type="password"
                             name="passwordConfirm"
@@ -118,8 +121,11 @@ function RecoverPassword({setIsLoggedIn,setTab}){
                             }}
                             invalid={passwordConfirm.length > 0 && (!validatePassword(passwordConfirm) || (password)!==(passwordConfirm))} 
                             valid={(password)===(passwordConfirm) && validatePassword(passwordConfirm)}
-                            style={{borderRadius:14,marginBottom:'0px'}}    
+                            style={{borderRadius:14,marginBottom:'0px',marginTop:'10px'}}    
                         />
+                        <FormFeedback>
+                            Passwords do not match
+                        </FormFeedback>
                         <Link style={{fontSize:'12px',marginTop:'0px',marginBottom:'5px'}} to="/auth" onClick={()=>{setStep(0);}}>I need a token</Link>
                         <br/><br/>
                         <Button 
