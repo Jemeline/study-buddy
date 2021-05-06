@@ -30,6 +30,14 @@ export function validateToken(token) {
     return false;
 };
 
+export function validateResetToken(token) {
+    const tokenRegex = /\b[0-9A-Z]{16}\b/gi;
+    if (tokenRegex.test(token)) {
+        return true;
+    }
+    return false;
+};
+
 export function validatePasswordLiteral(password) {
     const length = /^[\s\S]{8,32}$/;
     const upperCase = /[A-Z]/;

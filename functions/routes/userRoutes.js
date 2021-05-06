@@ -5,6 +5,9 @@ const UserModel = require("../models/user");
 const StudentProfileModel = require("../models/studentProfile");
 const app = express();
 const {check, validationResult} = require("express-validator");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
+const functions = require("firebase-functions");
 
 app.post("/user/login", [
   check("email", "Email is not valid").not().isEmpty().isEmail().normalizeEmail({remove_dots: false}),
@@ -178,5 +181,72 @@ async (req, res) => {
 }
 );
 
+app.post("/user/forgot-password/:email", [
+  check("email", "Email is not valid").not().isEmpty().isEmail().normalizeEmail({remove_dots: false}),
+],
+async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).jsonp(errors.array());
+
+  try {
+    const user = await UserModel.findOne({email: req.params.email});
+    if (!user) return res.status(401).send({msg: "The user id is not associated with any account."});
+    user.passwordResetToken = crypto.randomBytes(8).toString("hex");
+    const now = new Date().getTime();
+    user.passwordResetExpires = now/1000 + 3600;
+    user.save(function(err) {
+      if (err) {
+        return res.status(500).send({msg: err.message});
+      }
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: functions.config().studybuddy.gmail_account,
+          pass: functions.config().studybuddy.gmail_password,
+        },
+      });
+      const mailOptions = {
+        from: functions.config().studybuddy.gmail_account,
+        to: user.email, subject: "Study Buddy Password Reset",
+        text: "Hello "+user.first.charAt(0).toUpperCase()+user.first.slice(1).toLowerCase()+",\n\n" + "Please reset your password using the following token: "+ user.passwordResetToken};
+      transporter.sendMail(mailOptions, function(err) {
+        if (err) {
+          return res.status(500).send({msg: err.message});
+        }
+        res.status(200).send({msg: "A password reset token has been sent to " + user.email + "."});
+      });
+    });
+  } catch (err) {
+    res.status(500).send({msg: err.message});
+  }
+}
+);
+
+app.post("/user/forgot-password-verify/:token", [
+  check("newPassword", "New Password required").notEmpty(),
+],
+async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).jsonp(errors.array());
+
+  try {
+    const user = await UserModel.findOne({passwordResetToken: req.params.token});
+    if (!user) return res.status(401).send({msg: "The reset token is not associated with any account."});
+    const now = new Date().getTime();
+    if (user.passwordResetExpires <= now/1000) {
+      return res.status(401).send({msg: "Your token has expired. Please request a new one."});
+    }
+    user.password = req.body.newPassword;
+    user.save(function(err) {
+      if (err) {
+        return res.status(500).send({msg: err.message});
+      }
+      res.send({user: user.toJSON()});
+    });
+  } catch (err) {
+    res.status(500).send({msg: err.message});
+  }
+}
+);
 
 module.exports = app;
