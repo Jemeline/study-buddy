@@ -80,7 +80,8 @@ app.post("/user/add/favorites/:id", async (req, res) => {
 
 app.post("/user/remove/favorites/:id", async (req, res) => {
   try {
-    const user = await UserModel.updateOne({_id: req.params.id}, {"$pull": {"favorites": req.body.favorite}}).exec();
+    const user = await UserModel.updateOne({_id: req.params.id}, {"$pull": {"favorites": req.body.favorite}}).exec()
+    ;
     res.send(user);
   } catch (err) {
     console.log(err);
