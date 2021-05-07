@@ -44,10 +44,11 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "init": "npm i && firebase login && cd functions/ && npm i",
+    "init": "npm i && cd functions/ && npm i && firebase login",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "deploy": "firebase deploy",
     "eject": "react-scripts eject",
     "serve": "npm run build && firebase serve"
   },
