@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Allows student to browse other students by courses in common.
+Student can select course from dropdown prepopulated with their course
+schedule and filter students based on those in the same class
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import { getUser, capitalizeFirst } from "../../../utils/common";
 import {apiGetStudents,apiGetStudentProfiles,apiGetCoursesById} from "../../../utils/api";
@@ -12,6 +18,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ReactLoading from "react-loading";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function StudentClassListDashboard() {
     const history = useHistory();
@@ -49,7 +57,7 @@ function StudentClassListDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colspan="3" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse Users By Course</strong></TableCell>
+                            <TableCell colspan="3" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse Users By Course</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="class-list"/></TableCell>
                             <TableCell colspan="2" style={{ "text-align": "right",fontSize:'20px',fontFamily: 'Garamond, serif' }}>
                                 <select style={{backgroundColor:colorPalette.white,padding:'1px',outlineColor:colorPalette.secondary}}
                                     onChange={(val) => {
@@ -76,7 +84,7 @@ function StudentClassListDashboard() {
                     <TableBody>
                         <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
                         <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users In This Course</strong></TableCell></TableRow>
-                        {!loading ? 
+                        {(!loading && !error) ? 
                         rowsFiltered.map((row) => (
                         <TableRow hover key={row.user._id}>
                             <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
@@ -88,6 +96,9 @@ function StudentClassListDashboard() {
                     </TableBody>
                     </Table>
                 </TableContainer> 
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="class-list" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>Filter by your course schedule to find out who is in your classes. Select a course to get started.</p>
+                </ReactTooltip>
             </Paper>} 
         </div>
     );

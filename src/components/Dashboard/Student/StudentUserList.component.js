@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Component for browsing all active students and filtering
+students based on several criteria such as graduation year, program of study,
+student type, and name. 
+Route: https://study-buddy-d452c.web.app/find-students
+*/
 import React,{useState,useEffect} from 'react';
 import {apiGetStudents,apiGetStudentProfiles,apiAddFavorite,apiRemoveFavorite} from '../../../utils/api';
 import Table from '@material-ui/core/Table';
@@ -8,15 +14,32 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
-import {getUser,capitalizeFirst} from '../../../utils/common';
+import {getUser,capitalizeFirst,getIconIdentifiers,getIconLearningType} from '../../../utils/common';
 import ProfileRead from '../../Profile/View/ProfileRead.component.js';
 import {colorPalette} from '../../../utils/design';
-import { makeStyles } from "@material-ui/core/styles";
 import Select from 'react-select';
 import {Majors,Minors,GraduatePrograms} from '../../Survey/Student/utils/StudyPrograms';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import {Identifiers} from '../../Survey/Student/utils/common';
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import HearingIcon from '@material-ui/icons/Hearing';
+import PanToolIcon from '@material-ui/icons/PanTool';
+import FunctionsIcon from '@material-ui/icons/Functions';
+import GroupIcon from '@material-ui/icons/Group';
+import PersonIcon from '@material-ui/icons/Person';
+import RepeatOneOutlinedIcon from '@material-ui/icons/RepeatOneOutlined';
+import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
+import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
+import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
+import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
+import PoolOutlinedIcon from '@material-ui/icons/PoolOutlined';
+import {Button} from 'reactstrap';
+
 
 function StudentUserList(){
     const [loading, setLoading] = useState(false);
@@ -32,8 +55,8 @@ function StudentUserList(){
     const [hiddenProfile,setHiddenProfile] = useState(true);
     const [studentType, setStudentType] = useState([]);
     const [graduationYear, setGraduationYear] = useState([]);
+    const [identifiers, setIdentifiers] = useState([]);
     const [programOfStudy, setProgramOfStudy] = useState([]);
-    const classes = useStyles();
     const [optionsStudentNames, setOptionsStudentNames] = useState([]);
     const [studentName, setStudentName] = useState([]);
     const [favorites,setFavorites]=useState([]);
@@ -52,7 +75,7 @@ function StudentUserList(){
     const handleChangeStudentType = (e) => {
       setStudentType(e);
       setStudentName([]);
-      if (graduationYear.length===0 && programOfStudy.length===0 && e.length ===0){
+      if (graduationYear.length===0 && programOfStudy.length===0 && identifiers.length===0 && e.length ===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
@@ -60,7 +83,8 @@ function StudentUserList(){
           (typeof(row.profile)!=='undefined') &&
           ((graduationYear.length>0)?graduationYear.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
           ((e.length>0)?row.profile.studentType===e[0].value:true) &&
-          ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+          ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)&&
+          ((identifiers.length>0)?identifiers.map((ele)=>ele.value).some(val => row.profile.identifiers.indexOf(val) !== -1):true)
         )
         ));
       }
@@ -69,7 +93,7 @@ function StudentUserList(){
     const handleChangeGraduationYear = (e) => {
       setGraduationYear(e);
       setStudentName([]);
-      if (studentType.length===0 && programOfStudy.length===0 && e.length ===0){
+      if (studentType.length===0 && programOfStudy.length===0 && identifiers.length===0 && e.length ===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
@@ -77,7 +101,8 @@ function StudentUserList(){
           (typeof(row.profile)!=='undefined') &&
           ((e.length>0)?e.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
           ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&
-          ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+          ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)&&
+          ((identifiers.length>0)?identifiers.map((ele)=>ele.value).some(val => row.profile.identifiers.indexOf(val) !== -1):true)
         )
         ));
       }
@@ -86,16 +111,35 @@ function StudentUserList(){
     const handleChangePOS = (e) => {
       setProgramOfStudy(e);
       setStudentName([]);
-      if (studentType.length===0 && graduationYear.length===0 && e.length===0){
+      if (studentType.length===0 && graduationYear.length===0 && identifiers.length===0 && e.length===0){
         setRowsFiltered(rows);
       } else {
         setRowsFiltered(rows.filter((row)=>
         (
           (typeof(row.profile)!=='undefined') &&
           ((graduationYear.length>0)?graduationYear.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
-          ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&
-          ((e.length>0)?e.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1 || row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)
+          ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)&&
+          ((identifiers.length>0)?identifiers.map((ele)=>ele.value).some(val => row.profile.identifiers.indexOf(val) !== -1):true)&&
+          ((e.length>0)?e.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1):true)
         ) 
+        ));
+      }
+    };
+    const handleChangeIdentifiers = (e) => {
+      setIdentifiers(e);
+      setStudentName([]);
+      if (studentType.length===0 && graduationYear.length===0 && programOfStudy.length===0 && e.length===0){
+        setRowsFiltered(rows);
+      } else {
+        setRowsFiltered(rows.filter((row)=>{
+          return (
+            (typeof(row.profile)!=='undefined') &&
+            ((graduationYear.length>0)?graduationYear.map((ele)=>ele.value).includes(row.profile.graduationYear):true)&&
+            ((studentType.length>0)?row.profile.studentType===studentType[0].value:true) &&
+            ((programOfStudy.length>0)?programOfStudy.map((ele)=>ele.value).some(val => row.profile.programOfStudy.major.indexOf(val) !== -1|| row.profile.programOfStudy.graduateProgram.indexOf(val) !== -1):true)&&
+            ((e.length>0)?e.map((ele)=>ele.value).some(val => row.profile.identifiers.indexOf(val) !== -1):true)
+            ) 
+        }
         ));
       }
     };
@@ -105,6 +149,7 @@ function StudentUserList(){
       setStudentType([]);
       setGraduationYear([]);
       setProgramOfStudy([]);
+      setIdentifiers([]);
       if (e.length===0){
         setRowsFiltered(rows);
       } else {
@@ -137,14 +182,14 @@ function StudentUserList(){
     if (favorites.includes(user._id)){
       return colorPalette.secondary;
     } else {
-      return colorPalette.gray;
+      return 'lightgray';
     }
   };
 
   
   return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'space-evenly',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',width:'100vw',overflow:'auto'}}>
     <div hidden={hiddenTable} style={{width:'20vw',height:'calc(70vh + 55px)'}}>
-      <p style={{margin:0,color:colorPalette.secondary}}>Search By Attribute</p>
+      <p style={{margin:0,color:colorPalette.secondary}}>Search By Attribute<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="user-list"/></p>
       <hr style={{borderTop: `3px solid ${colorPalette.secondary}`,marginTop:0}}/>
       <Select
         isMulti
@@ -177,6 +222,16 @@ function StudentUserList(){
         styles={colourStyles}
       />
       <br/>
+      <Select
+        isMulti
+        options={optionsIdentifiers}
+        placeholder={"Identifiers"}
+        onChange={(e)=> handleChangeIdentifiers(e)}
+        value={identifiers}
+        menuPlacement="auto"
+        styles={colourStyles}
+      />
+      <br/>
       <p style={{margin:0,color:colorPalette.secondary}}>Search By Name</p>
       <hr style={{borderTop: `3px solid ${colorPalette.secondary}`,marginTop:0}}/>
       <Select
@@ -188,43 +243,79 @@ function StudentUserList(){
         menuPlacement="auto"
         styles={colourStyles}
       />
+      <br/>
+      <hr style={{borderTop: `3px solid ${colorPalette.secondary}`,marginTop:0}}/>
+      <Button style={{backgroundColor:colorPalette.secondary}} onClick={()=>{
+        setStudentName([]);
+        setStudentType([]);
+        setGraduationYear([]);
+        setProgramOfStudy([]);
+        setIdentifiers([]);
+        setRowsFiltered(rows);
+      }}>Clear Fields</Button>
     </div>
-    <div style={{width:"70vw"}}>
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',maxHeight:'70vh',height:'70vh'}}>
+    <div style={{width:"75vw"}}>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'75vw',maxHeight:'70vh',height:'70vh'}}>
     <TableContainer>
         <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
+                <TableCell colspan="9" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Find A Study Buddy</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="click-row"/></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableHead>
+            <TableRow>
               <TableCell align="left"></TableCell>
               <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Email</TableCell>
               <TableCell align="left">Student Type</TableCell>
               <TableCell align="left">Graduation Year</TableCell>
               <TableCell align="left">Program of Study</TableCell>
-              <TableCell align="left">Add To Favorites</TableCell>
+              <TableCell align="left">Minors</TableCell>
+              <TableCell align="left">Identifiers<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="identifier"/></TableCell>
+              <TableCell align="left">Learning Style<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="learning-type"/></TableCell>
+              <TableCell align="left">Add To Favorites<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="favorite"/></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-              <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
-              <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
-            {!loading ? 
+            <TableRow hidden={!error}><TableCell colSpan="9" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+            <TableRow hidden={rowsFiltered.length>0 || error}><TableCell colSpan="9" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Users Found</strong></TableCell></TableRow>
+            {(!loading && !error)? 
             rowsFiltered.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow className={classes.tableRow}
-              hover key={row.user._id}>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
+              <TableRow hover key={row.user._id} style={{cursor:'pointer'}}>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '3vw',width:"3vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '3vw',width:"3vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.name}</TableCell>
-                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{row.email}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':capitalizeFirst(row.profile.studentType)}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.graduationYear}</TableCell>
                 <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.major:row.profile.programOfStudy.graduateProgram[0]}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')? '':(row.profile.studentType === 'undergraduate')?row.profile.programOfStudy.minor:''}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.identifiers.map(e=>getIconIdentifiers(e))}</TableCell>
+                <TableCell onClick={()=> {setUser(row.user);setProfile(row.profile);setHiddenTable(true);setHiddenProfile(false);}} align="left">{(typeof(row.profile)==='undefined')?'':row.profile.learningType.map(e=>getIconLearningType(e))}</TableCell>
                 <TableCell align="left"><IconButton onClick={async () => {await handleFavorite(row.user,favorites,setFavorites);}}><FavoriteIcon style={{color:getFavorites(row.user)}}/></IconButton></TableCell>
               </TableRow>
             )): <TableRow/>}
           </TableBody>
         </Table>
-        </TableContainer>   
+        </TableContainer>  
+        <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="learning-type" place="left" effect="float">
+          <p style={{margin:'0px'}}><VisibilityIcon/> Visual</p>
+          <p style={{margin:'0px'}}><PersonIcon/> Solitary</p>
+          <p style={{margin:'0px'}}><GroupIcon/> Social</p>
+          <p style={{margin:'0px'}}><RecordVoiceOverIcon/> Verbal</p>
+          <p style={{margin:'0px'}}><HearingIcon/> Auditory/Musical</p>
+          <p style={{margin:'0px'}}><PanToolIcon/> Physical/Kinaesthetic</p>
+          <p style={{margin:'0px'}}><FunctionsIcon/> Logical/Mathematical</p>
+        </ReactTooltip> 
+        <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="identifier" place="left" effect="float">
+          <p style={{margin:'0px'}}><RepeatOneOutlinedIcon/> First Generation</p>
+          <p style={{margin:'0px'}}><MapOutlinedIcon/> Out-of-State</p>
+          <p style={{margin:'0px'}}><LanguageOutlinedIcon/> International</p>
+          <p style={{margin:'0px'}}><SchoolOutlinedIcon/> First Year</p>
+          <p style={{margin:'0px'}}><FunctionsIcon/> Greek Life</p>
+          <p style={{margin:'0px'}}><PoolOutlinedIcon/> Athlete</p>
+          <p style={{margin:'0px'}}><TransformOutlinedIcon/> Transfer</p>
+        </ReactTooltip>
     </Paper>
-    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'70vw',height:'55px'}}>
+    <Paper hidden={hiddenTable} style={{overflow:'auto',width:'75vw',height:'55px'}}>
     <TablePagination
           rowsPerPageOptions={[5,10, 25, 100]}
           component="div"
@@ -238,6 +329,15 @@ function StudentUserList(){
       <div hidden={hiddenProfile}>
         <ProfileRead user={user} profile={profile} setHiddenTable={setHiddenTable} setHiddenProfile={setHiddenProfile} setHideProfileTabs={setHideProfileTabs} hideProfileTabs={false}/>
       </div>
+      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="user-list" place="bottom" effect="float">
+          <p style={{margin:0,width:'250px'}}>Whether you want to find your friends or find your perfect studying companion, this tool gives you the power to filter our users based on your own specifications.</p>
+      </ReactTooltip> 
+      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="favorite" place="bottom" effect="float">
+          <p style={{margin:0,width:'250px'}}>Found the perfect Study Buddy? Check the heart to add them to your favorites. They wil be stored in the profile tab for safe keeping!</p>
+      </ReactTooltip> 
+      <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="click-row" place="bottom" effect="float">
+        <p style={{margin:0,width:'250px'}}>Click on any row to view more information about the user</p>
+      </ReactTooltip>
     </div>
     </div>
 }; 
@@ -266,13 +366,7 @@ async function handleFavorite(rowUser,favorites,setFavorites){
   };
 };
 
-const useStyles = makeStyles((theme) => ({
-  tableRow: {
-   '&&:hover': {
-      // backgroundColor: colorPalette.primary,
-    },
-  },
-}));
+
 
 const optionsStudentType = [
   { value: 'undergraduate', label: 'Undergraduate' },
@@ -281,7 +375,7 @@ const optionsStudentType = [
 
 const optionsMajors = Majors.map((e)=> {return {label:e,value:e}});
 const optionsGraduatePOS = GraduatePrograms.map((e)=> {return {label:e,value:e}});
-
+const optionsIdentifiers = Identifiers.map((e)=> {return {label:e,value:e}});
 const years = [...Array(9).keys()].map(i => i + new Date().getFullYear());
 const optionsGraduationYear = years.map((e)=> {return {label:e,value:e}});
 

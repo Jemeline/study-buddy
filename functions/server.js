@@ -1,4 +1,13 @@
+/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
+/* Author: Jada Pfeiffer
+Purpose: Express server connected to MongoDB Atlas using Mongoose
+wrapped in a firebase function for deployment.
+Utilizes six different routers with all endpoints from the base URL:
+https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api
+For more information on API deployment:
+https://firebase.google.com/docs/functions/get-started
+*/
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");

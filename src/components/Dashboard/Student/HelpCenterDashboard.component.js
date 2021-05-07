@@ -1,3 +1,7 @@
+/* Author: Jada Pfeiffer
+Purpose: Tile that directs student to Help Center onClick
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import Paper from '@material-ui/core/Paper';
 import logo from '../../study-buddy.png';

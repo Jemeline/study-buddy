@@ -9,17 +9,18 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {getUser,capitalizeFirst} from '../../../utils/common';
+import {getUser,capitalizeFirst, getMatchColor} from '../../../utils/common';
 import {getWeightedSum} from '../../Survey/MatchingAlgorithm';
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import { useHistory } from "react-router-dom";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 
 function SuggestedMatchesDashboard() {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [users, setUsers] = useState({});
     const [rows, setRows] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -42,9 +43,7 @@ function SuggestedMatchesDashboard() {
             const studentProfiles = (await apiGetStudentProfiles()).data;
             const awaitedUserMatches = await userMatches;
             const orderedStudents = awaitedUserMatches.map(match => students.find(student => student._id === studentProfiles.find(profile => profile._id === match["id"])._userId));
-            if (students != null) {
-                setUsers(students);
-                setRows(await orderedStudents.filter((e)=>!(e.disabled || e._id===JSON.parse(getUser())._id)).map(student=> createData(
+            setRows(await orderedStudents.filter((e)=>!(e.disabled || e._id===JSON.parse(getUser())._id)).map(student=> createData(
                 (capitalizeFirst(student.first) + ' '+ capitalizeFirst(student.last)),
                 student.email,
                 student.phoneNumber,
@@ -52,16 +51,13 @@ function SuggestedMatchesDashboard() {
                 studentProfiles.find(element => element._userId === student._id),
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedClasses"], 
                 awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["sharedLearningType"],
-                awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"]
-                )));
-                setLoading(false);
-            } else {
-                setError(true);
-                setLoading(false);
-            }  
+                awaitedUserMatches.find(match => match["id"] === studentProfiles.find(profile => profile._userId === student._id)._id)["percentMatch"],
+                studentProfiles.find(element => element._userId === student._id).graduationYear
+            )));
+            setLoading(false);
         } catch (err){
-        setError(true);
-        setLoading(false);
+            setError(true);
+            setLoading(false);
         }  
     }, []);
 
@@ -73,7 +69,7 @@ function SuggestedMatchesDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colspan="7" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>My Matches</strong></TableCell>
+                            <TableCell colspan="7" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>My Matches</strong><InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="match-dash"/></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
@@ -82,27 +78,35 @@ function SuggestedMatchesDashboard() {
                         <TableCell align="left" ></TableCell>
                         <TableCell align="left">Name</TableCell>
                         <TableCell align="left">Email</TableCell>
+                        <TableCell align="left">Class</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                    <TableRow hidden={!error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+                    <TableRow hidden={rows.length>0 || error}><TableCell colSpan="7" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>No Matches Found</strong></TableCell></TableRow>
+                    {(!loading && !error)? 
+                        rows.filter(row=>row.percentMatch>0).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                         <TableRow hover key={row.user._id} hidden={(row.user._id ===JSON.parse(getUser())._id) || row.user.disabled}>
-                            <TableCell align="left">{row.percentMatch+'%'}</TableCell>
+                            <TableCell align="left"><span style={{color:getMatchColor(row.percentMatch),fontSize:'15px'}}><strong>{row.percentMatch+'%'}</strong></span></TableCell>
                             <TableCell align="left">{(!row.user.avatar)?<img src={avatarUnknown} style={{height: '5vw',width:"5vw",borderRadius:'50%'}}/>:<div style={{borderRadius:'50%',height: '5vw',width:"5vw",backgroundImage:`url(${row.user.avatar})`,backgroundSize:'cover',backgroundPosition:'center'}}/>}</TableCell>
                             <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="left">{row.email}</TableCell>
+                            <TableCell align="left">{row.gradYear}</TableCell>
                         </TableRow>
-                        ))}
+                    )): <TableRow/>}
                     </TableBody>
                     </Table>
                 </TableContainer>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="match-dash" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>The Study Buddies we have matched you with, ranked highest to lowest in terms of compatibility.</p>
+                </ReactTooltip>  
             </Paper>} 
         </div>
     );
 }
 
-function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch) {
-    return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch };
+function createData(name, email, phone, user,profile, sharedClasses, sharedLearningType, percentMatch, gradYear) {
+    return { name, email, phone, user, profile, sharedClasses, sharedLearningType, percentMatch, gradYear };
 };
 
 export default SuggestedMatchesDashboard;

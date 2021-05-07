@@ -21,9 +21,10 @@ async function getStudentProfiles() {
 // Use survey responses to generate weighted sum of similar answers
 export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
+    console.log(studentProfiles);
     
     let matches = [];
-    const total = student.courseSchedule.length * 50 + student.learningType.length * 5;
+    const total = ((student.courseSchedule.length<2)?student.courseSchedule.length * 50:100) + student.programOfStudy.major.length * 20 + 15 + student.identifiers.length * 10 + student.learningType.length * 5;
 
     for (let i = 0; i < studentProfiles.length; i++) {
         matches[i] = {
@@ -33,51 +34,54 @@ export async function getWeightedSum(student) {
             "sharedLearningType": [], 
             "sharedStudyLocation": [], 
             "sharedIdentifiers": [],
-            "percentMatch": 0
+            "sharedMajors": [],
+            "sharedGradYear": [],
+            "percentMatch": 0,
         };
     }
     for (let i = 0; i < studentProfiles.length; i++) {
         if (studentProfiles[i]._id !== student._id) {
             for (let j = 0; j < student.courseSchedule.length; j++) {
-                if (studentProfiles[i].courseSchedule.includes(student.courseSchedule[j])) {
-                    // Add a large value if the students have a class in common, so that they show up at the top of the results
-                    // After the first class, the value added decreases because each additional class is less significant
+                const cleanCourseArr = studentProfiles[i].courseScheduleImproved.map(course=>course.courseSubject + " " + course.courseNumber);
+                const cleanCourse = student.courseScheduleImproved[j].courseSubject+ " " +student.courseScheduleImproved[j].courseNumber;
+                if (cleanCourseArr.includes(cleanCourse)) {
                     matches[i]["sum"] += 50;
                     const course = (await apiGetCourseById(student.courseSchedule[j])).data;
                     const courseClean = course.courseSubject + " " + course.courseNumber;
                     matches[i]["sharedClasses"].push(courseClean);
+                    console.log(matches[i]["sharedClasses"]);
+                }
+            }
+            for (let n = 0; n < student.programOfStudy.major.length; n++) {
+                if (studentProfiles[i].programOfStudy.major.includes(student.programOfStudy.major[n])) {
+                    matches[i]["sum"] += 20;
+                    matches[i]["sharedMajors"].push(student.programOfStudy.major[n])
+                }
+            }
+            if (studentProfiles[i].graduationYear === student.graduationYear) {
+                matches[i]["sum"] += 15
+                matches[i]["sharedGradYear"] = true;
+            } else {
+                matches[i]["sharedGradYear"] = false;
+            }
+            for (let m = 0; m < student.identifiers.length; m++) {
+                if (studentProfiles[i].identifiers.includes(student.identifiers[m])) {
+                    matches[i]["sum"] += 10;
+                    matches[i]["sharedIdentifiers"].push(student.identifiers[m])
                 }
             }
             for (let k = 0; k < student.learningType.length; k++) {
                 if (studentProfiles[i].learningType.includes(student.learningType[k])) {
-
-                    // matches[i] += student.weights[0];
                     matches[i]["sum"] += 5;
                     matches[i]["sharedLearningType"].push(student.learningType[k])
-                }
-            }
-            for (let l = 0; l < student.studyLocation.length; l++) {
-                if (studentProfiles[i].studyLocation.includes(student.studyLocation[l])) {
-
-                    // matches[i] += student.weights[1];
-                    matches[i]["sum"] += 2;
-                    matches[i]["sharedStudyLocation"].push(student.studyLocation[l])
-
-                }
-            }
-            for (let m = 0; m < student.identifiers.length; m++) {
-                if (studentProfiles[i].identifiers.includes(student.identifiers[m])) {
-
-                    // matches[i] += student.weights[2];
-                    matches[i]["sum"] += 1;
-                    matches[i]["sharedIdentifiers"].push(student.identifiers[m])
                 }
             }
         }
     }
 
     for (let i = 0; i < matches.length; i++) {
-        matches[i]["percentMatch"] = Math.floor(matches[i]["sum"] * 100 / total)
+        const percent = Math.floor(matches[i]["sum"] * 100 / total);
+        matches[i]["percentMatch"] = (percent>100)?100:percent;
     }
 
     matches.sort((a, b) => b["sum"] - a["sum"]);

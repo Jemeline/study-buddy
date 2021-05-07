@@ -7,10 +7,11 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Grid from '@material-ui/core/Grid';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 
 function MassStudyInvite() {
-
     const [user, setUser] = useState(JSON.parse(getUser()));
     const [myClasses, setMyClasses] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
@@ -114,38 +115,40 @@ function MassStudyInvite() {
         <div style={{boxSizing: "border-box", display: "flex", alignContent: "stretch", backgroundColor: colorPalette.gray, height: "92vh"}}>
             <Grid container justify="center">
                 <Grid item xs={12} md={4}  style={{display: "flex"}}>
-                    <Paper elevation={8} style={{marginRight: "2vw", overflow: "scroll", display: "flex", flexDirection: "column", backgroundColor: colorPalette.white, height: "50vh", justifyContent: "center", alignSelf: "center"}}>
-                        <p style={{}}>What better way to start a study group than by inviting your whole class! </p>
-                        <hr style={{width: "80%", border: `2px solid ${colorPalette.secondary}`}}></hr>
-                        <p style={{}}>Select a class, set the details, write a message, and an email will be sent to everyone in the selected class!</p>
-                        <hr style={{width: "80%", border: `2px solid ${colorPalette.secondary}`}}></hr>
-                        <p style={{}}>Happy Studying!</p>
-                    </Paper>                    
-                </Grid>
-                <Grid item xs={12} md={4}  style={{display: "flex"}}>
-                    <Paper elevation={5} style={{overflow: "scroll", marginLeft: "2vw", display: "flex", flexDirection: "column", backgroundColor: colorPalette.white, height: "75vh", width: "50vw", justifyContent: "flex-start", alignItems: "center", alignSelf: "center"}}>
-                        <form onSubmit={handleSubmit} style={{height: "60%", width: "80%", margin: "10% auto"}}>
-                            <div style={{display: "flex", flexDirection: "column", alignContent: "flex-start", width: "50%"}}>
-                                <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="class">Class:</label>
+                    <Paper elevation={5} style={{overflow: "scroll", marginLeft: "2vw", display: "flex", flexDirection: "column", backgroundColor: colorPalette.white, height: "75vh", width: "100%", justifyContent: "flex-start", alignItems: "center", alignSelf: "center"}}>
+                        <form onSubmit={handleSubmit} style={{height: "75vh", width: "100%", margin: "10% auto",display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+                            <h5>Send A Study Invite<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="mass-invite-1"/></h5>
+                            <div style={{display: "flex", flexDirection: "column", alignContent: "flex-start", width: "75%"}}>
+                                <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="class">Class:<InfoOutlinedIcon style={{height:'20px'}} data-tip data-for="mass-invite-2"/></label>
                                 <select id="class" required onChange={handleClassChange} name="chosenClass" style={{padding: "5px"}}>
                                     <option value="" defaultValue key="placeholder">Choose a class...</option>
                                     {myClasses.map(c => <option key={c[0]} value={[c[0], c[1]]}>{c[1]}</option>)}
                                 </select>
-                                <hr style={{margin: "8px auto"}}></hr>
+                                <hr style={{margin: "10px auto"}}></hr>
                                 <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="when">When:</label>
                                 <DateTimePicker id="when" required minDetail="year" value={datetime} disableClock={true} onChange={handleDateTimeChange} />
                                 <hr style={{margin: "8px auto"}}></hr>
                                 <label style={{alignSelf: "flex-start", marginBottom: "0"}} for="location">Where:</label>
-                                <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location..." />
-                                <hr style={{margin: "30px auto"}}></hr>
+                                <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location (or zoom link)..." style={{padding: "5px"}}/>
+                                <hr style={{margin: "10px auto"}}></hr>
+                            
+                            <textarea onChange={handleMessageChange} name="message" placeholder={"Add an additional message here..."} style={{width: "100%", height: "30%", margin: "auto", resize: "none"}}></textarea>
                             </div>
-                            <textarea onChange={handleMessageChange} name="message" placeholder={"Add additional info here..."} style={{width: "100%", height: "30%", margin: "auto", resize: "none"}}></textarea>
-                            <hr style={{margin: "30px auto"}}></hr>
-                            <button type="submit" style={{width: "25%", backgroundColor: colorPalette.primary}}><SendRoundedIcon /></button>
+                            <hr style={{margin: "10px auto"}}></hr>
+                            <button data-tip data-for="mass-invite-3" type="submit" style={{width: "25%", backgroundColor: colorPalette.primary}}><SendRoundedIcon /></button>
                             <strong><p style={{color: colorPalette.secondaryA}}>{successMessage}</p></strong>
                             <p>{errorMessage}</p>
                         </form>
                     </Paper>
+                    <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="mass-invite-1" place="top" effect="float">
+                        <p style={{margin:0,width:'250px'}}>What better way to start a study group than by inviting your whole class!</p>
+                    </ReactTooltip>
+                    <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="mass-invite-2" place="top" effect="float">
+                        <p style={{margin:0,width:'250px'}}>Select a class, set the details, write a message, and an email will be sent out to everyone in the selected class inviting them to join your for a study session.</p>
+                    </ReactTooltip>
+                    <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="mass-invite-3" place="top" effect="float">
+                        <p style={{margin:0,width:'150px'}}>Happy Studying!</p>
+                    </ReactTooltip>
                 </Grid>
             </Grid>
         </div>

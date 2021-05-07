@@ -1,3 +1,11 @@
+/* Author: Jada Pfeiffer
+Purpose: Since Study Buddy is an application designed to foster communication
+between students, we want to ensure users have supplied valid email addresses.
+This component verifies user email address by sending a code to the email and asking
+the user to inut the code they recieved.
+Redirects user to Dashboard component upon successful registration
+Route: https://study-buddy-d452c.web.app/auth
+*/
 import React, {useState} from 'react';
 import {Button,Col,Container,Form,FormGroup,Input} from 'reactstrap';
 import {Alert} from 'react-bootstrap';
@@ -57,9 +65,9 @@ function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
                     Your token is incorrect or expired. Please <Link to="/auth" onClick={()=>{getNewToken();}}>request a new token</Link> or try again.
                 </Alert>
                 <h5>{h5TagVerify}</h5>
-                <p style={{marginBottom:0}}>{p1TagVerify}</p>
-                
-                <p><strong><em>{p2TagVerify}</em></strong></p>
+                <p style={{margin:0}}>{p1TagVerify}</p>
+                <p style={{margin:0}}><strong><em>{p2TagVerify}</em></strong></p>
+                <br/>
                 <Form hidden={!tokenVerify || verified} className="form" style={{width:'20vw',margin: "auto"}}>
                     <FormGroup>
                         <Input
@@ -78,7 +86,7 @@ function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
                 </Form>
                 <Button 
                 size="md"
-                style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'40%',borderRadius:14}} 
+                style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14,fontSize:'1vw'}} 
                 hidden={tokenVerify || loadingVerify}
                 disabled={!(email.length > 0)}
                 onClick={async () => {
@@ -92,7 +100,7 @@ function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
                 </Button>
                 <Button 
                     size="md"
-                    style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'40%',borderRadius:14}} 
+                    style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14,fontSize:'1vw'}} 
                     hidden={!tokenVerify || verified || loadingVerify}
                     onClick={async () => {
                         setLoadingVerify(true);
@@ -107,7 +115,7 @@ function VerifyAccount({setIsLoggedIn,setTab,first,email,id}){
                   </Button>
                   <Button 
                     size="md"
-                    style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14}} 
+                    style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14,fontSize:'1.5vw'}} 
                     hidden={!verified || loadingVerify}
                     onClick={() => {
                         setLoadingVerify(true);

@@ -7,7 +7,9 @@ import { init } from 'emailjs-com';
 import Paper from '@material-ui/core/Paper';
 import { colorPalette } from "../../../utils/design";
 import {getUsers} from '../../../utils/api';
-
+import ReactLoading from "react-loading";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function InviteDashboard() {
     const [name, setName] = useState("");
@@ -15,18 +17,22 @@ function InviteDashboard() {
     const [alertMessage, setAlertMessage] = useState("");
     const [emails, setEmails] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     init('user_CiCtPrm14cI8KybGSOClZ');
     const { first, last } = JSON.parse(getUser());
 
     useEffect(async () => {
         try{
             setLoading(true);
+            setError(false);
             const data = await getUsers();
             const emailArr = await data.data.map(e=>e.email);
             setEmails(emailArr);
             setLoading(false);
         } catch (err){
-          console.log(err);
+            setLoading(false);
+            setError(true);
+            console.log(err);
         }  
       }, []);
     
@@ -49,6 +55,7 @@ function InviteDashboard() {
             }
         } catch(err) {
             console.error(err);
+            setError(true);
             setAlertMessage("Something went wrong. Your invite was not sent.");
         }
     };

@@ -12,7 +12,7 @@ import StudentUnsurveyed from '../Student/StudentUnsurveyed.component';
 import StudyPreferencesRead from './StudyPreferencesRead.component';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import UndoIcon from '@material-ui/icons/Undo';
-import Calendar from '../../Calendar/Calendar.component'
+import CalendarRead from '../../Calendar/CalendarRead.component'
 
 function ProfileRead({user,profile,setHiddenProfile,setHiddenTable,setHideProfileTabs,hideProfileTabs}){
   const theme = useTheme();
@@ -40,7 +40,7 @@ function ProfileRead({user,profile,setHiddenProfile,setHiddenTable,setHideProfil
     {(value === 1) ? <UserDetailsRead user={user}/>
     :(value === 2) ? <ContactInfoRead user={user}/>
     :(value === 3) ? ((user.isSurveyed) ? <StudyPreferencesRead profile={profile}/> : <StudentUnsurveyed/>)
-    :(value === 4) ? <Calendar user={user}/>
+    :(value === 4) ? <CalendarRead user={user}/>
     :<p>3</p>}
     </div>
 </div>

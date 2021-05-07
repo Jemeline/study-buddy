@@ -67,8 +67,7 @@ function UserDetails({user,setUser,hidden}) {
             handleClose();
             if (updateType==='details'){
               await handleUpdate(first,last,user,setFirst,setLast,login,setUser);
-            } else {
-              
+            } else {  
             }
             setUpdate(false);
             setUpdateType('');

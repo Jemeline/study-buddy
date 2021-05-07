@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used to display student course schedule on Dashboard
+Shows course name, number, subject, and instructors
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import { getUser, storeTabValue } from "../../../utils/common";
 import {apiGetStudentProfiles,apiGetCoursesById} from "../../../utils/api";
@@ -43,7 +48,7 @@ function CourseScheduleDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colSpan="3" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>My Courses</strong></TableCell>
+                            <TableCell colSpan="5" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>My Courses</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
@@ -51,17 +56,19 @@ function CourseScheduleDashboard() {
                             <TableCell align="left">Course</TableCell>
                             <TableCell align="left">Title</TableCell>
                             <TableCell align="left">Time</TableCell>
+                            <TableCell align="left">Instructor</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
                         <TableRow hidden={courses.length>0 || error}><TableCell colSpan="3" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Add A Course To Your Schedule</strong></TableCell></TableRow>
-                        {!loading ? 
+                        {(!loading && !error) ? 
                         courses.map((row) => (
                         <TableRow hover key={row._id}>
                             <TableCell align="left">{row.courseSubject} {row.courseNumber}-{String(row.courseSection).padStart(3, '0')}</TableCell>
                             <TableCell align="left">{row.courseTitle}</TableCell>
                             <TableCell align="left">{row.courseSchedule[0].day} {(row.courseSchedule[0].time === 'TBA') ? "TBA": processTime(row.courseSchedule[0].time)}</TableCell>
+                            <TableCell align="left">{row.courseInstructor}</TableCell>
                         </TableRow>
                         )): <TableRow/>}
                     </TableBody>

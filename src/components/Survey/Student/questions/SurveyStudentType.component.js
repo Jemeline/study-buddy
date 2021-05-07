@@ -8,8 +8,14 @@ function SurveyStudentType({studentType,setStudentType,hidden}){
     const [graduateClassName, setGraduateClassName] = useState((studentType==='graduate') ? 'selected': '');
     const [undergraduateClassName, setUndergraduateClassName] = useState((studentType==='undergraduate') ? 'selected': '');
 
+    useEffect(async () => {
+        setGraduateClassName((studentType==='graduate') ? 'selected': '');
+        setUndergraduateClassName((studentType==='undergraduate') ? 'selected': '');    
+    }, [studentType]);
+
+    
     return <div hidden={hidden}> 
-            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>WHICH TYPE OF STUDENT ARE YOU?</h4>
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw',fontFamily: 'Garamond, serif'}}>WHICH TYPE OF STUDENT ARE YOU?</h4>
             <div style={{display: 'flex',justifyContent: "space-between"}}>
                 <div className={graduateClassName} onClick={(e)=>{setGraduateClassName('selected');setUndergraduateClassName('');setStudentType('graduate');storeStudentType('graduate');}} style={{marginLeft:"8%",width: '40%',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px'}}>
                     <br></br>

@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used to display all active students for student
+to browse through on dashboard
+Condensed version of StudentUserList 
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import { getUser, capitalizeFirst } from "../../../utils/common";
 import {apiGetStudents,apiGetStudentProfiles} from "../../../utils/api";

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import Grid from '@material-ui/core/Grid';
 import {colorPalette} from '../../utils/design';
+import Paper from '@material-ui/core/Paper';
+import logo from '../../components/study-buddy.png';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 function HelpCenter() {
     return <div data-testid='Help-Center' style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'flex-start'}}>
@@ -33,8 +35,6 @@ function HelpCenter() {
                         <a href="/find-tutors">Search for a tutor</a>
                     </Grid>
                 </Grid>
-                
-                
             </div>
 }
 

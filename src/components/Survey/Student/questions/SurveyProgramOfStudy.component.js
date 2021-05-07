@@ -25,7 +25,7 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
     };
 
     return <div hidden={hidden}> 
-            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw'}}>SELECT YOUR PROGRAM(S) OF STUDY</h4>
+            <h4 style={{margin:'auto',paddingBottom:'1.5vw',fontSize:'2vw',fontFamily: 'Garamond, serif'}}>SELECT YOUR PROGRAM(S) OF STUDY</h4>
             <div hidden={studentType==='undergraduate'} style={{margin:'auto',paddingBottom:'1.5vw'}}>
             <Select
                 placeholder={"Select Your Program of Study (Required)"}
@@ -45,7 +45,7 @@ function SurveyProgramOfStudy({major,setMajor,minor,setMinor,graduatePOS,setGrad
                 isMulti
                 options={(major.length + minor.length) === maxOptions ? [] : selectMajors}
                 onChange={(e)=> handleChangeMajor(e)}
-                noOptionsMessage={()=>'Max 3 Selections'}
+                noOptionsMessage={()=>'Max 3 Selections Total'}
                 styles={colourStyles}
                 value={major}
                 menuPlacement="auto"

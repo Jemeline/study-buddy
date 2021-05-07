@@ -1,3 +1,11 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used for user sign in. Form feedback notifies user if
+email format is invalid. Several alerts will also display conditionally for
+incorrect credentials, if user is already logged in, etc.
+Redirects user to VerifyAccount component if user has not verified email
+or Dashboard if user has verified email
+Route: https://study-buddy-d452c.web.app/auth
+*/
 import React, {useState} from 'react';
 import {Button,Col,Container,Form,
   FormGroup,FormFeedback,Input} from 'reactstrap';
@@ -29,10 +37,10 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
   };
 
   return <div className="Login" data-testid="Login"> 
-      <Container style={{width:'30vw',margin: "auto"}} >     
+      <Container style={{width:'35vw',margin: "auto"}} >     
         <Col>
           <img src={logo} alt="logo" style={{height: '35vh'}}/>
-          <br/>
+          <br/><br/>
             <Alert data-testid="login-alert-incomplete-creds" style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertLogin} onClose={() => setAlertLogin(false)} dismissible transition={false}>
                 {alertMessageLogin}
             </Alert>
@@ -87,7 +95,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                       setAlertMessageLogin,setAlertInvalidLoginCreds,setIsLoggedIn,setLoadingLogin,setAlertAlreadyLoggedIn,
                       dismissAlerts,setFirst,setEmail,setId,setTab);
                   }}
-                  style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'30%',borderRadius:14}}                                                                                                                
+                  style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14,fontSize:'1.5vw'}}                                                                                                                
                 > Sign In</Button>
                 <br/>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -95,9 +103,9 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                 </div>
               <br/>
               Don't Have an Account?
-              <Button data-testid='Register' color="link" onClick={()=>{setTab('register')}}> Sign Up Now</Button>
+              <Link style={{marginLeft:'5px'}} data-testid='Register' to="/auth" onClick={()=>{setTab('register')}}>Sign Up Now</Link>
               <br/>
-              <Button color="link" onClick={()=>{setTab('recover')}}>Forgot Password?</Button>
+              <Link to="/auth" onClick={()=>{setTab('recover')}}>Forgot Password?</Link>
           </Col>  
       </Container>  
   </div>

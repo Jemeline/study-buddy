@@ -11,7 +11,7 @@ import {storeCurrPage} from '../Survey/Student/utils/common';
 
 
 
-function Calendar(user) {
+function CalendarRead(user) {
     function createEventId() {return String(eventGuid++)}
     const history = useHistory();
     const [ iEvents, setEvents ] = useState(null);
@@ -80,18 +80,9 @@ function Calendar(user) {
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     headerToolbar={{
-                        left: 'prev next updateScheduleButton',
+                        left: 'prev next today',
                         center: 'title',
-                        right: 'today dayGridMonth timeGridWeek timeGridDay'
-                    }}
-                    customButtons={{
-                        updateScheduleButton: {
-                            text: 'Update Schedule',
-                            click: function() {
-                                storeCurrPage(5);
-                                history.push(`/student-survey`);
-                            },
-                        },
+                        right: 'dayGridMonth timeGridWeek timeGridDay'
                     }}
                     initialView='dayGridMonth'
                     editable={false}
@@ -116,4 +107,4 @@ function Calendar(user) {
     }  
 }
 
-export default Calendar;
+export default CalendarRead;

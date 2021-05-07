@@ -1,24 +1,38 @@
+/* Author: Jada Pfeiffer
+Purpose: Displays the student profile of the currently authenticated
+student
+Condensed version of StudentProfile
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import { getUser, capitalizeFirst } from "../../../utils/common";
 import {apiUpdateUser,apiGetStudentProfile} from "../../../utils/api";
 import avatarUnknown from '../../Profile/Student/unknown-avatar.jpg';
 import Paper from '@material-ui/core/Paper';
 import { useHistory } from "react-router-dom";
+import ReactLoading from "react-loading";
+import {colorPalette} from "../../../utils/design";
 
 function ProfileDashboard() {
     const history = useHistory();
     const user = JSON.parse(getUser());
     const [avatar, setAvatar] = useState('');
     const [profile, setProfile] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     
     useEffect(async () => {
         try{
+            setLoading(true);
             const data = await apiUpdateUser(user._id,{});
             const profile = await apiGetStudentProfile(user._id);
             setAvatar(data.data.avatar);
             setProfile(profile.data);
+            setLoading(false);
         } catch (err){
-          console.log(err);
+            setLoading(false);
+            setError(true);
+            console.log(err);
         }  
       }, 
     []);
@@ -36,8 +50,8 @@ function ProfileDashboard() {
                         <p style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'20px'}}>Class of {profile.graduationYear}</p>
                     </div>
                 </div>
-            </div>
-        </Paper>
+            </Paper>}
+        </div>
     );
 }
 

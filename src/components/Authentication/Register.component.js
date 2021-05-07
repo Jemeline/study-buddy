@@ -1,3 +1,10 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used for user sign up. Form feedback notifies user if
+email format is invalid, if passwords do not match or satisy requirements,
+if name or phone number invalid... 
+Redirects user to VerifyAccount component upon successful registration
+Route: https://study-buddy-d452c.web.app/auth
+*/
 import React, {useState} from 'react';
 import {Button,Col,Container,Row,Form,
   FormGroup,FormText,Input,FormFeedback} from 'reactstrap';
@@ -36,8 +43,8 @@ function Register({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
     <div data-testid='Register'>
       <Container style={{width:'35vw', margin: "auto"}}> 
         <Col>
-        <img src={logo} style={{height: '35vh'}}/>
-        <br/>
+        <img src={logo} style={{height: '30vh'}}/>
+        <br/><br/>
         <Alert style={{backgroundColor:colorPalette.primary,borderRadius:14}} show={alertRegister} onClose={() => setAlertRegister(false)} dismissible transition={false}>
           {alertMessageRegister}
         </Alert>
@@ -138,13 +145,13 @@ function Register({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                     style={{borderRadius:14}}
                   >
                   </Input>
-                  <FormText>Ex. 8475664332 (Only Numbers)</FormText>          
+                  <FormText style={{fontSize:'10px'}}>Ex. 8475664332</FormText>          
                 </FormGroup>
               </Col>
             </Row>
             <Button 
               size="lg" 
-              style={{backgroundColor:colorPalette.secondary,color:colorPalette.white}}
+              style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,fontSize:'1.5vw'}}
               type="submit"
               hidden={loadingRegister}
               disabled={

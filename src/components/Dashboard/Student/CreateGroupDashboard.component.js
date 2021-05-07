@@ -6,10 +6,11 @@ import { getUser } from '../../../utils/common';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
-import GroupIcon from '@material-ui/icons/Group';
+import ReactLoading from "react-loading";
+import ReactTooltip from 'react-tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function CreateGroupDashboard() {
-
     const [user, setUser] = useState(JSON.parse(getUser()));
     const [myClasses, setMyClasses] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
@@ -20,10 +21,14 @@ function CreateGroupDashboard() {
     const [sent, setSent] = useState(false);
     const [message, setMessage] = useState("");
     const [location, setLocation] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
 
     useEffect(async () => {
         try {
+            setLoading(true);
+            setError(false);
             const profileRes = await apiGetStudentProfile(user._id);
             const profile = profileRes.data;
             const classes = [];
@@ -34,7 +39,10 @@ function CreateGroupDashboard() {
                 classes[i] = [profile.courseSchedule[i], courseClean];
             }
             setMyClasses(classes);
+            setLoading(false);
         } catch (err) {
+            setLoading(false);
+            setError(true);
             console.log(err);
         }
     }, []);
@@ -87,6 +95,7 @@ function CreateGroupDashboard() {
             setErrorMessage("");
         } catch (err) {
             console.log(err);
+            setError(true);
             setSuccessMessage("");
             setErrorMessage("There was a problem sending your email. Try again");
         }
@@ -134,12 +143,13 @@ function CreateGroupDashboard() {
                             <input onChange={handleLocationChange} required type="text" id="location" name="location" placeholder="Enter a location..." />
                             <hr style={{margin: "4px auto"}}></hr>
                         </div>
-                        <button type="submit" style={{width: "25%", backgroundColor: colorPalette.primary}}><SendRoundedIcon /></button>
-                        <strong><p style={{color: colorPalette.secondaryA}}>{successMessage}</p></strong>
-                        <p>{errorMessage}</p>
+                        <button type="submit" style={{width: "25%", backgroundColor: colorPalette.secondary,color:'white',marginTop:'20px', marginBottom:'20px'}}><SendRoundedIcon /></button>
                     </form>
                 </div>
-            </Paper>
+                <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="create-group" place="top" effect="float">
+                    <p style={{margin:0,width:'250px'}}>Want to study realtime with other Study Buddies in your class? Select one of your courses, pick a time, send a location (or Zoom link), and start studying! </p>
+                </ReactTooltip>
+            </Paper>}
         </div>
     );
 }

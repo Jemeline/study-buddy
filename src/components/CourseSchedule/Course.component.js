@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used to display courses inside the CouresSearchImproved component
+Displays course title, number, time, and instructors.
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React, {useState,useEffect} from 'react';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';

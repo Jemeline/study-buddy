@@ -4,29 +4,31 @@ import SurveyGraduationYear from './questions/SurveyGraduationYear.component';
 import SurveyProgramOfStudy from './questions/SurveyProgramOfStudy.component';
 import SurveyStudentType from './questions/SurveyStudentType.component';
 import SurveyLearningType from './questions/SurveyLearningType.component';
+import SurveyIdentifiers from './questions/SurveyIdentifiers.component';
 import background from '../survey-background.jpg';
 import SurveyCourseSchedule from './questions/SurveyCourseSchedule.component';
 import CourseSearchImproved from '../../CourseSchedule/CourseSearchImproved.component';
 import SurveyNavigation from './SurveyNavigation.component';
 import SurveyResubmit from './SurveyResubmit.component';
 import SurveyComplete from './SurveyComplete.component';
-import {getGraduationYear,getStudentType,getMajor,getMinor,getCurrPage,getCourseSchedule,getLearningType,getGraduatePOS} from './utils/common';
+import {getCurrPage} from './utils/common';
 import { useHistory } from "react-router-dom";
-import {apiGetStudents,apiGetStudentProfiles,apiGetStudentProfile,apiGetCoursesById} from "../../../utils/api";
+import {apiGetStudentProfiles,apiGetCoursesById} from "../../../utils/api";
 
 function Survey(){
     const user = JSON.parse(getUser());
     const [currPage, setCurrPage] = useState((getCurrPage() !== null)? parseInt(getCurrPage()) : 0);
     const pageStart = 0;
-    const pageEnd = 5;
-    const [graduationYear, setGraduationYear] = useState((getGraduationYear() !== null) ? parseInt(getGraduationYear()) : new Date().getFullYear()+2);
-    const [minor, setMinor] = useState((getMinor() !== null) ? JSON.parse(getMinor()) : []);
-    const [major, setMajor] = useState((getMajor() !== null) ? JSON.parse(getMajor()) : []);
-    const [graduatePOS, setGraduatePOS] = useState((getGraduatePOS() !== null) ? JSON.parse(getGraduatePOS()) : []);
-    const [studentType, setStudentType] = useState((getStudentType() !== null) ? getStudentType() : 'undergraduate');
+    const pageEnd = 7;
+    const [graduationYear, setGraduationYear] = useState(new Date().getFullYear());
+    const [minor, setMinor] = useState([]);
+    const [major, setMajor] = useState([]);
+    const [graduatePOS, setGraduatePOS] = useState([]);
+    const [studentType, setStudentType] = useState('');
     const [courseSchedule, setCourseSchedule] = useState([]);
-    const [learningType, setLearningType] = useState((getLearningType() !== null) ? JSON.parse(getLearningType()) : []);
-    const profilePayload = () => createStudentProfilePayload(graduationYear,major,minor,graduatePOS,studentType,courseSchedule,learningType,user);
+    const [learningType, setLearningType] = useState([]);
+    const [identifiers, setIdentifiers] = useState([]);
+    const profilePayload = () => createStudentProfilePayload(graduationYear,major,minor,graduatePOS,studentType,courseSchedule,learningType,user,identifiers);
     const history = useHistory();
     
     useEffect(async () => {
@@ -34,9 +36,26 @@ function Survey(){
             if(user.isSurveyed){
                 const profiles = await apiGetStudentProfiles();
                 const courseSchedule = await profiles.data.filter(e=>e._userId === user._id)[0].courseSchedule;
+                const studentType = await profiles.data.filter(e=>e._userId === user._id)[0].studentType;
+                const graduationYear = await profiles.data.filter(e=>e._userId === user._id)[0].graduationYear;
+                const graduatePOS = await profiles.data.filter(e=>e._userId === user._id)[0].programOfStudy.graduateProgram.map(e=>{return {label:e,value:e}});
+                const major = await profiles.data.filter(e=>e._userId === user._id)[0].programOfStudy.major.map(e=>{return {label:e,value:e}});
+                const minor = await profiles.data.filter(e=>e._userId === user._id)[0].programOfStudy.minor.map(e=>{return {label:e,value:e}});
+                const learningType = await profiles.data.filter(e=>e._userId === user._id)[0].learningType;
+                const identifiers = await profiles.data.filter(e=>e._userId === user._id)[0].identifiers;
                 const userCourseSchedule = await apiGetCoursesById(courseSchedule);
-                console.log(userCourseSchedule.data);
                 setCourseSchedule(userCourseSchedule.data);
+                setStudentType(studentType);
+                setGraduationYear(graduationYear);
+                setLearningType(learningType);
+                setIdentifiers(identifiers);
+                if (studentType==='graduate'){
+                    setGraduatePOS(graduatePOS);
+                }
+                if (studentType==='undergraduate'){
+                    setMinor(minor);
+                    setMajor(major);
+                }
             }
         } catch (err){
           console.log(err);
@@ -44,19 +63,20 @@ function Survey(){
     }, []);
 
     return <div style={{backgroundImage: `url(${background})`,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}}>
-        <div hidden={currPage === 4} style={{width:'40vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white',display:'flex',alignItems: 'center',justifyContent:'center',padding:'1vw'}}>
+        <div hidden={currPage === (pageEnd-2)} style={{width:'40vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white',display:'flex',alignItems: 'center',justifyContent:'center',padding:'1vw'}}>
             <div>
             <SurveyGraduationYear graduationYear={graduationYear} setGraduationYear={setGraduationYear} hidden={currPage !== 0}/>
             <SurveyStudentType studentType={studentType} setStudentType={setStudentType} hidden={currPage !== 1} setMajor={setMajor}/>
             <SurveyProgramOfStudy major={major} setMajor={setMajor} minor={minor} setMinor={setMinor} graduatePOS={graduatePOS} setGraduatePOS={setGraduatePOS} studentType={studentType} hidden={currPage !== 2}/>
             <SurveyLearningType learningType={learningType} setLearningType={setLearningType} hidden={currPage !== 3}/> 
-            <SurveyResubmit hidden={currPage !== 5}/>
-            <SurveyComplete hidden={currPage !== 6}/>
+            <SurveyIdentifiers identifiers={identifiers} setIdentifiers={setIdentifiers} hidden={currPage !== 4}/>
+            <SurveyResubmit hidden={currPage !== (pageEnd-1)}/>
+            <SurveyComplete hidden={currPage !== pageEnd}/>
             <SurveyNavigation currPage={currPage} studentType={studentType} setCurrPage={setCurrPage} pageEnd={pageEnd} pageStart={pageStart} major={major} courseSchedule={courseSchedule} profilePayload={profilePayload}graduatePOS={graduatePOS}/>
             
             </div>    
         </div>
-            <div hidden={currPage !== 4} style={{display:'flex',alignItems: 'center',justifyContent:"space-between"}}>
+            <div hidden={currPage !== pageEnd-2} style={{display:'flex',alignItems: 'center',justifyContent:"space-between"}}>
                 <div style={{width:'40vw',boxShadow:'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',backgroundColor:'white',marginRight:'10vw',padding:'1vw',height:'70vh'}}>
                     <CourseSearchImproved courseSchedule={courseSchedule} setCourseSchedule={setCourseSchedule}/>
                 </div>
@@ -69,7 +89,7 @@ function Survey(){
               
 };
 
-function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,studentType,courseSchedule,learningType,user){
+function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,studentType,courseSchedule,learningType,user,identifiers){
     if (studentType === 'graduate') {
         const graduateObj = {
             _userId:user._id,
@@ -77,7 +97,9 @@ function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,stud
             studentType:studentType,
             programOfStudy:{graduateProgram:graduatePOS.map((ele)=>ele.value)},
             courseSchedule:courseSchedule.map((ele)=>ele._id),
+            courseScheduleImproved:courseSchedule,
             learningType:(learningType.length !== 0)?learningType:['prefer not to answer'],
+            identifiers:(identifiers.length !== 0)?identifiers:['prefer not to answer'],
         }
         return graduateObj;
     } else {
@@ -87,7 +109,9 @@ function createStudentProfilePayload(graduationYear,major,minor,graduatePOS,stud
             studentType:studentType,
             programOfStudy:{major:major.map((ele)=>ele.value),minor:minor.map((ele)=>ele.value)},
             courseSchedule:courseSchedule.map((ele)=>ele._id),
+            courseScheduleImproved:courseSchedule,
             learningType:(learningType.length !== 0)?learningType:['prefer not to answer'],
+            identifiers:(identifiers.length !== 0)?identifiers:['prefer not to answer'],
         }
         return undergraduateObj;
     }
