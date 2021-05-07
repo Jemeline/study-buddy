@@ -1,3 +1,10 @@
+// Written by Clayton Saunders
+
+// This component is part of the student profile and pulls all of the user class schedule
+// info to render a schedule for the user to view for their own profile or another user's
+// profile. Used the FullCalendar js library.
+
+
 import React, {useEffect, useState}from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -10,7 +17,7 @@ import { useHistory } from "react-router-dom";
 import {storeCurrPage} from '../Survey/Student/utils/common';
 
 
-
+// Creates the calendar component
 function Calendar(user) {
     function createEventId() {return String(eventGuid++)}
     const history = useHistory();
@@ -20,6 +27,7 @@ function Calendar(user) {
     let semesterEnd = "2021-06-05";
     let eventGuid = 0;
 
+    //gets user profile
     useEffect(async () => {
         apiGetStudentProfile(user.user._id).then((res) => {
             apiGetCoursesById(res.data.courseSchedule).then((res) => {
@@ -32,6 +40,7 @@ function Calendar(user) {
         })
     }, [])
 
+    // gets user class info and creates a JSON object for the FullCalendar component to render
     function getEvents(data) {
         let events = [];
         for(let i = 0; i < data.length; i++) {
@@ -51,6 +60,7 @@ function Calendar(user) {
         return events
     }
 
+    //Creates the start time string for the event object
     function getStartTime(timeArray) {
         let array = timeArray.time.split(" ")
         let timeObject = {
@@ -61,6 +71,7 @@ function Calendar(user) {
         return timeObject
     }
 
+    //Puts the day string in the correct format for the event object
     function getDays(dayString) {
         if (dayString == 'MW') { return [1,3]} else
         if (dayString == 'MWF') { return [1,3,5]} else 
@@ -73,7 +84,7 @@ function Calendar(user) {
         else { return [1]}
     }
         
-       
+    //Creates the full calendar object.. Renders only when all of the event objects have been created
     if (!loading) {
         return (
             <div className='demo-app-main' style={{width:'80vw'}}>

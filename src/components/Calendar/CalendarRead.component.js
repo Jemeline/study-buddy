@@ -1,3 +1,9 @@
+// Written by Clayton Saunders
+
+// This component is part of the student profile and pulls all of the user class schedule
+// info to render a schedule for the user to view for their own profile or another user's
+// profile. Used the FullCalendar js library.
+
 import React, {useEffect, useState}from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
