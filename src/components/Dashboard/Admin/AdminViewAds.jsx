@@ -15,7 +15,7 @@ const AdminViewAds = () => {
     }, []);
 
     return ads ? (
-        <div>
+        <div data-testid='AdminViewAds'>
             <h4>Tutor Ads</h4>
             <div style={{
                 flexGrow: 1,
@@ -28,14 +28,14 @@ const AdminViewAds = () => {
                 
                 <Grid container direction="row" justify="flex-start" spacing={1}>
                     {ads.map(ad => (
-                        <Grid key={ad._id} item xs={4} sm={4} md={4}>
-                            <AdminAd ad={ad} />
+                        <Grid key={ad._id} item xs={12} sm={6} md={3}>
+                            <AdminAd data-testid='AdminAd' ad={ad} />
                         </Grid>
                     ))}
                 </Grid>
             </div>
         </div>
-    ) : <ReactLoading type={"cylon"} color={colorPalette.secondary} />;
+    ) : <ReactLoading data-testid='AdminViewAds' type={"cylon"} color={colorPalette.secondary} />;
 };
 
 export default AdminViewAds;
