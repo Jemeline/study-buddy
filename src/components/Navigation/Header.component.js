@@ -28,6 +28,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import {storeCurrPage} from '../Survey/Student/utils/common';
+import InfoIcon from '@material-ui/icons/Info';
 
 function Header({isLoggedIn,setIsLoggedIn}){ 
     const history = useHistory();
@@ -108,6 +109,11 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><QuestionAnswerIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"Take Our Survey"} />
         </ListItem>
+        <a href="https://docs.google.com/document/d/1twoZd_Lnf7APHXiDgFkhEE3hiPTCnevaL7tnNORcrSI/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+        <ListItem button>
+            <ListItemIcon><InfoIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
+            <ListItemText primary={"User Manual"} />
+        </ListItem></a>
       </List>
       </Box>
       </Drawer>

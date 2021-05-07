@@ -4,6 +4,8 @@ import Login from './Login.component';
 import Register from './Register.component';
 import RecoverPassword from './RecoverPassword.component';
 import VerifyAccount from './VerifyAccount.component';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import ReactTooltip from 'react-tooltip';
 
 function AuthenticationHome({setIsLoggedIn}){
   const [tab,setTab] = useState('login');
@@ -20,7 +22,11 @@ function AuthenticationHome({setIsLoggedIn}){
         : (tab==='verify') ? <VerifyAccount setIsLoggedIn={setIsLoggedIn} setTab={setTab} first={first} email={email} id={id}/>
         : <RecoverPassword setTab={setTab}/>} 
         </div>
+        <a href="https://docs.google.com/document/d/1twoZd_Lnf7APHXiDgFkhEE3hiPTCnevaL7tnNORcrSI/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><HelpOutlineIcon style={{height:'30px',outline:'none'}} data-tip data-for="auth"/></a>
         <br/>
+        <ReactTooltip textColor="white" id="auth" place="top" effect="float">
+          <p style={{margin:0,width:'150px'}}>New to Study Buddy? Click for our detailed User Manual</p>
+        </ReactTooltip>
     </div>
   </div>
 };
