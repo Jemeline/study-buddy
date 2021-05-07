@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Displays when student has not taken survey yet instead of normal
+dashboard components
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React from 'react';
 import {getUser,capitalizeFirst} from '../../utils/common';
 import logo from '../study-buddy.png';

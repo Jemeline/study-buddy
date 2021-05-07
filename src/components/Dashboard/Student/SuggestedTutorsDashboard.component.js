@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Component for viewing tutors who tutor for the classes a student
+is currently in. Shows tutor contact info, rating, and courses tutored.
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import { getUser, capitalizeFirst } from "../../../utils/common";
 import {apiGetStudentProfiles,getUsers,getAllAds,apiGetCoursesById} from "../../../utils/api";

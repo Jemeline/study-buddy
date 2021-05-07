@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used to display student course schedule on Dashboard
+Shows course name, number, subject, and instructors
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import { getUser, storeTabValue } from "../../../utils/common";
 import {apiGetStudentProfiles,apiGetCoursesById} from "../../../utils/api";

@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Displays the student who has the highest match percent with
+the currently authenticated student
+Shows avatar, match percent, courses in common, email...
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import Paper from '@material-ui/core/Paper';
 import { colorPalette } from '../../../utils/design';

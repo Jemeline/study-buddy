@@ -1,3 +1,7 @@
+/* Author: Jada Pfeiffer
+Purpose: Header and Navigation drawer for site. Dynamically displays
+links to differnet routes based on user type.
+*/
 import React, {useState} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';

@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Allows student to browse other students by courses in common.
+Student can select course from dropdown prepopulated with their course
+schedule and filter students based on those in the same class
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import { getUser, capitalizeFirst } from "../../../utils/common";
 import {apiGetStudents,apiGetStudentProfiles,apiGetCoursesById} from "../../../utils/api";

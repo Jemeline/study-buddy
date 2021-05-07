@@ -1,3 +1,10 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used to search through all current semester courses in Courses
+collection in MongoDB
+Fetches courses by subject ticker whe entered (see CourseTickers.js) and then
+filters based on course number and section number entered
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React, {useState} from 'react';
 import ReactLoading from 'react-loading';
 import {Input,InputGroup,InputGroupAddon,FormText} from 'reactstrap';

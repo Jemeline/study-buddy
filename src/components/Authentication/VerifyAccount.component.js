@@ -1,3 +1,11 @@
+/* Author: Jada Pfeiffer
+Purpose: Since Study Buddy is an application designed to foster communication
+between students, we want to ensure users have supplied valid email addresses.
+This component verifies user email address by sending a code to the email and asking
+the user to inut the code they recieved.
+Redirects user to Dashboard component upon successful registration
+Route: https://study-buddy-d452c.web.app/auth
+*/
 import React, {useState} from 'react';
 import {Button,Col,Container,Form,FormGroup,Input} from 'reactstrap';
 import {Alert} from 'react-bootstrap';

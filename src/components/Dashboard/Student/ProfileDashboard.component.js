@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Displays the student profile of the currently authenticated
+student
+Condensed version of StudentProfile
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useState,useEffect } from "react";
 import { getUser, capitalizeFirst } from "../../../utils/common";
 import {apiUpdateUser,apiGetStudentProfile} from "../../../utils/api";

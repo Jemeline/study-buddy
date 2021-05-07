@@ -21,6 +21,7 @@ async function getStudentProfiles() {
 // Use survey responses to generate weighted sum of similar answers
 export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
+    console.log(studentProfiles);
     
     let matches = [];
     const total = ((student.courseSchedule.length<2)?student.courseSchedule.length * 50:100) + student.programOfStudy.major.length * 20 + 15 + student.identifiers.length * 10 + student.learningType.length * 5;

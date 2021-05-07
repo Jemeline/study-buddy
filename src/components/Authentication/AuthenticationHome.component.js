@@ -1,3 +1,10 @@
+/* Author: Jada Pfeiffer
+Purpose: Central component that directs the authentication process
+Contains four components: Login, Register, VerifyAccount, and RecoverPassword
+which are displayed conditionally depending user selection
+Default component displayed is Login
+Route: https://study-buddy-d452c.web.app/auth
+*/
 import React, {useState} from 'react';
 import background from './dark-background-1.jpeg';
 import Login from './Login.component';

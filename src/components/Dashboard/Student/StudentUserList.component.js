@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Component for browsing all active students and filtering
+students based on several criteria such as graduation year, program of study,
+student type, and name. 
+Route: https://study-buddy-d452c.web.app/find-students
+*/
 import React,{useState,useEffect} from 'react';
 import {apiGetStudents,apiGetStudentProfiles,apiAddFavorite,apiRemoveFavorite} from '../../../utils/api';
 import Table from '@material-ui/core/Table';

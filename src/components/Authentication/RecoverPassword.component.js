@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Used to reset forgotten/lost user password. User inputs email and if
+email is found, user is sent temporary code to reset password.
+Redirects user to Login component upon success
+Route: https://study-buddy-d452c.web.app/auth
+*/
 import React, {useState} from 'react';
 import {Button,Col,Container,Form,FormGroup,Input,FormFeedback} from 'reactstrap';
 import {Alert} from 'react-bootstrap';

@@ -1,3 +1,11 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used for user sign in. Form feedback notifies user if
+email format is invalid. Several alerts will also display conditionally for
+incorrect credentials, if user is already logged in, etc.
+Redirects user to VerifyAccount component if user has not verified email
+or Dashboard if user has verified email
+Route: https://study-buddy-d452c.web.app/auth
+*/
 import React, {useState} from 'react';
 import {Button,Col,Container,Form,
   FormGroup,FormFeedback,Input} from 'reactstrap';

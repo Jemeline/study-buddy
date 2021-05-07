@@ -1,3 +1,10 @@
+/* Author: Jada Pfeiffer
+Purpose: Component used for user sign up. Form feedback notifies user if
+email format is invalid, if passwords do not match or satisy requirements,
+if name or phone number invalid... 
+Redirects user to VerifyAccount component upon successful registration
+Route: https://study-buddy-d452c.web.app/auth
+*/
 import React, {useState} from 'react';
 import {Button,Col,Container,Row,Form,
   FormGroup,FormText,Input,FormFeedback} from 'reactstrap';

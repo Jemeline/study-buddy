@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Utilizes MUI Grid to display all dashboard components once
+student has taken survey
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, { useEffect, useState } from 'react';
 import {getIsSurveyed, getUser} from '../../utils/common';
 import DashboardUnsurveyed from './DashboardUnsurveyed.component';
