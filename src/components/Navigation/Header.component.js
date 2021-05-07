@@ -29,6 +29,8 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import {storeCurrPage} from '../Survey/Student/utils/common';
 import InfoIcon from '@material-ui/icons/Info';
+import PhoneIcon from '@material-ui/icons/Phone';
+
 
 function Header({isLoggedIn,setIsLoggedIn}){ 
     const history = useHistory();
@@ -114,6 +116,10 @@ function Header({isLoggedIn,setIsLoggedIn}){
             <ListItemIcon><InfoIcon style={{ color: colorPalette.secondary }}/></ListItemIcon>
             <ListItemText primary={"User Manual"} />
         </ListItem></a>
+        <ListItem button onClick={() => history.push("/contact")}>
+          <ListItemIcon><PhoneIcon style={{color: colorPalette.secondary}} /></ListItemIcon>
+          <ListItemText primary={"Contact Us"}/>
+        </ListItem>
       </List>
       </Box>
       </Drawer>
