@@ -6,12 +6,18 @@ const list = [{
   "_id": 0,
   "tutorEmail": "tutor@email.com",
   "text": "test ad text",
-  "courses": "COMP-550"
+  "courses": ["COMP-550"],
+  "first": "firstname",
+  "last": "lastname",
+  "ratings": [5, 8]
 }, {
   "_id": 1,
   "tutorEmail": "tutor2@email.com",
   "text": "another test ad",
-  "courses": "COMP-523"
+  "courses": ["COMP-523"],
+  "first": "firstname",
+  "last": "lastname",
+  "ratings": [5, 8]
 }];
 
 test('renders Advertisement List for Students', () => {
@@ -24,9 +30,3 @@ test('renders Advertisement list for Tutors', () => {
   expect(screen.getByText("test ad text")).toBeInTheDocument();
 });
 
-test('renders Advertisement Edit mode', () => {
-  render(<TutorAd isTutor={true} ad={list[0]} />);
-  fireEvent.click(screen.getByText("Edit"));
-  expect(screen.getByText("Submit")).toBeInTheDocument();
-  expect(screen.getAllByRole("textbox")[0]).toBeInTheDocument();
-});

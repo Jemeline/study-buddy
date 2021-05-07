@@ -12,7 +12,7 @@ import {getLoginStatus} from '../utils/common';
 function Home({}){
   const history = useHistory();
   return (
-  <div>
+  <div data-testid='Home'>
     <div style={{float:'left',backgroundImage: `url(${students})`,postion: 'relative', height:'100vh',width:'70vw',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',position:'fixed',overflow:'auto'}}>
       <div className='animate' style={{float:'right', backgroundColor: colorPalette.secondary,position: 'center', marginTop:'400px'}}>
           <p style={{fontSize: '22px', color:'white'}}>
@@ -24,7 +24,7 @@ function Home({}){
     </div>
     <div style={{float:'right',width:'30vw'}}>
       <img src={logo} alt="logo" style={{height: '45vh', width: '45vh',marginTop: '90px'}}/>
-      <Button onClick={()=>history.push('/auth')} style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'50%',borderRadius:14, marginTop: '50px'}}>Login/Register</Button>
+      <Button data-testid='Login-Register' onClick={()=>history.push('/auth')} style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,width:'50%',borderRadius:14, marginTop: '50px'}}>Login/Register</Button>
     </div>
   </div>
   

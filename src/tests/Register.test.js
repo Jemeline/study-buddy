@@ -20,9 +20,3 @@ test('renders All Authentication sub components', () => {
     expect(element).toBeInTheDocument();
 });
 
-// test('renders Register component', () => {
-//     render(<AuthenticationHome />);
-//     const button = screen.getByTestId("Register");
-//     fireEvent.click(button);
-//     expect(screen.getByTestId("Register")).toBeInTheDocument();
-// });

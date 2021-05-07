@@ -42,7 +42,7 @@ function FindAStudyBuddyDashboard() {
                     <Table stickyHeader size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCell colspan="4" style={{ "text-align": "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse All Users</strong></TableCell>
+                            <TableCell colSpan="4" style={{ textAlign: "left",fontSize:'20px',fontFamily: 'Garamond, serif' }}><strong>Browse All Users</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableHead>
@@ -54,8 +54,8 @@ function FindAStudyBuddyDashboard() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow hidden={!error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
-                        <TableRow hidden={rows.length>0 || error}><TableCell colSpan="5" style={{ "text-align": "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>
+                        <TableRow hidden={!error}><TableCell colSpan="5" style={{ textAlign: "center",fontSize:'15px',color:'darkgray'}}><strong>Oops... Something went wrong</strong></TableCell></TableRow>
+                        <TableRow hidden={rows.length>0 || error}><TableCell colSpan="5" style={{ textAlign: "center",fontSize:'15px',color:'darkgray'}}><strong>Could Not Find Any Users</strong></TableCell></TableRow>
                         {!loading ? 
                         rows.filter((row)=>!((row.user._id ===JSON.parse(getUser())._id) || row.user.disabled)).map((row) => (
                         <TableRow hover key={row.user._id}>

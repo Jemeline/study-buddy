@@ -13,39 +13,6 @@ import CreateGroupDashboard from '../components/Dashboard/Student/CreateGroupDas
 import SuggestedMatchesDashboard from '../components/Dashboard/Student/SuggestedMatchesDashboard.component';
 import HelpCenterDashboard from '../components/Dashboard/Student/HelpCenterDashboard.component';
 
-const user = {
-    first: '',
-    last: '',
-    avatar: picture,
-    email: '',
-    role: '',
-    phoneNumber: ''
-  }
-
-// test('renders Student Dashboard', () => {
-//     render(<StudentDashboard/>);
-//     const element = screen.getByTestId("Student-Dashboard");
-//     expect(element).toBeInTheDocument();
-// });
-
-// test('every element renders', () => {
-//     render(<StudentDashboard/>);
-//     expect(screen.getByTestId('Help-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('Group-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('Profile-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('Suggested-Matches-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('ClassList-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('Calendar-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('Course-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('Invite-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('FindBuddy-Dashboard')).toBeInTheDocument();
-//     expect(screen.getByTestId('Tutor-Dashboard')).toBeInTheDocument();
-// });
-
-// test('renders Student Dashboard', () => {
-//     render(<ProfileDashboard/>);
-//     expect(screen.getByTestId("Profile-Dashboard")).toBeInTheDocument();
-// });
 
 test('renders Help Center Dashboard', () => {
     render(<HelpCenterDashboard/>);
@@ -58,18 +25,6 @@ test('renders Help Center on click', () => {
     const element = screen.getByTestId("Help-Dashboard");
     expect(element).toBeEnabled();
 });
-
-// test('renders Create Group Dashboard', () => {
-//     render(<CreateGroupDashboard/>);
-//     const element = screen.getByTestId("Group-Dashboard");
-//     expect(element).toBeInTheDocument();
-// });
-
-// test('renders Create Group onClick', () => {
-//     render(<CreateGroupDashboard/>);
-//     const element = screen.getByTestId("Group-Dashboard");
-//     expect(element).toBeEnabled();
-// });
 
 test('renders Create Group Dashboard', () => {
     act(() => {
@@ -87,15 +42,4 @@ test('renders Create Group onClick', () => {
     });
 });
 
-test('renders Invite Dashboard', () => {
-    render(<InviteDashboard/>);
-    const element = screen.getByTestId("Invite-Dashboard");
-    expect(element).toBeInTheDocument();
-});
-
-test('renders Invite onClick', () => {
-    render(<InviteDashboard/>);
-    const element = screen.getByTestId("Invite-Dashboard");
-    expect(element).toBeEnabled();
-});
 

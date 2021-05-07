@@ -112,7 +112,7 @@ const TutorAd = ({ isTutor, ad }) => {
             <p><strong>Name:</strong> {capitalizeFirst(ad.first)} {capitalizeFirst(ad.last)}</p>
             <p><strong>Email: </strong>{ad.tutorEmail}</p>
             <p>{ad.text}</p>
-            <p style={{marginBottom:0,marginTop:0}}><strong>Courses:</strong></p>{ad.courses.map(e=> <p style={{marginBottom:0,marginTop:0}}>{e}, </p>)}
+            <p style={{marginBottom:0,marginTop:0}}><strong>Courses:</strong></p>{ad.courses.map(e=> <p key={e} style={{marginBottom:0,marginTop:0}}>{e}, </p>)}
             {ad.ratings.length === 0 ? <p><strong>Average Rating:</strong> Unrated </p>: <p><strong>Average Rating:</strong> {Math.round((ad.ratings.reduce((acc, cur) => acc + cur) * 100 / ad.ratings.length)) / 100}</p>}
             <br/>
         </div>

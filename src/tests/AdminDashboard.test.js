@@ -5,12 +5,6 @@ import UserItem from '../components/Dashboard/Admin/UserItem';
 import picture from '../components/study-buddy-tagline.png';
 import AdminAd from '../components/Dashboard/Admin/AdminAd';
 
-// test('renders Tutor Dashboard', () => {
-//   render(<TutorDashboard />);
-//   const element = screen.getByTestId("tutorDash");
-//   expect(element).toBeInTheDocument();
-// });
-
 test('renders Admin Dashboard', () => {
   render(<AdminDashboard />);
   const element = screen.getByTestId("Admin-Dashboard");
