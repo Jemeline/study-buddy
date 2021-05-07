@@ -1,5 +1,30 @@
 /* eslint-disable max-len */
+/* eslint-disable linebreak-style */
 /* eslint-disable no-undef */
+/* Author: Jada Pfeiffer
+Purpose: Backend unit testing for User object. In each unit test, the following
+User is instantiated and added to the User collection in MongoDB:
+
+  const user = new UserModel({
+        email: "unit_test@email.com",
+        password: "TestTest1!",
+        first: "Test",
+        last: "Test",
+        dateMember: new Date(),
+        role: "student",
+  });
+
+After each test, the user is found and removed from the collection.
+The following tests are conducted:
+1. Create a user => Assert user is in collection
+2. Read a user => Assert user can be read once inserted into collection
+3. Create a user with non-unique email => Assert is not inserted and Mongo 11000 error thrown
+4. Delete a user => Assert user is removed from collection
+5. Update a user => Asset user role is updated from "student" to "tutor"
+
+Tests can be run by the following command: cd functions && npm test
+*/
+
 const assert = require("assert");
 const UserModel = require("../models/user");
 

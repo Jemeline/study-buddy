@@ -1,4 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
+/* Author: Jada Pfeiffer
+Purpose: Helper function to connect to the MongoDB Atlas database inside of server.js
+*/
 const mongoose = require("mongoose");
 const functions = require("firebase-functions");
 mongoose.Promise = global.Promise;

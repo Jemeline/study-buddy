@@ -1,5 +1,46 @@
 /* eslint-disable max-len */
+/* eslint-disable linebreak-style */
 /* eslint-disable no-undef */
+/* Author: Jada Pfeiffer
+Purpose: Backend unit testing for StudentProfile object. In each unit test, the following
+StudentProfile is instantiated and added to the StudentProfile collection in MongoDB:
+
+  const profile = new StudentProfileModel({
+      _userId: userId,
+      graduationYear: 2021,
+      studentType: "undergraduate",
+      programOfStudy: {
+        major: [
+          "Art History Major, B.A.",
+        ],
+        minor: [
+          "American Studies Minor",
+        ],
+        graduateProgram: ["Art History PhD"],
+      },
+      courseSchedule: [
+        "604a5874d7ec68b7140e9ed0",
+      ],
+      learningType: [
+        "visual",
+      ],
+  });
+
+The variable userId is utilized to store the _id of the user once added to the DB
+since every StudentProfile is associated with a _userId. In order to unit test the
+StudentProfile model, a user must first be inserted during every test and then the
+subsequent StudentProfile can be inseted and linked using the _userId
+reference to the user model.
+
+After each test, the User and StudentProfile objects are found and removed from the collection.
+The following tests are conducted:
+1. Create a StudentProfile => Assert StudentProfile is in collection
+2. Read a StudentProfile => Assert StudentProfile can be read once inserted into collection
+3. Delete a StudentProfile => Assert StudentProfile is removed from collection
+4. Update a StudentProfile => Asset StudentProfile graduationYear is updated from 2100 to 2200
+
+Tests can be run by the following command: cd functions && npm test
+*/
 const assert = require("assert");
 const StudentProfileModel = require("../models/studentProfile");
 const UserModel = require("../models/user");

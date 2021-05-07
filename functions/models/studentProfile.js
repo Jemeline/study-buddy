@@ -1,4 +1,12 @@
+/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
+/* Author: Jada Pfeiffer
+Purpose: Mongoose data schema for StudentProfile object.
+The StudentProfile object is populated once a student completes the Study Buddy
+survey and contains detailed student study preferences. A StudentProfile is linked
+to a User by the unique _userId field.
+For detailed data definitions: https://docs.google.com/document/d/14qkdYCDylZk62Gv6M04fyYsa7VxupBWX4OhFtDWyD-M/edit?usp=sharing
+*/
 const mongoose = require("mongoose");
 const {Majors, Minors, GraduatePrograms} = require("../utils/StudyPrograms.js");
 

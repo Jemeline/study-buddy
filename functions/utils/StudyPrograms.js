@@ -1,5 +1,12 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable max-len */
+/* eslint-disable linebreak-style */
+/* Author: Jada Pfeiffer
+Purpose: Current list of all UNC majors and minors as well as some UNC graduate programs. Utilized
+in the StudentProfile model to enumerate acceptable programs of study.
+Current majors and minors obtained here: https://catalog.unc.edu/undergraduate/programs-study/programs-study.pdf
+Python script to isolate majors and minors from the above PDF:
+https://drive.google.com/file/d/1S6ltLiB93_11qQncG2a8yyUhtnsmaQwy/view?usp=sharing
+*/
 const Majors = [
   "African, African American, and Diaspora Studies Major, B.A.",
   "American Studies Major, B.A.", "American Studies Major, B.A.–American Indian and Indigenous Studies Concentration", "American Studies Major, B.A.–Folklore Concentration", "American Studies Major, B.A.–Global American Studies Concentration",

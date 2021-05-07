@@ -1,5 +1,10 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable max-len */
+/* eslint-disable linebreak-style */
+/* Author: Jada Pfeiffer
+Purpose: CRUD routes for Course object. See the following document for detailed
+API descriptions of the utilized Course routes:
+https://docs.google.com/document/d/1YBo-JZqJDuFYI9B0bbcqIF3TLFgrI5Km5-gBzN6nqEc/edit?usp=sharing
+*/
 const express = require("express");
 const CourseModel = require("../models/course");
 const app = express();
