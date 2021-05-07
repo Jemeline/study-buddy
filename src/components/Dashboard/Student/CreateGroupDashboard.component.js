@@ -1,9 +1,10 @@
 import React, { useState,useEffect } from "react";
-import Paper from '@material-ui/core/Paper';
+import {Paper} from '@material-ui/core';
 import { colorPalette } from '../../../utils/design';
 import { apiGetCourseById, apiGetStudentProfile, apiGetStudentProfiles, apiGetStudents, sendMassStudyInvite } from '../../../utils/api';
 import { getUser } from '../../../utils/common';
-import SendRoundedIcon from '@material-ui/icons/SendRounded';
+import {SendRoundedIcon} from '@material-ui/icons/SendRounded';
+import {GroupIcon} from '@material-ui/icons/Group';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import ReactLoading from "react-loading";
@@ -149,7 +150,7 @@ function CreateGroupDashboard() {
                 <ReactTooltip textColor="white" backgroundColor={colorPalette.secondary} id="create-group" place="top" effect="float">
                     <p style={{margin:0,width:'250px'}}>Want to study realtime with other Study Buddies in your class? Select one of your courses, pick a time, send a location (or Zoom link), and start studying! </p>
                 </ReactTooltip>
-            </Paper>}
+            </Paper>
         </div>
     );
 }

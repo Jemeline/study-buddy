@@ -50,8 +50,8 @@ function ProfileDashboard() {
                         <p style={{margin:'10px',fontFamily: 'Garamond, serif',fontSize:'20px'}}>Class of {profile.graduationYear}</p>
                     </div>
                 </div>
-            </Paper>}
-        </div>
+            </div>
+        </Paper>
     );
 }
 

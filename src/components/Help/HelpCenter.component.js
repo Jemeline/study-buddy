@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {colorPalette} from '../../utils/design';
-import Paper from '@material-ui/core/Paper';
+import {Grid} from '@material-ui/core';
 import logo from '../../components/study-buddy.png';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
