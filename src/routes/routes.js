@@ -19,11 +19,13 @@ import InviteLink from '../components/InviteLink/InviteLink.component'
 import MassStudyInvite from '../components/MassInvite/MassInvite.component';
 import CreateAd from '../components/Advertisements/CreateAd';
 import TutorProfile from '../components/Profile/Tutor/TutorProfile.component';
+import ContactUs from '../components/Contact/ContactUs.component';
 
 const Routes = ({setIsLoggedIn}) => (
     <Switch>
       <Route exact path="/" render={() => (<Home/>)}/>
       <Route exact path="/auth/" render={() => (<AuthenticationHome  setIsLoggedIn={setIsLoggedIn}/>)}/>
+      <Route exact path="/contact" render={() => (<ContactUs />)} />
       <StudentRoute exact path="/dashboard/student" component={StudentDashboard}/>
       <StudentRoute exact path="/student-survey" component={Survey}/>
       <StudentRoute exact path="/student-profile" component={StudentProfile}/>
