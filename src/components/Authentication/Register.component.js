@@ -39,8 +39,8 @@ function Register({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
     setAlertRegister(false);
   };
 
-  return <div>
-    <div >
+  return <div data-testid='Register'>
+    <div data-testid='Register'>
       <Container style={{width:'35vw', margin: "auto"}}> 
         <Col>
         <img src={logo} style={{height: '30vh'}}/>

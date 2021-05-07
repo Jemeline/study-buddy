@@ -5,7 +5,7 @@ import AdminGetUsers from "./AdminGetUsers";
 import CreateAdmin from "./CreateAdmin";
  
 function AdminDashboard(props) {
-    return <Container style={{"marginBottom": "5vh", "marginTop": "3vh"}}>
+    return <Container data-testid='Admin-Dashboard' style={{"marginBottom": "5vh", "marginTop": "3vh"}}>
       <CreateAdmin />
       <AdminViewAds />
       <AdminGetUsers />

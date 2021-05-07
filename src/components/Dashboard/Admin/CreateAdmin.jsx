@@ -40,7 +40,7 @@ const CreateAdmin = () => {
     };
 
     return (
-        <Container>
+        <Container data-testid='CreateAdmin'>
             <h4>Create Admin</h4>
             <Card
                 style={{
@@ -55,6 +55,7 @@ const CreateAdmin = () => {
                 <Container>
                     <Form onSubmit={handleSubmit}>
                         <Form.Control
+                            data-testid='admin-email-input'
                             placeholder="Email Adress"
                             type="email"
                             value={email}
@@ -64,6 +65,7 @@ const CreateAdmin = () => {
                         <Row>
                             <Col>
                                 <Form.Control
+                                    data-testid='admin-password-input'
                                     placeholder="Password"
                                     type="password"
                                     value={password}
@@ -72,6 +74,7 @@ const CreateAdmin = () => {
                             </Col>
                             <Col>
                                 <Form.Control
+                                    data-testid='admin-confirm-password-input'
                                     placeholder="Confirm Password"
                                     type="password"
                                     value={confirmPass}
@@ -82,6 +85,7 @@ const CreateAdmin = () => {
                         <Row>
                             <Col>
                                 <Form.Control
+                                    data-testid='fname-input'
                                     placeholder="First Name"
                                     value={first}
                                     onChange={e => setFirst(e.target.value)}
@@ -89,13 +93,14 @@ const CreateAdmin = () => {
                             </Col>
                             <Col>
                                 <Form.Control
+                                    data-testid='lname-input'
                                     placeholder="Last Name"
                                     value={last}
                                     onChange={e => setLast(e.target.value)}
                                 />
                             </Col>
                         </Row>
-                        <Button type="submit" style={{backgroundColor:colorPalette.secondary, marginTop: "2vh"}}>Submit</Button>
+                        <Button data-testid='submit-admin-button' type="submit" style={{backgroundColor:colorPalette.secondary, marginTop: "2vh"}}>Submit</Button>
                     </Form>
                 </Container>
             </Card>

@@ -17,7 +17,7 @@ const MyAds = () => {
     }, []);
 
     return (
-        <div>
+        <div data-testid='My-Ads'>
             <h4>My Advertisements</h4>
             <br/>
             {ads ? 

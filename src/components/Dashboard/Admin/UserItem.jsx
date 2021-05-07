@@ -29,9 +29,9 @@ const UserItem = ({ user }) => {
             <Col>{user.role}</Col>
             <Col>
                 <ButtonGroup>
-                    {user.avatar ? <Button style={{backgroundColor: colorPalette.secondary}} onClick={handlePic}>Delete Picture</Button> : null}
-                    <Button style={{backgroundColor: colorPalette.secondary}} onClick={handleUser}>Delete User</Button>
-                    <Button variant="danger" onClick={() => setEdit(false)}>Cancel</Button>
+                    {user.avatar ? <Button data-testid='delete-user-picture' style={{backgroundColor: colorPalette.secondary}} onClick={handlePic}>Delete Picture</Button> : null}
+                    <Button data-testid='delete-user' style={{backgroundColor: colorPalette.secondary}} onClick={handleUser}>Delete User</Button>
+                    <Button data-testid='cancel-delete-user' variant="danger" onClick={() => setEdit(false)}>Cancel</Button>
                 </ButtonGroup>
             </Col>
         </Row>
@@ -42,7 +42,7 @@ const UserItem = ({ user }) => {
             <Col>{user.email}</Col>
             <Col>{user.phoneNumber}</Col>
             <Col>{user.role}</Col>
-            <Col><Button style={{backgroundColor:colorPalette.secondary}} onClick={() => setEdit(true)}>Edit</Button></Col>
+            <Col><Button data-testid='edit-user' style={{backgroundColor:colorPalette.secondary}} onClick={() => setEdit(true)}>Edit</Button></Col>
         </Row>
     );
 };
