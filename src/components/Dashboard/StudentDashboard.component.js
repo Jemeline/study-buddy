@@ -22,7 +22,7 @@ import HighestMatchDashboard from './Student/HighestMatchDashboard.component';
 
 function StudentDashboard() {
     const user = JSON.parse(getUser());
-    return <div data-testid='Student-Dashboard' style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',width:'100vw',overflow:'auto'}}>
+    return <div style={{backgroundColor:colorPalette.gray,zIndex:-1,height:'calc(100vh - 65px)',display:'flex',justifyContent:'center',alignItems: 'center',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover',width:'100vw',overflow:'auto'}}>
       {getIsSurveyed() ?
       <div style={{flexGrow: 1,height:'calc(100vh - 95px)',overflowY:'auto',overflowX:'hidden', margin:'20px'}}>
       <Grid
@@ -32,44 +32,47 @@ function StudentDashboard() {
           spacing={3}
       >
           <Grid item xs={2}>
-            <HelpCenterDashboard data-testid='Help-Dashboard'/>
+            <HelpCenterDashboard/>
           </Grid>
-          <Grid item xs={6}>
-            <CreateGroupDashboard data-testid='Group-Dashboard'/>
+          <Grid item xs={3}>
+            <InviteDashboard/>
+          </Grid>
+          <Grid item xs={3}>
+            <HighestMatchDashboard/>
           </Grid>
           <Grid item xs={4}>
-            <ProfileDashboard data-testid='Profile-Dashboard'/>
+            <ProfileDashboard/>
           </Grid>
 
           <Grid item xs={6}>
-            <SuggestedMatchesDashboard data-testid='Suggested-Matches-Dashboard'/>
+            <SuggestedMatchesDashboard/>
           </Grid>
           <Grid item xs={6}>
-            <StudentClassListDashboard data-testid='ClassList-Dashboard'/>
+            <StudentClassListDashboard/>
           </Grid>
           
 
           <Grid item xs={4}> 
-            <CalendarDashboard user={user} data-testid='Calendar-Dashboard'/>
+            <CalendarDashboard user={user}/>
           </Grid>
           <Grid item xs={5}>
-            <CourseScheduleDashboard data-testid='Course-Dashboard'/>
+            <CourseScheduleDashboard/>
           </Grid>
           <Grid item xs={3}>
-            <InviteDashboard data-testid='Invite-Dashboard'/>
+            <CreateGroupDashboard/>
           </Grid>
 
           
           <Grid item xs={6}>
-            <FindAStudyBuddyDashboard data-testid='FindBuddy-Dashboard'/>
+            <FindAStudyBuddyDashboard/>
           </Grid>
           <Grid item xs={6}>
-            <SuggestedTutorsDashboard data-testid='Tutor-Dashboard'/>
+            <SuggestedTutorsDashboard/>
           </Grid>
           
       </Grid>
       </div>
-      : <DashboardUnsurveyed data-testid='Student-Dashboard'/>}
+      : <DashboardUnsurveyed/>}
     </div>
 };
  
