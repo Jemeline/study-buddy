@@ -1,3 +1,6 @@
+// Written by Sai Gongidi
+// Student View - Find Tutor Ads
+
 import React, { useState, useEffect } from "react";
 import { colorPalette } from "../../utils/design";
 import TutorAdList from "./TutorAdList";

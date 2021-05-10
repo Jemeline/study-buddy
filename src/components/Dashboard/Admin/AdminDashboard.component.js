@@ -1,3 +1,6 @@
+// Written by Sai Gongidi
+// Admin Dashboard Panel
+
 import React from 'react';
 import { Container } from "react-bootstrap";
 import AdminViewAds from "./AdminViewAds";

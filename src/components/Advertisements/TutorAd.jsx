@@ -1,16 +1,17 @@
+// Written by Sai Gongidi
+// Render Tutor Advertisement
+
 import React, { useState } from "react";
 import { Form, Container, Row, Col } from "react-bootstrap";
 import { Slider } from "@material-ui/core";
 import "./TutorAd.css";
 import { colorPalette } from "../../utils/design";
 import { Button } from "react-bootstrap";
-import {Input} from 'reactstrap';
+import { Input } from 'reactstrap';
 import { editAd, deleteAd } from "../../utils/api";
-import {capitalizeFirst} from '../../utils/common';
+import { capitalizeFirst } from '../../utils/common';
 import CourseSearchImproved from '../CourseSchedule/CourseSearchImproved.component';
-import { Modal, ModalHeader, ModalBody} from 'reactstrap';
-import ReactTooltip from 'react-tooltip';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 const TutorAd = ({ isTutor, ad }) => {
     const [editMode, setEditMode] = useState(false);

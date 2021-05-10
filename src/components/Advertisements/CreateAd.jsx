@@ -1,3 +1,6 @@
+// Written by Sai Gongidi
+// Tutor Dashboard - Create new Advertisement
+
 import React, { useState } from "react";
 import { colorPalette } from "../../utils/design";
 import { Form, Button } from "react-bootstrap";
@@ -5,11 +8,10 @@ import ReactLoading from "react-loading";
 import { getUser } from "../../utils/common";
 import { createAd } from "../../utils/api";
 import CourseSearchImproved from '../CourseSchedule/CourseSearchImproved.component';
-import {Input} from 'reactstrap';
+import { Input } from 'reactstrap';
 
 const CreateAd = () => {
     const [text, setText] = useState("");
-    const [courses, setCourses] = useState("");
     const [loading, setLoading] = useState(false);
     const [courseSchedule, setCourseSchedule] = useState([]);
 

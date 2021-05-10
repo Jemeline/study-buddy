@@ -1,3 +1,6 @@
+// Written by Sai Gongidi
+// Admin Dashboard- View all users
+
 import React, { useState, useEffect } from "react";
 import { Container, ListGroup, Row, Col } from "react-bootstrap";
 import ReactLoading from "react-loading";
@@ -5,7 +8,6 @@ import { getUsers } from "../../../utils/api";
 import { colorPalette } from "../../../utils/design";
 import UserItem from "./UserItem";
 
-// Admin Dash - Get Users
 const AdminGetUsers = () => {
     const [users, setUsers] = useState(null);
     useEffect(() => {

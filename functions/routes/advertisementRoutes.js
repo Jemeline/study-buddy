@@ -1,4 +1,7 @@
 /* eslint-disable linebreak-style */
+// Written by Sai Gongidi
+// Tutor Advertisement CRUD Operations
+
 const express = require("express");
 const AdvertisementModel = require("../models/advertisement");
 const app = express();
@@ -67,7 +70,6 @@ app.delete("/advertisement/:id", async (req, res) => {
   try {
     if (!req.params.id) return res.status(400).send("Must send an ID");
     const ad = await AdvertisementModel.findByIdAndDelete(req.params.id);
-    // console.log(ad);
     res.status(200).send(ad);
   } catch (err) {
     res.status(500).send(err);

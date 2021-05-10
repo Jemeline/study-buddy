@@ -1,3 +1,6 @@
+// Written by Sai Gongidi
+// Admin Dashboard - View Tutor Ads
+
 import React, { useState, useEffect } from "react";
 import { colorPalette } from "../../../utils/design";
 import { Grid } from "@material-ui/core";
@@ -5,7 +8,6 @@ import ReactLoading from "react-loading";
 import AdminAd from "./AdminAd";
 import { getAllAds } from "../../../utils/api";
 
-// Admin Dash - View Tutor Ads
 const AdminViewAds = () => {
     const [ads, setAds] = useState(null);
     useEffect(() => {

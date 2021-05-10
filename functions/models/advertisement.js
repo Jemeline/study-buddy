@@ -1,4 +1,7 @@
 /* eslint-disable linebreak-style */
+// Written by Sai Gongidi
+// Tutor Advertisement Schema
+
 const mongoose = require("mongoose");
 
 const advertisementSchema = new mongoose.Schema({

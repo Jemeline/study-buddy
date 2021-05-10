@@ -1,3 +1,6 @@
+// Written by Sai Gongidi
+// List of Ads by currently logged in tutor
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { colorPalette } from "../../utils/design";
@@ -6,7 +9,6 @@ import ReactLoading from "react-loading";
 import { getUser } from "../../utils/common";
 import { getAllAds } from "../../utils/api";
 
-// List of Ads by currently logged in tutor
 const MyAds = () => {
     const [ads, setAds] = useState(null);
     

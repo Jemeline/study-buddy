@@ -1,3 +1,6 @@
+// Written by Sai Gongidi
+// Admin Dashboard- Render User Component
+
 import React, { useState } from "react";
 import { apiDeleteUser, apiUpdateUser } from "../../../utils/api";
 import { colorPalette } from "../../../utils/design";

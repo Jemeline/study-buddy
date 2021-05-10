@@ -1,10 +1,13 @@
+// Written by Sai Gongidi
+// Admin Dashboard- Render Tutor Ad
+
 import React, { useState } from "react";
 import { Form, Container } from "react-bootstrap";
 import { colorPalette } from "../../../utils/design";
 import { Button } from "react-bootstrap";
-import {Input} from 'reactstrap';
+import { Input } from 'reactstrap';
 import { editAd, deleteAd } from "../../../utils/api";
-import {capitalizeFirst} from '../../../utils/common';
+import { capitalizeFirst } from '../../../utils/common';
 import CourseSearchImproved from '../../CourseSchedule/CourseSearchImproved.component';
 import { Modal, ModalHeader, ModalBody} from 'reactstrap';
 

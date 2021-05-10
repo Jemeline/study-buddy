@@ -1,12 +1,11 @@
+// Written by Sai Gongidi
+// Grid view of Tutor Advertisements
+// list: [ {advertisement} ]
+
 import React from "react";
 import TutorAd from "./TutorAd";
 import Grid from '@material-ui/core/Grid';
 
-// List of Tutor Advertisements
-// list: [ {"_id": 0, 
-//     "tutorEmail": "tutor@email.com", 
-//     "text": "ad text", 
-//     "courses": "COMP-523, COMP-110"} ]
 const TutorAdList = ({ isTutor, list }) => {
     return <div style={{flexGrow: 1,height:'calc(100vh - 85px)',overflowY:'auto',overflowX:'hidden', margin:'10px'}}>
         <Grid
