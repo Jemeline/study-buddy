@@ -36,6 +36,15 @@ app.get("/course/find-by-subject/:subject", async (req, res) => {
   }
 });
 
+app.get("/course/find-by-subject-and-semester/:subject/:year/:season", async (req, res) => {
+  const course = await CourseModel.find({courseSubject: (req.params.subject).toUpperCase(), courseYear: req.params.year, courseSemester: (req.params.season).toUpperCase()});
+  try {
+    res.send(course);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 app.get("/course/find-by-id/:id", async (req, res) => {
   const course = await CourseModel.findById(req.params.id);
   try {

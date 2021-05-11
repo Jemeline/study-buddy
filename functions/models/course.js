@@ -11,21 +11,6 @@ For detailed data definitions: https://docs.google.com/document/d/14qkdYCDylZk62
 
 const mongoose = require("mongoose");
 
-const subCourseSemester = new mongoose.Schema({
-  year: {
-    type: Number,
-    required: [true, "Year required"],
-    min: [2021, "Minimum year is 2021"],
-  },
-  season: {
-    type: String,
-    uppercase: true,
-    trim: true,
-    enum: ["SPRING", "FALL"],
-    required: [true, "Season required"],
-  },
-});
-
 const subCourseSchedule = new mongoose.Schema({
   day: {
     type: String,
@@ -41,8 +26,13 @@ const subCourseSchedule = new mongoose.Schema({
 
 const CourseSchema = new mongoose.Schema({
   courseSemester: {
-    type: subCourseSemester,
+    type: String,
     required: [true, "Course semester required"],
+    uppercase: true,
+  },
+  courseYear: {
+    type: Number,
+    required: [true, "Course year required"],
   },
   courseSubject: {
     type: String,

@@ -75,6 +75,16 @@ export async function apiGetCoursesBySubject(subject) {
     }    
 };
 
+export async function apiGetCoursesBySubjectAndSemester(subject,year,season) {
+    try { // app6
+        const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/course/find-by-subject-and-semester/${subject}/${year}/${season}`);
+        return res;
+    } catch (error){
+        console.log(error.response);
+        throw error;
+    }    
+};
+
 export async function apiCreateStudentProfile(surveyPayload) {
     try {
         const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/student-profile',surveyPayload);

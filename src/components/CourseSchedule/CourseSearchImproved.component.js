@@ -8,7 +8,7 @@ Route: https://study-buddy-d452c.web.app/student-survey
 import React, {useState} from 'react';
 import ReactLoading from 'react-loading';
 import {Input,InputGroup,InputGroupAddon,FormText} from 'reactstrap';
-import {apiGetCoursesBySubject} from '../../utils/api';
+import {apiGetCoursesBySubjectAndSemester} from '../../utils/api';
 import Course from './Course.component';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -24,6 +24,8 @@ function CourseSearchImproved({courseSchedule,setCourseSchedule}){
     const [error, setError] = useState(false);
     const [courseInput, setCourseInput] = useState('');
     const [notFound, setNotFound] = useState('');
+    const currYear = new Date().getFullYear();
+    const currSeason = (new Date().getMonth()<6)?'SPRING':"FALL";
 
     return <div>
             <InputGroup style={{margin: "auto"}}>
@@ -37,7 +39,7 @@ function CourseSearchImproved({courseSchedule,setCourseSchedule}){
                         if (validateCourseInput(e.target.value)){
                             if (CourseTickers.includes(e.target.value.slice(0,5).toUpperCase())) {
                                 setNotFound('');
-                                await fetchCourses(e.target.value,setLoading,setCourses,setError,setFilteredCourses,setNotFound);
+                                await fetchCourses(e.target.value,setLoading,setCourses,setError,setFilteredCourses,setNotFound,currYear,currSeason);
                             } else if (e.target.value.length > 4) {
                                 filterCourses(e.target.value,setLoading,setFilteredCourses,setError,courses,setNotFound);
                             } else {
@@ -131,12 +133,12 @@ function filterCourses(searchString,setLoading,setFilteredCourses,setError,cours
     };
 };
 
-async function fetchCourses(subject,setLoading,setCourses,setError,setFilteredCourses,setNotFound){
+async function fetchCourses(subject,setLoading,setCourses,setError,setFilteredCourses,setNotFound,currYear,currSeason){
     try{
         setNotFound('');
         setLoading(true);
         setError(false);
-        const data = await apiGetCoursesBySubject(subject.slice(0,4));
+        const data = await apiGetCoursesBySubjectAndSemester(subject.slice(0,4),currYear,currSeason);
         setFilteredCourses(data.data);
         setCourses(data.data);
         setLoading(false);

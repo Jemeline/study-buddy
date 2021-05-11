@@ -78,7 +78,6 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                       value={passwordLogin}
                   />
                 </FormGroup>
-                </Form>
                 <Button
                   data-testid="login-button"
                   size="lg"
@@ -97,6 +96,7 @@ function Login({setIsLoggedIn,setTab,setFirst,setEmail,setId}){
                   }}
                   style={{backgroundColor:colorPalette.secondary,color:colorPalette.white,borderRadius:14,fontSize:'1.5vw'}}                                                                                                                
                 > Sign In</Button>
+                </Form>
                 <br/>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                   <ReactLoading hidden={!loadingLogin} type={"cylon"} color={colorPalette.secondary} height={'10%'} width={'10%'} /> 
