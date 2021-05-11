@@ -1,3 +1,7 @@
+// Written by Randy Sievers
+// A simple resource for students who need extra help/couldn't find what they were looking for on Study Buddy
+// with links to the Learning and Writing Centers
+
 import React, {useState} from 'react';
 import {colorPalette} from '../../utils/design';
 import Paper from '@material-ui/core/Paper';

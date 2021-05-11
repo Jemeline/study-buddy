@@ -1,3 +1,7 @@
+// Written by Randy Sievers
+
+// Info for contacting the Study Buddy team
+
 import {colorPalette} from '../../utils/design';
 import Paper from '@material-ui/core/Paper';
 
