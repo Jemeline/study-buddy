@@ -1,8 +1,10 @@
 // Written by Randy Sievers
 
 // Matching algorithm to be used upon completion of student survey
-// Uses a weighted sum of similar answers between the survey-taking student and other users
-// Weights are based on answers given by student as to which questions matter most to them
+// For each answer in common between the survey-taking student and an already-surveyed student, some amount
+// is added to the sum for the "other" student. Classes have the heaviest weight since students will most likely want to study with
+// others who are in their classes.
+
 
 import axios from 'axios';
 import {apiGetCourseById} from '../../utils/api';
@@ -18,7 +20,7 @@ async function getStudentProfiles() {
     return studentProfiles;
 }
 
-// Use survey responses to generate weighted sum of similar answers
+// Use survey responses to generate weighted sum of similar answers for every other surveyed student
 export async function getWeightedSum(student) {
     const studentProfiles = await getStudentProfiles();
     

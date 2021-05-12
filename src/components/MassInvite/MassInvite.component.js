@@ -1,3 +1,7 @@
+// Written by Randy Sievers
+// A form that students can fill out with a class chosen from their class schedule, a time, date, location, and possibly a message.
+// On submission, an email is sent to all Study Buddy users in the chosen class with the details for a study session.
+
 import { React, useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import { colorPalette } from '../../utils/design';
@@ -82,6 +86,8 @@ function MassStudyInvite() {
 
         let info = {classmates, formattedMessage};
 
+        
+        // Use the form data to make a backend request that will handle the rest
         try {
             const res = await sendMassStudyInvite(info);
             console.log(res);

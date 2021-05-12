@@ -1,3 +1,8 @@
+// Written by Jada Pfeiffer and Randy Sievers
+
+// Displays top matches for the current user based on scores from the matching algorithm.
+// Shows the user commonalities they have with other students for each survey question.
+
 import React,{useState,useEffect} from 'react';
 import {apiGetStudents,apiGetStudentProfile,apiGetStudentProfiles} from '../../../utils/api';
 import Table from '@material-ui/core/Table';
@@ -68,7 +73,7 @@ function TopMatches(){
       return matches;
     }
 
-  
+  // Create table rows with the information gathered from the matching algorithm
   useEffect(async () => {
     try{
       setLoading(true);
