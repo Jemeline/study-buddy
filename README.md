@@ -50,6 +50,10 @@ The following commands can be entered into the Terminal to execute the described
   - Run test suites found in src/tests
   - [Docs](https://testing-library.com/docs/)
 
+- **cd functions && npm test**
+  - Run test suites found in functions/test
+  - [Docs](https://mochajs.org/)
+
 - **npm run deploy**
   - Deploy changes to the live site
   - This command can also be run from the functions folder to only deploy changes to the backend API (functions folder)
