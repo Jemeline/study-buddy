@@ -1,4 +1,5 @@
 import { render, screen, cleanup, fireEvent,waitFor } from '@testing-library/react';
+import { BrowserRouter as Router } from "react-router-dom";
 import Login from '../components/Authentication/Login.component';
 
 
@@ -9,30 +10,30 @@ function setId() {};
 function setEmail() {};
 
 test('renders Login component', () => {
-  render(<Login />);
+  render(<Router><Login /></Router>);
   const element = screen.getByTestId("Login");
   expect(element).toBeInTheDocument();
 });
  
 // it('should take a snapshot of Login', () => {
-//     const { asFragment } = render(<Login />)
+//     const { asFragment } = render(<Router><Login /></Router>)
 //     expect(asFragment(<Login />)).toMatchSnapshot()
 // });
 
 it('Login form is rendered correctly', () => {
-    render(<Login />);
+    render(<Router><Login /></Router>);
     expect(screen.getByTestId('login-button')).toBeInTheDocument();
     expect(screen.getByTestId('login-email-input')).toBeInTheDocument();
     expect(screen.getByTestId('login-password-input')).toBeInTheDocument();
 });
 
 it('login button should be disabled initially', () => {
-    render(<Login />); 
+    render(<Router><Login /></Router>); 
     expect(screen.getByTestId('login-button')).toBeDisabled()
 });
 
 it("login button should be enabled when valid email entered in input box", () => {
-    render(<Login />);
+    render(<Router><Login /></Router>);
     const button = screen.getByTestId('login-button');
     const emailInput = screen.getByTestId('login-email-input');
     fireEvent.change(emailInput, { target: { value: "rtl@unittesting.com" } });
@@ -40,7 +41,7 @@ it("login button should be enabled when valid email entered in input box", () =>
 });
 
 it("login button should be enabled when invlalid email entered in input box", () => {
-    render(<Login />);
+    render(<Router><Login /></Router>);
     const button = screen.getByTestId('login-button');
     const emailInput = screen.getByTestId('login-email-input');
     fireEvent.change(emailInput, { target: { value: "rtl" } });
@@ -48,7 +49,7 @@ it("login button should be enabled when invlalid email entered in input box", ()
 });
 
 it("alert should appear when incomplete credentials entered", () => {
-    render(<Login />);
+    render(<Router><Login /></Router>);
     const button = screen.getByTestId('login-button');
     const emailInput = screen.getByTestId('login-email-input');
     fireEvent.change(emailInput, { target: { value: "rtl@unittesting.com" } });
@@ -58,7 +59,7 @@ it("alert should appear when incomplete credentials entered", () => {
 });
 
 it("login should fail when invalid credentials entered", async () => {
-    render(<Login />);
+    render(<Router><Login /></Router>);
     const button = screen.getByTestId('login-button');
     const emailInput = screen.getByTestId('login-email-input');
     const passwordInput = screen.getByTestId('login-password-input');
@@ -69,7 +70,7 @@ it("login should fail when invalid credentials entered", async () => {
 });
 
 it("login should succeed when valid credentials entered", async () => {
-    render(<Login setIsLoggedIn={setIsLoggedIn} setTab={setTab} setFirst={setFirst} setEmail={setEmail} setId={setId}/>);
+    render(<Router><Login setIsLoggedIn={setIsLoggedIn} setTab={setTab} setFirst={setFirst} setEmail={setEmail} setId={setId}/></Router>);
     const button = screen.getByTestId('login-button');
     const emailInput = screen.getByTestId('login-email-input');
     const passwordInput = screen.getByTestId('login-password-input');
