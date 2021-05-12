@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
-import {Row, Button,Col,Container,Form,FormGroup,FormFeedback,Input} from 'reactstrap';
+/* Written by Clayton Saunders
+Purpose: Homepage for Study Buddy
+Route: https://study-buddy-d452c.web.app/ 
+ */
+import React from 'react';
+import {Button} from 'reactstrap';
 import logo from './study-buddy-tagline.png';
-import books from './dark-background-1.jpeg';
-import students from './students-background-1.jpeg'
-import {Link} from 'react-router-dom';
+import students from './students-background-1.jpeg';
 import {colorPalette} from '../utils/design';
 import './Home.css';
 import { useHistory } from "react-router-dom";
-import {getLoginStatus} from '../utils/common';
 
 function Home({}){
   const history = useHistory();
