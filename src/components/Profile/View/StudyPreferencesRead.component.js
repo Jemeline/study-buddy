@@ -1,3 +1,6 @@
+/* Author: Jada Pfeiffer
+Purpose: Read-only student profile component for study preferences tab
+*/
 import React from 'react';
 import {colorPalette} from '../../../utils/design';
 import { InputGroup,InputGroupAddon,InputGroupText,Input} from 'reactstrap';

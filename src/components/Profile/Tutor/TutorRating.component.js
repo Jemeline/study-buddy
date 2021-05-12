@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Tutor profile component for tutor rating tab
+Calculates adn displays avarage rating for tutor and also
+displays number of active ads
+Route: https://study-buddy-d452c.web.app/tutor-profile
+*/
 import React,{useState,useEffect} from 'react';
 import {colorPalette} from '../../../utils/design';
 import {apiUpdateUser,getAllAds} from '../../../utils/api';

@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Student profile component for study preferences tab
+Allows students to update any of the fields in the StudentProfile model
+Uses react-select dependency
+Route: https://study-buddy-d452c.web.app/student-profile
+*/
 import React,{useState,useEffect} from 'react';
 import {colorPalette} from '../../../utils/design';
 import {apiResubmitStudentProfile,apiGetStudentProfile} from '../../../utils/api';

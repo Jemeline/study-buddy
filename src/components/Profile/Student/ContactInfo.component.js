@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Student profile component for contact info tab
+Allows user to view contact info, update phone number, and update
+email (re-verifies user upon email update)
+Route: https://study-buddy-d452c.web.app/student-profile
+*/
 import React,{useState,useEffect} from 'react';
 import {getUser,login} from '../../../utils/common';
 import {validateEmail,validatePhone,validateToken} from '../../../utils/regex';

@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Main component for authenticated student to view other
+students' profiles
+Read-only version of ../Student/StudentProfile
+Route: https://study-buddy-d452c.web.app/find-students
+*/
 import React,{useState} from 'react';
 import {useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';

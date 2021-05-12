@@ -6,7 +6,7 @@ const baseAPI = "https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/a
 // const baseAPI = "http://localhost:5001/study-buddy-d452c/us-central1/app8/api";
 
 export async function apiLogin(userData) {
-    try { // app
+    try {
         const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/login', userData);
         return res;
     } catch (error){
@@ -16,7 +16,7 @@ export async function apiLogin(userData) {
 };
 
 export async function apiRegister(userData) {
-    try { // app3
+    try {
         const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/user/register', userData);
         return res;
     } catch (error){
@@ -26,7 +26,7 @@ export async function apiRegister(userData) {
 };
 
 export async function apiVerify(userData) {
-    try { // app4
+    try {
         const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/token/verify', userData);
         return res;
     } catch (error){
@@ -56,7 +56,7 @@ export async function apiVerifyResetPassword(token,userData) {
 };
 
 export async function apiToken(userData) {
-    try { // app4
+    try {
         const res = await axios.post('https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/token', userData);
         return res;
     } catch (error){
@@ -66,7 +66,7 @@ export async function apiToken(userData) {
 };
 
 export async function apiGetCoursesBySubject(subject) {
-    try { // app6
+    try {
         const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/course/find-by-subject/${subject}`);
         return res;
     } catch (error){
@@ -76,7 +76,7 @@ export async function apiGetCoursesBySubject(subject) {
 };
 
 export async function apiGetCoursesBySubjectAndSemester(subject,year,season) {
-    try { // app6
+    try {
         const res = await axios.get(`https://us-central1-study-buddy-d452c.cloudfunctions.net/app8/api/course/find-by-subject-and-semester/${subject}/${year}/${season}`);
         return res;
     } catch (error){

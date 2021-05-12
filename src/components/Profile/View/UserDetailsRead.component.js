@@ -1,3 +1,6 @@
+/* Author: Jada Pfeiffer
+Purpose: Read-only student profile component for user details tab
+*/
 import React,{useState,useEffect} from 'react';
 import {capitalizeFirst} from '../../../utils/common';
 import avatarUnknown from '../Student/unknown-avatar.jpg';

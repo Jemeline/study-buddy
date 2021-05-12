@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Displays instead of Study Preferences component
+to indicate student still needs to take survey
+Route: https://study-buddy-d452c.web.app/student-profile
+*/
 import React from 'react';
 import logo from '../../study-buddy.png';
  

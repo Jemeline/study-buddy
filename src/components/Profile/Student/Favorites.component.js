@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Student profile component for favorites tab
+Fetches and displays student favorites using MUI Table
+Route: https://study-buddy-d452c.web.app/student-profile
+*/
 import React,{useState,useEffect} from 'react';
 import {apiGetStudents,apiGetStudentProfiles,apiRemoveFavorite} from '../../../utils/api';
 import Table from '@material-ui/core/Table';

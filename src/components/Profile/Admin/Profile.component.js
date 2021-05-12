@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: main admin profile component utilizes MUI tabs and profile
+components from ./Student
+Route: https://study-buddy-d452c.web.app/admin-profile
+*/
 import React,{useState} from 'react';
 import {useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';

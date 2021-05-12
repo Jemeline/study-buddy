@@ -1,3 +1,7 @@
+/* Author: Jada Pfeiffer
+Purpose: Top level component for admin profile
+Route: https://study-buddy-d452c.web.app/admin-profile
+*/
 import React,{useState,useEffect} from 'react';
 import Profile from './Profile.component';
 import {getUser} from '../../../utils/common';

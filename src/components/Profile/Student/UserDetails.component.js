@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Student profile component for user details tab
+Allows students to update name and avatar and view email
+Route: https://study-buddy-d452c.web.app/student-profile
+*/
 import React,{useState,useEffect} from 'react';
 import {getUser,capitalizeFirst,login} from '../../../utils/common';
 import {validateName} from '../../../utils/regex';

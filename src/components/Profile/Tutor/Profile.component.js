@@ -1,3 +1,7 @@
+/* Author: Jada Pfeiffer
+Purpose: main tutor profile component utilizes MUI tabs
+Route: https://study-buddy-d452c.web.app/tutor-profile
+*/
 import React,{useState} from 'react';
 import {useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';

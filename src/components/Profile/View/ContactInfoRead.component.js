@@ -1,3 +1,6 @@
+/* Author: Jada Pfeiffer
+Purpose: Read-only student profile component for contact info tab
+*/
 import React,{useState,useEffect} from 'react';
 import avatarUnknown from '../Student/unknown-avatar.jpg';
 import { InputGroup,InputGroupAddon,InputGroupText,Input} from 'reactstrap';
@@ -5,7 +8,6 @@ import ReactLoading from 'react-loading';
 import {apiUpdateUser} from '../../../utils/api';
 import {colorPalette} from '../../../utils/design';
 
- 
 function ContactInfoRead({user}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);

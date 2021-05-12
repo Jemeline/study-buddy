@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Student profile component for settings tab
+Allows students to disable account via toggle switch,
+update password, and delete account
+Route: https://study-buddy-d452c.web.app/student-profile
+*/
 import React,{useState} from 'react';
 import {getUser,login,logout} from '../../../utils/common';
 import {apiDeleteUser,apiUpdateUser,apiUpdatePassword} from '../../../utils/api';
