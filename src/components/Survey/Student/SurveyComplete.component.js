@@ -1,3 +1,7 @@
+/* Author: Jada Pfeiffer
+Purpose: Component which displays when survey has been sent
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import {React, useState} from 'react';
 import { useHistory } from 'react-router';
 

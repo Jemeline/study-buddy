@@ -1,10 +1,14 @@
+/* Author: Jada Pfeiffer
+Purpose: Survey question about graduation year
+Implements MUI slider component
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React from 'react';
 import Slider from '@material-ui/core/Slider';
 import {colorPalette} from '../../../../utils/design';
 import { withStyles } from '@material-ui/core/styles';
 import {storeGraduationYear} from '../utils/common';
 import SurveyNavigation from '../SurveyNavigation.component';
-
 
 function SurveyGraduationYear({graduationYear,setGraduationYear,hidden}){
     return <div hidden={hidden}> 

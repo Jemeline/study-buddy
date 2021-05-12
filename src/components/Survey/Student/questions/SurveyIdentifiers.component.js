@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Survey question about study identifiers
+Uses css to display outlines around selected identifiers and MUI icons
+Passes identifiers back up to main survey component
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React, {useEffect,useState} from 'react';
 import RepeatOneOutlinedIcon from '@material-ui/icons/RepeatOneOutlined';
 import MapOutlinedIcon from '@material-ui/icons/MapOutlined';

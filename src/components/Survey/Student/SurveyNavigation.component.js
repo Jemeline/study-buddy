@@ -1,3 +1,12 @@
+/* Author: Jada Pfeiffer
+Purpose: This is the survey navigation module
+It takes in the current page, and start and finish pages as well
+as several of the responses to hide/show and disable/enable 
+navigation buttons at the proper time in the survey
+Additionally, it contains the submit buttons that 
+send the survey data to the backend
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React from 'react';
 import {colorPalette} from '../../../utils/design';
 import Button from '@material-ui/core/Button';

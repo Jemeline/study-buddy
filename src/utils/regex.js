@@ -1,10 +1,7 @@
-export function validateEmail(email) {
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailRegex.test(email)) {
-        return true;
-    }
-    return false;
-};
+/*
+Purpose: Regular expression form validation for various components
+Validate email regex citation: https://stackoverflow.com/questions/38091894/regular-expression-for-email-not-working
+*/
 
 export function validatePassword(password) {
     const length = /^[\s\S]{8,32}$/;
@@ -94,9 +91,19 @@ export function validatePhoneProfile(phone) {
     return false;
 };
 
+// Validate email regex citation: https://stackoverflow.com/questions/38091894/regular-expression-for-email-not-working
 export function validateEmailProfile(email) {
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (email.length !== 0 && !emailRegex.test(email)) {
+        return true;
+    }
+    return false;
+};
+
+// Validate email regex citation: https://stackoverflow.com/questions/38091894/regular-expression-for-email-not-working
+export function validateEmail(email) {
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailRegex.test(email)) {
         return true;
     }
     return false;

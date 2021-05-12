@@ -1,3 +1,7 @@
+/* 
+For detailed API documentation,
+visit: https://docs.google.com/document/d/1YBo-JZqJDuFYI9B0bbcqIF3TLFgrI5Km5-gBzN6nqEc/edit?usp=sharing
+*/
 import axios from 'axios';
 
 // deployed API (firebase deploy --only functions)

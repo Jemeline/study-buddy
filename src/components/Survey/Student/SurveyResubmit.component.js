@@ -1,5 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Component which displays when survey has already been submitted
+to inform users that their previous responses will be deleted
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React from 'react';
-
 
 function SurveyResubmit({hidden}){
     return <div hidden={hidden}> 

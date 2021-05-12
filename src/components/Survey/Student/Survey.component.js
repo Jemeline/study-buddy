@@ -1,3 +1,13 @@
+/* Author: Jada Pfeiffer
+Purpose: This is the main survey component module
+It stores all the responses from each question and bundles the response
+to be sent the the API in SurveyNavigation
+currPage keeps track of the page that the user is on which is
+also passed to surveyNavigation
+Utilizes useEffect to preload survey responses of student 
+who have previously completed survey
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React, {useState,useEffect} from 'react';
 import {getUser} from '../../../utils/common';
 import SurveyGraduationYear from './questions/SurveyGraduationYear.component';

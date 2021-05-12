@@ -1,3 +1,8 @@
+/* Author: Jada Pfeiffer
+Purpose: Main routing for App
+Utilizes Route wrappers to protect routes based on
+login status and user role
+*/
 import React from 'react';
 import {Switch,Route} from 'react-router-dom';
 import StudentDashboard from '../components/Dashboard/StudentDashboard.component';

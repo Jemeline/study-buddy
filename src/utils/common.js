@@ -1,3 +1,7 @@
+/* Author: Jada Pfeiffer
+Purpose: Contains functions that are utilize
+by multiple components
+*/
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import HearingIcon from '@material-ui/icons/Hearing';

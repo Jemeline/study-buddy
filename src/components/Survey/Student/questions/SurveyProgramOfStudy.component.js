@@ -1,3 +1,10 @@
+/* Author: Jada Pfeiffer
+Purpose: Survey question about program of study
+Uses react-select to provide list of UNC majors, minors, anr/or
+graduate programs based on studentType
+Passes major,minor,graduatePOS back up to main survey component
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React from 'react';
 import {colorPalette} from '../../../../utils/design';
 import {Majors,Minors,GraduatePrograms} from '../utils/StudyPrograms';

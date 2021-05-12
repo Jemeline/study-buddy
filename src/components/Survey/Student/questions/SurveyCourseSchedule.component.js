@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Display courses selected in current student schedule during survey
+Implements Course Component and interacts with CourseSearchImproved Component
+Passes courseSchedule back up to main survey component
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React from 'react';
 import Course from '../../../CourseSchedule/Course.component';
 import Grid from '@material-ui/core/Grid';

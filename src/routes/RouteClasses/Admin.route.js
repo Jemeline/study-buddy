@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Route wrapped for the Admin components
+User may only go to an AdminRoute if they are logged in 
+and have the role of "admin"
+Else they are redirected to login or the appropriate dashboard
+*/
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import {getRole,getRoleLiteral,getLoginStatus} from "../../utils/common";

@@ -1,3 +1,7 @@
+/* Author: Jada Pfeiffer and Clayton Saunders
+Purpose: Component used to display student weekly clanedar view on Dashboard
+Route: https://study-buddy-d452c.web.app/dashboard/student
+*/
 import React, {useEffect, useState}from 'react';
 import FullCalendar from '@fullcalendar/react';
 import listPlugin from '@fullcalendar/list';

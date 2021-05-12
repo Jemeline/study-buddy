@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Survey question about student type
+Uses css to display outlines around selected student type and MUI icons
+Passes studentType back up to main survey component
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React, {useState,useEffect} from 'react';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SchoolIcon from '@material-ui/icons/School';

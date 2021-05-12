@@ -1,3 +1,9 @@
+/* Author: Jada Pfeiffer
+Purpose: Survey question about learning type
+Uses css to display outlines around selected learning types and MUI icons
+Passes learningType back up to main survey component
+Route: https://study-buddy-d452c.web.app/student-survey
+*/
 import React, {useEffect,useState} from 'react';
 import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import VisibilityIcon from '@material-ui/icons/Visibility';
